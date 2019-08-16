@@ -1,0 +1,3 @@
+[submodule "HeistEngine/deps/spdlog"]
+	path = HeistEngine/deps/spdlog
+	url = https://github.com/gabime/spdlog

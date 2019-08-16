@@ -43,12 +43,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)\bin\$(Platform)-$(Configuration)\$(ProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)\bin-int\$(Platform)-$(Configuration)\$(ProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)-$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)bin-int\$(Platform)-$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)\bin\$(Platform)-$(Configuration)\$(ProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)\bin-int\$(Platform)-$(Configuration)\$(ProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)-$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)bin-int\$(Platform)-$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -57,6 +57,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>_WINDLL;%(PreprocessorDefinitions);HEIST_PLATFORM_WINDOWS;HEIST_BUILD_DLL</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)HeistEngine\deps\spdlog\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -70,7 +71,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>_WINDLL;%(PreprocessorDefinitions);HEIST_PLATFORM_WINDOWS;HEIST_BUILD_DLL</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDLL;%(PreprocessorDefinitions);HEIST_PLATFORM_WINDOWS;HEIST_BUILD_DLL;HEIST_DIST_BUILD</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)HeistEngine\deps\spdlog\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -82,10 +84,12 @@
     <ClInclude Include="src\HeistEngine.h" />
     <ClInclude Include="src\HeistEngine\Application.h" />
     <ClInclude Include="src\HeistEngine\EntryPoint.h" />
+    <ClInclude Include="src\HeistEngine\Log.h" />
     <ClInclude Include="src\HeistEngine\Macro.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\HeistEngine\Application.cpp" />
+    <ClCompile Include="src\HeistEngine\Log.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
