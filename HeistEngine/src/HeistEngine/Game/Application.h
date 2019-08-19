@@ -1,7 +1,5 @@
 #pragma once
 #include "../Macro.h"
-#include "../Platform/Assertions.h"
-#include "../Core/Math/Math.h"
 
 namespace Heist {
 	class HEIST_API Application {

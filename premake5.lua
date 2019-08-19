@@ -29,7 +29,8 @@ project "HeistEngine"
 	includedirs {
 		"%{prj.name}/deps/spdlog/include",
 		"%{prj.name}/src",
-		"%{prj.name}/src/HeistEngine/Core"
+		"%{prj.name}/src/HeistEngine",
+		"%{prj.name}/src/HeistEngine/Platform"
 	}
 
 	filter "system:windows"

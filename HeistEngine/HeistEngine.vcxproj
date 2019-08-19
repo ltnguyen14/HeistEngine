@@ -80,7 +80,7 @@
       <PrecompiledHeaderFile>hspch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HEIST_PLATFORM_WINDOWS;HEIST_BUILD_DLL;HS_DEBUG;HS_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>deps\spdlog\include;src;src\HeistEngine\Core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>deps\spdlog\include;src;src\HeistEngine;src\HeistEngine\Platform;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -101,7 +101,7 @@
       <PrecompiledHeaderFile>hspch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HEIST_PLATFORM_WINDOWS;HEIST_BUILD_DLL;HS_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>deps\spdlog\include;src;src\HeistEngine\Core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>deps\spdlog\include;src;src\HeistEngine;src\HeistEngine\Platform;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -126,7 +126,7 @@
       <PrecompiledHeaderFile>hspch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HEIST_PLATFORM_WINDOWS;HEIST_BUILD_DLL;HS_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>deps\spdlog\include;src;src\HeistEngine\Core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>deps\spdlog\include;src;src\HeistEngine;src\HeistEngine\Platform;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -149,6 +149,7 @@
     <ClInclude Include="src\HeistEngine.h" />
     <ClInclude Include="src\HeistEngine\Core\Log.h" />
     <ClInclude Include="src\HeistEngine\Core\Math\Math.h" />
+    <ClInclude Include="src\HeistEngine\Core\Math\Matrix.h" />
     <ClInclude Include="src\HeistEngine\Core\Math\Vector.h" />
     <ClInclude Include="src\HeistEngine\Game\Application.h" />
     <ClInclude Include="src\HeistEngine\Game\EntryPoint.h" />
@@ -158,7 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\HeistEngine\Core\Log.cpp" />
-    <ClCompile Include="src\HeistEngine\Core\Math\Vector.cpp" />
+    <ClCompile Include="src\HeistEngine\Core\Math\Matrix.cpp" />
     <ClCompile Include="src\HeistEngine\Game\Application.cpp" />
     <ClCompile Include="src\hspch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

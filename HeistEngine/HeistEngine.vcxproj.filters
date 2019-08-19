@@ -22,6 +22,15 @@
     <ClInclude Include="src\HeistEngine\Core\Log.h">
       <Filter>HeistEngine\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\HeistEngine\Core\Math\Math.h">
+      <Filter>HeistEngine\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HeistEngine\Core\Math\Matrix.h">
+      <Filter>HeistEngine\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HeistEngine\Core\Math\Vector.h">
+      <Filter>HeistEngine\Core\Math</Filter>
+    </ClInclude>
     <ClInclude Include="src\HeistEngine\Game\Application.h">
       <Filter>HeistEngine\Game</Filter>
     </ClInclude>
@@ -35,21 +44,17 @@
       <Filter>HeistEngine\Platform</Filter>
     </ClInclude>
     <ClInclude Include="src\hspch.h" />
-    <ClInclude Include="src\HeistEngine\Core\Math\Vector.h">
-      <Filter>HeistEngine\Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\HeistEngine\Core\Math\Math.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\HeistEngine\Core\Log.cpp">
       <Filter>HeistEngine\Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\HeistEngine\Core\Math\Matrix.cpp">
+      <Filter>HeistEngine\Core\Math</Filter>
+    </ClCompile>
     <ClCompile Include="src\HeistEngine\Game\Application.cpp">
       <Filter>HeistEngine\Game</Filter>
     </ClCompile>
     <ClCompile Include="src\hspch.cpp" />
-    <ClCompile Include="src\HeistEngine\Core\Math\Vector.cpp">
-      <Filter>HeistEngine\Core\Math</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

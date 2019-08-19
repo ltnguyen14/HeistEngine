@@ -1,4 +1,5 @@
 #pragma once
+#include "Core/Log.h"
 
 #ifdef HEIST_PLATFORM_WINDOWS
 	#ifdef HS_ENABLE_ASSERTS
