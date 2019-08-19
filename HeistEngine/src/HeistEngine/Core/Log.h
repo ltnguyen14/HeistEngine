@@ -1,8 +1,7 @@
 #pragma once
-#include "Macro.h"
+#include "../Macro.h"
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
-#include <memory>
 
 namespace Heist {
 	class HEIST_API Log {

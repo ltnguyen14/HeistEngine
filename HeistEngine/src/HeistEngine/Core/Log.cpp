@@ -1,3 +1,4 @@
+#include "hspch.h"
 #include "Log.h"
 
 namespace Heist {
@@ -8,8 +9,10 @@ namespace Heist {
 		spdlog::set_pattern("%^[%T] %n: %v%$");
 		s_CoreLogger = spdlog::stdout_color_mt("HIEST");
 		s_CoreLogger->set_level(spdlog::level::trace);
+		HS_CORE_TRACE("Engine Logger Inititated");
 
 		s_ClientLogger = spdlog::stdout_color_mt("APP");
-		s_CoreLogger->set_level(spdlog::level::trace);
+		s_ClientLogger->set_level(spdlog::level::trace);
+		HS_TRACE("Client Logger Inititated");
 	}
 }

@@ -1,42 +1,55 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="HeistEngine">
+      <UniqueIdentifier>{38499D78-A4FE-156E-2DF3-0F4599A70C72}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="HeistEngine\Core">
+      <UniqueIdentifier>{90F06C31-7CE9-8B83-A51B-710891736B8F}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="HeistEngine\Core\Math">
+      <UniqueIdentifier>{692F681E-D59B-2319-9E8F-BB760ABB4581}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeistEngine\Game">
+      <UniqueIdentifier>{E1E56E31-CDDE-8D83-F610-7308E2686D8F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeistEngine\Platform">
+      <UniqueIdentifier>{8C649DFA-78F3-26C4-2112-3BBF0D80376A}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\HeistEngine\Application.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\HeistEngine.h" />
+    <ClInclude Include="src\HeistEngine\Core\Log.h">
+      <Filter>HeistEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HeistEngine\Game\Application.h">
+      <Filter>HeistEngine\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HeistEngine\Game\EntryPoint.h">
+      <Filter>HeistEngine\Game</Filter>
     </ClInclude>
     <ClInclude Include="src\HeistEngine\Macro.h">
-      <Filter>Header Files</Filter>
+      <Filter>HeistEngine</Filter>
     </ClInclude>
-    <ClInclude Include="src\HeistEngine.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\HeistEngine\Platform\Assertions.h">
+      <Filter>HeistEngine\Platform</Filter>
     </ClInclude>
-    <ClInclude Include="src\HeistEngine\EntryPoint.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\hspch.h" />
+    <ClInclude Include="src\HeistEngine\Core\Math\Vector.h">
+      <Filter>HeistEngine\Core\Math</Filter>
     </ClInclude>
-    <ClInclude Include="src\HeistEngine\Log.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="src\HeistEngine\Core\Math\Math.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\HeistEngine\Application.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\HeistEngine\Core\Log.cpp">
+      <Filter>HeistEngine\Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\HeistEngine\Log.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\HeistEngine\Game\Application.cpp">
+      <Filter>HeistEngine\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hspch.cpp" />
+    <ClCompile Include="src\HeistEngine\Core\Math\Vector.cpp">
+      <Filter>HeistEngine\Core\Math</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
