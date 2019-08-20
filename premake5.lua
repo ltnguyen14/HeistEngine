@@ -81,7 +81,8 @@ project "Sandbox"
 
 	includedirs {
 		"HeistEngine/deps/spdlog/include",
-		"HeistEngine/src"
+		"HeistEngine/src",
+		"HeistEngine/src/HeistEngine"
 	}
 
 	links {
