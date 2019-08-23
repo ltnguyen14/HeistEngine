@@ -6,7 +6,7 @@
 namespace Heist {
 	class Application {
 	public:
-		Application();
+		Application(int32 width, int32 height, std::string title);
 		virtual ~Application();
 
 		void OnUpdate();

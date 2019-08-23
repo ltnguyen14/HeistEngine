@@ -28,8 +28,18 @@ project "HeistEngine"
 		"%{prj.name}/src/**.cpp",
 	}
 
+	libdirs {
+		"%{prj.name}/deps/GLFW/lib-vc2019"
+	}
+
+	links {
+		"opengl32.lib",
+		"glfw3dll",
+	}
+
 	includedirs {
 		"%{prj.name}/deps/spdlog/include",
+		"%{prj.name}/deps/GLFW/include",
 		"%{prj.name}/src",
 		"%{prj.name}/src/HeistEngine",
 		"%{prj.name}/src/HeistEngine/Platform"
@@ -39,7 +49,12 @@ project "HeistEngine"
 		systemversion "10.0.17763.0"
 
 		defines {
-			"HEIST_PLATFORM_WINDOWS"
+			"HEIST_PLATFORM_WINDOWS",
+			"GLFW_INCLUDE_NONE"
+		}
+
+		postbuildcommands {
+			("{COPY} deps/GLFW/lib-vc2019 ../bin/" .. outputdir .. "/Sandbox")
 		}
 
 	filter "configurations:Debug"
@@ -80,13 +95,14 @@ project "Sandbox"
 	}
 
 	includedirs {
+		"HeistEngine/deps/GLFW/include",
 		"HeistEngine/deps/spdlog/include",
 		"HeistEngine/src",
-		"HeistEngine/src/HeistEngine"
+		"HeistEngine/src/HeistEngine",
 	}
 
 	links {
-		"HeistEngine"
+		"HeistEngine",
 	}
 
 	filter "system:windows"

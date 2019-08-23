@@ -8,10 +8,8 @@ namespace Heist {
 	EventNode::~EventNode() {}
 
 	void EventNode::OnUpdate() {
-		HS_CORE_TRACE(name + " does not implement OpUpdate function!");
 	}
 
 	void EventNode::OnNotify(Event event) {
-		HS_CORE_TRACE(name + " does not implement OnNotify function!");
 	}
 }

@@ -4,7 +4,7 @@
 class Sandbox : public Heist::Application {
 
 public:
-	Sandbox() {};
+	Sandbox(): Application(1920, 1080, "Sandbox App") {};
 	~Sandbox() {};
 };
 

@@ -5,7 +5,8 @@
 
 namespace Heist {
 
-	Application::Application() : window(&eventBus) {
+	Application::Application(int32 width, int32 height, std::string title) 
+		: window(&eventBus, width, height, title) {
 		running = true;
 	}
 
@@ -18,7 +19,7 @@ namespace Heist {
 	void Application::OnEvent() {}
 
 	void Application::Run() {
-		while (running) {
+		while (!window.ShouldClose()) {
 			this->OnUpdate();
 		};
 	}
