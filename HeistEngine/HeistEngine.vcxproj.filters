@@ -28,6 +28,9 @@
     <ClInclude Include="src\HeistEngine\Core\Event\EventBus.h">
       <Filter>HeistEngine\Core\Event</Filter>
     </ClInclude>
+    <ClInclude Include="src\HeistEngine\Core\Event\EventNode.h">
+      <Filter>HeistEngine\Core\Event</Filter>
+    </ClInclude>
     <ClInclude Include="src\HeistEngine\Core\Log.h">
       <Filter>HeistEngine\Core</Filter>
     </ClInclude>
@@ -56,13 +59,15 @@
       <Filter>HeistEngine\Platform</Filter>
     </ClInclude>
     <ClInclude Include="src\hspch.h" />
-    <ClInclude Include="src\HeistEngine\Core\Event\EventNode.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\HeistEngine\Core\Event\Event.cpp">
       <Filter>HeistEngine\Core\Event</Filter>
     </ClCompile>
     <ClCompile Include="src\HeistEngine\Core\Event\EventBus.cpp">
+      <Filter>HeistEngine\Core\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\HeistEngine\Core\Event\EventNode.cpp">
       <Filter>HeistEngine\Core\Event</Filter>
     </ClCompile>
     <ClCompile Include="src\HeistEngine\Core\Log.cpp">
@@ -78,6 +83,5 @@
       <Filter>HeistEngine\Platform</Filter>
     </ClCompile>
     <ClCompile Include="src\hspch.cpp" />
-    <ClCompile Include="src\HeistEngine\Core\Event\EventNode.cpp" />
   </ItemGroup>
 </Project>
