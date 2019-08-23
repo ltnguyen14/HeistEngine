@@ -10,9 +10,6 @@ workspace "HeistEngine"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
-IncludeDir = {}
-IncludeDir["GLFW"] = "Heist/deps/GLFW/include"
-
 project "HeistEngine"
 	location "HeistEngine"
 	kind "StaticLib"
@@ -35,20 +32,14 @@ project "HeistEngine"
 		"%{prj.name}/deps/spdlog/include",
 		"%{prj.name}/src",
 		"%{prj.name}/src/HeistEngine",
-		"%{prj.name}/src/HeistEngine/Platform",
-		"%{IncludeDir.GLFW}"
-	}
-
-	links {
-		"GLFW"
+		"%{prj.name}/src/HeistEngine/Platform"
 	}
 
 	filter "system:windows"
 		systemversion "10.0.17763.0"
 
 		defines {
-			"HEIST_PLATFORM_WINDOWS",
-			"GLFW_INCLUDE_NONE"
+			"HEIST_PLATFORM_WINDOWS"
 		}
 
 	filter "configurations:Debug"
