@@ -12,8 +12,10 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 project "HeistEngine"
 	location "HeistEngine"
-	kind "sharedLib"
+	kind "StaticLib"
 	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -34,17 +36,10 @@ project "HeistEngine"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "10.0.17763.0"
 
 		defines {
 			"HEIST_PLATFORM_WINDOWS",
-			"HEIST_BUILD_DLL",
-		}
-
-		postbuildcommands {
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
 		}
 
 	filter "configurations:Debug"
@@ -52,24 +47,29 @@ project "HeistEngine"
 			"HS_DEBUG",
 			"HS_ENABLE_ASSERTS"
 		}
+		runtime "Debug"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines {
 			"HS_RELEASE"
 		}
+		runtime "Release"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines {
 			"HS_DIST"
 		}
+		runtime "Release"
 		optimize "On"
 
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
+	staticruntime "on"
+	cppdialect "C++17"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -90,8 +90,6 @@ project "Sandbox"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "10.0.17763.0"
 
 		defines {
@@ -103,16 +101,19 @@ project "Sandbox"
 			"HS_DEBUG",
 			"HS_ENABLE_ASSERTS"
 		}
+		runtime "Debug"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines {
 			"HS_RELEASE"
 		}
+		runtime "Release"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines {
 			"HS_DIST"
 		}
+		runtime "Release"
 		optimize "On"

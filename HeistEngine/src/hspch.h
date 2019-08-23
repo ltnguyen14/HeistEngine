@@ -1,8 +1,10 @@
 #pragma once
 
 #include <vector>
+#include <queue>
 #include <string>
 #include <sstream>
+#include <array>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -10,6 +12,7 @@
 #include <memory>
 #include <algorithm>
 #include <math.h>
+#include <functional>
 
 #ifdef HEIST_PLATFORM_WINDOWS
 	#include <Windows.h>

@@ -7,7 +7,7 @@ namespace Heist {
 
 	void Log::Init() {
 		spdlog::set_pattern("%^[%T] %n: %v%$");
-		s_CoreLogger = spdlog::stdout_color_mt("HIEST");
+		s_CoreLogger = spdlog::stdout_color_mt("HEIST");
 		s_CoreLogger->set_level(spdlog::level::trace);
 		HS_CORE_TRACE("Engine Logger Inititated");
 

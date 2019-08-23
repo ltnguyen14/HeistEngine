@@ -1,16 +1,8 @@
 #pragma once
 #include "cstdint"
 
-#ifdef HEIST_PLATFORM_WINDOWS
-	#ifdef HEIST_BUILD_DLL
-		#define HEIST_API __declspec(dllexport)
-	#else
-		#define HEIST_API __declspec(dllimport)
-	#endif
-	#define HS_ARRAY_COUNT(arr) (sizeof(arr) / sizeof(arr[0]))
-#else
-	#error Engine only supports Windows
-#endif
+#define HS_ARRAY_COUNT(arr) (sizeof(arr) / sizeof(arr[0]))
+#define BIT(x) (1 << x)
 
 typedef uint8_t uint8;
 typedef uint16_t uint16;

@@ -7,6 +7,9 @@
     <Filter Include="HeistEngine\Core">
       <UniqueIdentifier>{90F06C31-7CE9-8B83-A51B-710891736B8F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HeistEngine\Core\Event">
+      <UniqueIdentifier>{E19DE8EA-CD97-113D-B604-A84DA29D77A9}</UniqueIdentifier>
+    </Filter>
     <Filter Include="HeistEngine\Core\Math">
       <UniqueIdentifier>{692F681E-D59B-2319-9E8F-BB760ABB4581}</UniqueIdentifier>
     </Filter>
@@ -19,6 +22,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\HeistEngine.h" />
+    <ClInclude Include="src\HeistEngine\Core\Event\Event.h">
+      <Filter>HeistEngine\Core\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HeistEngine\Core\Event\EventBus.h">
+      <Filter>HeistEngine\Core\Event</Filter>
+    </ClInclude>
     <ClInclude Include="src\HeistEngine\Core\Log.h">
       <Filter>HeistEngine\Core</Filter>
     </ClInclude>
@@ -43,9 +52,19 @@
     <ClInclude Include="src\HeistEngine\Platform\Assertions.h">
       <Filter>HeistEngine\Platform</Filter>
     </ClInclude>
+    <ClInclude Include="src\HeistEngine\Platform\Window.h">
+      <Filter>HeistEngine\Platform</Filter>
+    </ClInclude>
     <ClInclude Include="src\hspch.h" />
+    <ClInclude Include="src\HeistEngine\Core\Event\EventNode.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\HeistEngine\Core\Event\Event.cpp">
+      <Filter>HeistEngine\Core\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\HeistEngine\Core\Event\EventBus.cpp">
+      <Filter>HeistEngine\Core\Event</Filter>
+    </ClCompile>
     <ClCompile Include="src\HeistEngine\Core\Log.cpp">
       <Filter>HeistEngine\Core</Filter>
     </ClCompile>
@@ -55,6 +74,10 @@
     <ClCompile Include="src\HeistEngine\Game\Application.cpp">
       <Filter>HeistEngine\Game</Filter>
     </ClCompile>
+    <ClCompile Include="src\HeistEngine\Platform\Window.cpp">
+      <Filter>HeistEngine\Platform</Filter>
+    </ClCompile>
     <ClCompile Include="src\hspch.cpp" />
+    <ClCompile Include="src\HeistEngine\Core\Event\EventNode.cpp" />
   </ItemGroup>
 </Project>

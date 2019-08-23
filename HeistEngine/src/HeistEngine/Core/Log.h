@@ -4,7 +4,7 @@
 #include "spdlog/sinks/stdout_color_sinks.h"
 
 namespace Heist {
-	class HEIST_API Log {
+	class Log {
 	public:
 
 		static void Init();

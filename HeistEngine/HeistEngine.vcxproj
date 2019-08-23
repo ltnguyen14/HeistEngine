@@ -23,19 +23,19 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
@@ -54,25 +54,22 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
     <OutDir>..\bin\Debug-windows-x86_64\HeistEngine\</OutDir>
     <IntDir>..\bin-int\Debug-windows-x86_64\HeistEngine\</IntDir>
     <TargetName>HeistEngine</TargetName>
-    <TargetExt>.dll</TargetExt>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
     <OutDir>..\bin\Release-windows-x86_64\HeistEngine\</OutDir>
     <IntDir>..\bin-int\Release-windows-x86_64\HeistEngine\</IntDir>
     <TargetName>HeistEngine</TargetName>
-    <TargetExt>.dll</TargetExt>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
-    <LinkIncremental>false</LinkIncremental>
     <OutDir>..\bin\Dist-windows-x86_64\HeistEngine\</OutDir>
     <IntDir>..\bin-int\Dist-windows-x86_64\HeistEngine\</IntDir>
     <TargetName>HeistEngine</TargetName>
-    <TargetExt>.dll</TargetExt>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -89,11 +86,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ImportLibrary>..\bin\Debug-windows-x86_64\HeistEngine\HeistEngine.lib</ImportLibrary>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Debug-windows-x86_64\HeistEngine\HeistEngine.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\HeistEngine\HeistEngine.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\HeistEngine\HeistEngine.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -114,11 +107,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <ImportLibrary>..\bin\Release-windows-x86_64\HeistEngine\HeistEngine.lib</ImportLibrary>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Release-windows-x86_64\HeistEngine\HeistEngine.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\HeistEngine\HeistEngine.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\HeistEngine\HeistEngine.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
@@ -139,14 +128,13 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <ImportLibrary>..\bin\Dist-windows-x86_64\HeistEngine\HeistEngine.lib</ImportLibrary>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Dist-windows-x86_64\HeistEngine\HeistEngine.dll\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\HeistEngine\HeistEngine.dll ..\bin\Dist-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\HeistEngine\HeistEngine.dll ..\bin\Dist-windows-x86_64\Sandbox &gt; nul)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\HeistEngine.h" />
+    <ClInclude Include="src\HeistEngine\Core\Event\Event.h" />
+    <ClInclude Include="src\HeistEngine\Core\Event\EventBus.h" />
+    <ClInclude Include="src\HeistEngine\Core\Event\EventNode.h" />
     <ClInclude Include="src\HeistEngine\Core\Log.h" />
     <ClInclude Include="src\HeistEngine\Core\Math\Math.h" />
     <ClInclude Include="src\HeistEngine\Core\Math\Matrix.h" />
@@ -155,12 +143,17 @@
     <ClInclude Include="src\HeistEngine\Game\EntryPoint.h" />
     <ClInclude Include="src\HeistEngine\Macro.h" />
     <ClInclude Include="src\HeistEngine\Platform\Assertions.h" />
+    <ClInclude Include="src\HeistEngine\Platform\Window.h" />
     <ClInclude Include="src\hspch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\HeistEngine\Core\Event\Event.cpp" />
+    <ClCompile Include="src\HeistEngine\Core\Event\EventBus.cpp" />
+    <ClCompile Include="src\HeistEngine\Core\Event\EventNode.cpp" />
     <ClCompile Include="src\HeistEngine\Core\Log.cpp" />
     <ClCompile Include="src\HeistEngine\Core\Math\Matrix.cpp" />
     <ClCompile Include="src\HeistEngine\Game\Application.cpp" />
+    <ClCompile Include="src\HeistEngine\Platform\Window.cpp" />
     <ClCompile Include="src\hspch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
