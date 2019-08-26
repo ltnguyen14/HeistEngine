@@ -3,4 +3,4 @@
 	url = https://github.com/gabime/spdlog
 [submodule "HeistEngine/deps/GLFW"]
 	path = HeistEngine/deps/GLFW
-	url = https://github.com/glfw/glfw
+	url = https://github.com/ltnguyen14/glfw
