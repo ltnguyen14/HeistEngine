@@ -21,6 +21,7 @@ namespace Heist {
 	void Application::Run() {
 		while (!window.ShouldClose()) {
 			this->OnUpdate();
+			eventBus.Notify();
 		};
 	}
 }

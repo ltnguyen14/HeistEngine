@@ -4,7 +4,10 @@
 
 namespace Heist {
 
-	EventNode::EventNode(EventBus *eventBus, std::string name): eventBus(eventBus), name(name) {}
+	EventNode::EventNode(EventBus *eventBus, std::string name): eventBus(eventBus), name(name) {
+		eventBus->AddReceiver(this->GetNotificationFunc());
+	}
+
 	EventNode::~EventNode() {}
 
 	void EventNode::OnUpdate() {

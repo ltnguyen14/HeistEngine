@@ -33,4 +33,7 @@ namespace Heist {
 		/* Poll for and process events */
 		glfwPollEvents();
 	}
+
+	void Window::OnNotify(Event event) {
+	}
 }

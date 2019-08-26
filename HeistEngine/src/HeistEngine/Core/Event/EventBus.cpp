@@ -20,6 +20,7 @@ namespace Heist {
 				if (!events.front().handled)
 					receiver(events.front());
 			}
+			events.pop();
 		}
 	}
 
