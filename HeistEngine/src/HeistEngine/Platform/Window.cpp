@@ -20,6 +20,7 @@ namespace Heist {
 
 		/* Make the window's context current */
 		glfwMakeContextCurrent(window);
+		glfwSwapInterval(0);
 	};
 
 	Window::~Window() {
@@ -27,11 +28,13 @@ namespace Heist {
 	}
 
 	void Window::OnUpdate() {
+
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
 
 		/* Poll for and process events */
 		glfwPollEvents();
+
 	}
 
 	void Window::OnNotify(Event event) {

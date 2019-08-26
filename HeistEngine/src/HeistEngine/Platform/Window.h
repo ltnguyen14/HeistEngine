@@ -7,7 +7,7 @@ namespace Heist {
 		Window(EventBus *eventBus, int32 width, int32 height, std::string title);
 		~Window();
 
-		void OnUpdate() override;
+		void OnUpdate();
 		void OnNotify(Event event) override;
 		inline bool ShouldClose() { return glfwWindowShouldClose(window); };
 

@@ -59,6 +59,8 @@
       <Filter>HeistEngine\Platform</Filter>
     </ClInclude>
     <ClInclude Include="src\hspch.h" />
+    <ClInclude Include="src\HeistEngine\Core\Layer\Layer.h" />
+    <ClInclude Include="src\HeistEngine\Core\Layer\LayerStack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\HeistEngine\Core\Event\Event.cpp">
@@ -83,5 +85,7 @@
       <Filter>HeistEngine\Platform</Filter>
     </ClCompile>
     <ClCompile Include="src\hspch.cpp" />
+    <ClCompile Include="src\HeistEngine\Core\Layer\Layer.cpp" />
+    <ClCompile Include="src\HeistEngine\Core\Layer\LayerStack.cpp" />
   </ItemGroup>
 </Project>

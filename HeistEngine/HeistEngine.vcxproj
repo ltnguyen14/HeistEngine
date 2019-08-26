@@ -156,6 +156,8 @@
     <ClInclude Include="src\HeistEngine\Core\Event\Event.h" />
     <ClInclude Include="src\HeistEngine\Core\Event\EventBus.h" />
     <ClInclude Include="src\HeistEngine\Core\Event\EventNode.h" />
+    <ClInclude Include="src\HeistEngine\Core\Layer\Layer.h" />
+    <ClInclude Include="src\HeistEngine\Core\Layer\LayerStack.h" />
     <ClInclude Include="src\HeistEngine\Core\Log.h" />
     <ClInclude Include="src\HeistEngine\Core\Math\Math.h" />
     <ClInclude Include="src\HeistEngine\Core\Math\Matrix.h" />
@@ -171,6 +173,8 @@
     <ClCompile Include="src\HeistEngine\Core\Event\Event.cpp" />
     <ClCompile Include="src\HeistEngine\Core\Event\EventBus.cpp" />
     <ClCompile Include="src\HeistEngine\Core\Event\EventNode.cpp" />
+    <ClCompile Include="src\HeistEngine\Core\Layer\Layer.cpp" />
+    <ClCompile Include="src\HeistEngine\Core\Layer\LayerStack.cpp" />
     <ClCompile Include="src\HeistEngine\Core\Log.cpp" />
     <ClCompile Include="src\HeistEngine\Core\Math\Matrix.cpp" />
     <ClCompile Include="src\HeistEngine\Game\Application.cpp" />

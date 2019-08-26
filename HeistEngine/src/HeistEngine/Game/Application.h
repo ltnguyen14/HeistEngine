@@ -2,6 +2,7 @@
 #include "../Macro.h"
 #include "Platform/Window.h"
 #include "Core/Event/EventBus.h"
+#include "Core/Layer/LayerStack.h"
 
 namespace Heist {
 	class Application {
@@ -12,11 +13,15 @@ namespace Heist {
 		void OnUpdate();
 		void OnEvent();
 
+		void PushLayer(Layer *layer);
+		void PopLayer(Layer* layer);
+
 		void Run();
 
 	private:
 		bool running;
 		EventBus eventBus;
+		LayerStack layerStack;
 		Window window;
 	};
 	

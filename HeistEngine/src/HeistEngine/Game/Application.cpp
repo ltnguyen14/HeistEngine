@@ -18,6 +18,14 @@ namespace Heist {
 
 	void Application::OnEvent() {}
 
+	void Application::PushLayer(Layer* layer) {
+		layerStack.PushLayer(layer);
+	}
+
+	void Application::PopLayer(Layer* layer) {
+		layerStack.PopLayer(layer);
+	}
+
 	void Application::Run() {
 		while (!window.ShouldClose()) {
 			this->OnUpdate();
