@@ -9,6 +9,8 @@ namespace Heist {
 
 		void OnUpdate();
 		void OnNotify(Event event) override;
+		void ClearWindow();
+
 		inline bool ShouldClose() { return glfwWindowShouldClose(window); };
 
 		GLFWwindow* window;

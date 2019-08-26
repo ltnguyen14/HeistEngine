@@ -1,6 +1,8 @@
 #include "hspch.h"
 #include "Window.h"
-#include "Core/Log.h"
+#include "Core/Log/Log.h"
+#include "Platform/Assertions.h"
+#include "glad/glad.h"
 
 namespace Heist {
 	Window::Window(EventBus *eventBus, int32 width, int32 height, std::string title) 
@@ -21,6 +23,13 @@ namespace Heist {
 		/* Make the window's context current */
 		glfwMakeContextCurrent(window);
 		glfwSwapInterval(0);
+
+		// GLAD init
+		int gladInit = gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
+		HS_CORE_ASSERT(gladInit, "Failed to init GLAD");
+
+		// OpenGl clear color
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	};
 
 	Window::~Window() {
@@ -35,6 +44,10 @@ namespace Heist {
 		/* Poll for and process events */
 		glfwPollEvents();
 
+	}
+
+	void Window::ClearWindow() {
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
 	void Window::OnNotify(Event event) {

@@ -1,5 +1,5 @@
 #pragma once
-#include "Core/Log.h"
+#include "Core/Log/Log.h"
 
 #ifdef HEIST_PLATFORM_WINDOWS
 	#ifdef HS_ENABLE_ASSERTS

@@ -10,6 +10,9 @@
     <Filter Include="HeistEngine\Core\Event">
       <UniqueIdentifier>{E19DE8EA-CD97-113D-B604-A84DA29D77A9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HeistEngine\Core\Layer">
+      <UniqueIdentifier>{5C195CEB-4813-853D-3180-1B4E1D19EBA9}</UniqueIdentifier>
+    </Filter>
     <Filter Include="HeistEngine\Core\Math">
       <UniqueIdentifier>{692F681E-D59B-2319-9E8F-BB760ABB4581}</UniqueIdentifier>
     </Filter>
@@ -31,8 +34,11 @@
     <ClInclude Include="src\HeistEngine\Core\Event\EventNode.h">
       <Filter>HeistEngine\Core\Event</Filter>
     </ClInclude>
-    <ClInclude Include="src\HeistEngine\Core\Log.h">
-      <Filter>HeistEngine\Core</Filter>
+    <ClInclude Include="src\HeistEngine\Core\Layer\Layer.h">
+      <Filter>HeistEngine\Core\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HeistEngine\Core\Layer\LayerStack.h">
+      <Filter>HeistEngine\Core\Layer</Filter>
     </ClInclude>
     <ClInclude Include="src\HeistEngine\Core\Math\Math.h">
       <Filter>HeistEngine\Core\Math</Filter>
@@ -59,8 +65,10 @@
       <Filter>HeistEngine\Platform</Filter>
     </ClInclude>
     <ClInclude Include="src\hspch.h" />
-    <ClInclude Include="src\HeistEngine\Core\Layer\Layer.h" />
-    <ClInclude Include="src\HeistEngine\Core\Layer\LayerStack.h" />
+    <ClInclude Include="src\HeistEngine\Core\Memory\Memory.h" />
+    <ClInclude Include="src\HeistEngine\Core\Log\Log.h">
+      <Filter>HeistEngine\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\HeistEngine\Core\Event\Event.cpp">
@@ -72,8 +80,11 @@
     <ClCompile Include="src\HeistEngine\Core\Event\EventNode.cpp">
       <Filter>HeistEngine\Core\Event</Filter>
     </ClCompile>
-    <ClCompile Include="src\HeistEngine\Core\Log.cpp">
-      <Filter>HeistEngine\Core</Filter>
+    <ClCompile Include="src\HeistEngine\Core\Layer\Layer.cpp">
+      <Filter>HeistEngine\Core\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\HeistEngine\Core\Layer\LayerStack.cpp">
+      <Filter>HeistEngine\Core\Layer</Filter>
     </ClCompile>
     <ClCompile Include="src\HeistEngine\Core\Math\Matrix.cpp">
       <Filter>HeistEngine\Core\Math</Filter>
@@ -85,7 +96,9 @@
       <Filter>HeistEngine\Platform</Filter>
     </ClCompile>
     <ClCompile Include="src\hspch.cpp" />
-    <ClCompile Include="src\HeistEngine\Core\Layer\Layer.cpp" />
-    <ClCompile Include="src\HeistEngine\Core\Layer\LayerStack.cpp" />
+    <ClCompile Include="src\HeistEngine\Core\Memory\Memory.cpp" />
+    <ClCompile Include="src\HeistEngine\Core\Log\Log.cpp">
+      <Filter>HeistEngine\Core</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

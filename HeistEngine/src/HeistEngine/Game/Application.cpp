@@ -1,7 +1,7 @@
 #include "hspch.h"
 #include "Application.h"
 #include "Core/Math/Math.h"
-#include "Assertions.h"
+#include "Platform/Assertions.h"
 
 namespace Heist {
 
@@ -28,6 +28,7 @@ namespace Heist {
 
 	void Application::Run() {
 		while (!window.ShouldClose()) {
+			window.ClearWindow();
 			this->OnUpdate();
 			eventBus.Notify();
 		};

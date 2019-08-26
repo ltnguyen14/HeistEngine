@@ -10,6 +10,13 @@ workspace "HeistEngine"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+IncludeDir = {}
+IncludeDir["Glad"] = "HeistEngine/deps/GLAD/include"
+IncludeDir["GLFW"] = "HeistEngine/deps/GLFW/include"
+
+include "HeistEngine/deps/GLAD"
+include "HeistEngine/deps/GLFW"
+
 project "HeistEngine"
 	location "HeistEngine"
 	kind "StaticLib"
@@ -28,33 +35,26 @@ project "HeistEngine"
 		"%{prj.name}/src/**.cpp",
 	}
 
-	libdirs {
-		"%{prj.name}/deps/GLFW/lib-vc2019"
-	}
-
 	links {
 		"opengl32.lib",
-		"glfw3dll",
+		"GLFW",
+		"Glad"
 	}
 
 	includedirs {
 		"%{prj.name}/deps/spdlog/include",
-		"%{prj.name}/deps/GLFW/include",
 		"%{prj.name}/src",
 		"%{prj.name}/src/HeistEngine",
-		"%{prj.name}/src/HeistEngine/Platform"
+		"%{IncludeDir.Glad}",
+		"%{IncludeDir.GLFW}"
 	}
 
 	filter "system:windows"
-		systemversion "10.0.17763.0"
+		systemversion "latest"
 
 		defines {
 			"HEIST_PLATFORM_WINDOWS",
 			"GLFW_INCLUDE_NONE"
-		}
-
-		postbuildcommands {
-			("{COPY} deps/GLFW/lib-vc2019 ../bin/" .. outputdir .. "/Sandbox")
 		}
 
 	filter "configurations:Debug"

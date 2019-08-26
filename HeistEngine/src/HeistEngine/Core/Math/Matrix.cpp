@@ -1,6 +1,6 @@
 #include "hspch.h"
 #include "Matrix.h"
-#include "Assertions.h"
+#include "Platform/Assertions.h"
 
 namespace Heist {
 

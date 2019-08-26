@@ -1,6 +1,6 @@
 #include "hspch.h"
 #include "EventNode.h"
-#include "Core/Log.h"
+#include "Core/Log/Log.h"
 
 namespace Heist {
 
