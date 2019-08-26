@@ -3,7 +3,7 @@
 
 namespace Heist {
 	
-	Layer::Layer(EventBus* eventBus, std::string name) : layerName(name), EventNode(eventBus, name) {
+	Layer::Layer(std::string name) : layerName(name) {
 	
 	}
 

@@ -3,9 +3,9 @@
 
 namespace Heist {
 
-	struct Layer : public EventNode {
+	struct Layer {
 
-		Layer(EventBus* eventBus, std::string name = "Layer");
+		Layer(std::string name = "Layer");
 		virtual ~Layer();
 
 		virtual void OnAttach() {}
