@@ -6,8 +6,9 @@
 namespace Heist {
 
 	Application::Application(int32 width, int32 height, std::string title) 
-		: window(&eventBus, width, height, title) {
+		: window(&eventBus, width, height, title), memoryManager(1024 * 1024) {
 		running = true;
+
 	}
 
 	Application::~Application() {}

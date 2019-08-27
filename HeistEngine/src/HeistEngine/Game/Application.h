@@ -3,6 +3,7 @@
 #include "Platform/Window.h"
 #include "Core/Event/EventBus.h"
 #include "Core/Layer/LayerStack.h"
+#include "Core/Memory/Memory.h"
 
 namespace Heist {
 	class Application {
@@ -23,6 +24,7 @@ namespace Heist {
 		EventBus eventBus;
 		LayerStack layerStack;
 		Window window;
+		MemoryManager memoryManager;
 	};
 	
 	// To be defined in client
