@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <math.h>
 #include <functional>
+#include <time.h>
 
 #ifdef HEIST_PLATFORM_WINDOWS
 	#include <Windows.h>

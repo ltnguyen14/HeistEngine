@@ -4,10 +4,12 @@
 
 namespace Heist {
 
-	MemoryManager::MemoryManager(uint32 stackSize) 
+	MemoryManager::MemoryManager(uintmax stackSize_mb)
+		:stackSize_mb(stackSize_mb)
 	{
-		startPointer = malloc(stackSize);
-		endPointer = (char*)startPointer + stackSize;
+		HS_CORE_TRACE("Memory initialized with the size of {}MB", stackSize_mb);
+		startPointer = malloc(stackSize_mb * 1024 * 1024);
+		endPointer = (char*)startPointer + stackSize_mb * 1024 * 1024;
 
 		marker = startPointer;
 	}
@@ -17,7 +19,7 @@ namespace Heist {
 		free(startPointer);
 	}
 
-	void* MemoryManager::Alloc(uint32 size_byte)
+	void* MemoryManager::Alloc(uintmax size_byte)
 	{
 		HS_CORE_ASSERT((char*)marker + size_byte < endPointer, "Not enough dynamic memory to allocate!");
 		void* returnPointer = marker;

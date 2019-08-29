@@ -6,15 +6,16 @@ namespace Heist {
 	class MemoryManager
 	{
 	public:
-		MemoryManager(uint32 stackSize);
+		MemoryManager(uintmax stackSize_mb); // stack size is in megabyte
 		~MemoryManager();
 
-		void* Alloc(uint32 size_byte);
+		void* Alloc(uintmax size_byte);
 		void ClearStack();
 
 		void* marker;
 		void* startPointer;
 		void* endPointer;
+		uintmax stackSize_mb;
 	};
 
 }

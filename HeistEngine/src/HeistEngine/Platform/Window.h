@@ -7,7 +7,8 @@ namespace Heist {
 		Window(EventBus *eventBus, int32 width, int32 height, std::string title);
 		~Window();
 
-		void OnUpdate();
+		void SwapBuffer();
+		void PollEvents();
 		void OnNotify(Event event) override;
 		void ClearWindow();
 

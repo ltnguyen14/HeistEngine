@@ -11,8 +11,8 @@ namespace Heist {
 		Application(int32 width, int32 height, std::string title);
 		virtual ~Application();
 
-		void OnUpdate();
-		void OnEvent();
+		void OnUpdate(real32 time);
+		void OnRender();
 
 		void PushLayer(Layer *layer);
 		void PopLayer(Layer* layer);

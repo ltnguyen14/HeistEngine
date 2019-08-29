@@ -36,14 +36,14 @@ namespace Heist {
 		glfwTerminate();
 	}
 
-	void Window::OnUpdate() {
-
+	void Window::SwapBuffer() {
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
+	}
 
+	void Window::PollEvents() {
 		/* Poll for and process events */
 		glfwPollEvents();
-
 	}
 
 	void Window::ClearWindow() {
