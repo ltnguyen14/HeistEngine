@@ -54,6 +54,7 @@ project "HeistEngine"
 
 		defines {
 			"HEIST_PLATFORM_WINDOWS",
+			"RENDERER_OPENGL",
 			"GLFW_INCLUDE_NONE"
 		}
 

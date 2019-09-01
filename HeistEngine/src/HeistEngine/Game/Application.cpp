@@ -75,30 +75,26 @@ namespace Heist {
 			0, 1, 3,  // first Triangle
 			1, 2, 3   // second Triangle
 		};
-		uint32 vbo, ebo, vao;
+		uint32 vao;
 		glGenVertexArrays(1, &vao);
 		glBindVertexArray(vao);
 
-		glCreateBuffers(1, &vbo);
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glBufferData(GL_ARRAY_BUFFER, 3 * 4 * sizeof(real32), verticies, GL_STATIC_DRAW);
+		vertexBuffer.reset(VertexBuffer::Create(verticies, sizeof(verticies)));
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
-		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(0); 
 
-		glCreateBuffers(1, &ebo);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(uint32), indicies, GL_STATIC_DRAW);
+		indexBuffer.reset(IndexBuffer::Create(indicies, 6));
 	}
 
 	Application::~Application() {}
 
-	void Application::OnUpdate(real32 time) {
+	void Application::OnUpdate(real64 time) {
 	}
 
 	void Application::OnRender() {
 		window.ClearWindow();
 		// Render stuff go here
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, indexBuffer->count, GL_UNSIGNED_INT, 0);
 		// --------------------
 		window.SwapBuffer();
 	}

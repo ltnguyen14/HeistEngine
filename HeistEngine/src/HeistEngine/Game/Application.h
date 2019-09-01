@@ -4,6 +4,7 @@
 #include "Core/Event/EventBus.h"
 #include "Core/Layer/LayerStack.h"
 #include "Core/Memory/Memory.h"
+#include "Core/Renderer/Buffer.h"
 
 namespace Heist {
 	class Application {
@@ -11,7 +12,7 @@ namespace Heist {
 		Application(int32 width, int32 height, std::string title);
 		virtual ~Application();
 
-		void OnUpdate(real32 time);
+		void OnUpdate(real64 time);
 		void OnRender();
 
 		void PushLayer(Layer *layer);
@@ -25,6 +26,8 @@ namespace Heist {
 		LayerStack layerStack;
 		Window window;
 		MemoryManager memoryManager;
+		std::unique_ptr<VertexBuffer> vertexBuffer = nullptr;
+		std::unique_ptr<IndexBuffer> indexBuffer = nullptr;
 	};
 	
 	// To be defined in client

@@ -11,7 +11,7 @@ struct TestLayer : public Heist::Layer {
 class Sandbox : public Heist::Application {
 
 public:
-	Sandbox(): Application(380, 320, "Sandbox App") {
+	Sandbox(): Application(1280, 800, "Sandbox App") {
 		PushLayer(new TestLayer);
 	};
 
