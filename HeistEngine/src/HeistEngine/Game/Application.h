@@ -5,6 +5,7 @@
 #include "Core/Layer/LayerStack.h"
 #include "Core/Memory/Memory.h"
 #include "Core/Renderer/Buffer.h"
+#include "Core/Renderer/Shader.h"
 
 namespace Heist {
 	class Application {

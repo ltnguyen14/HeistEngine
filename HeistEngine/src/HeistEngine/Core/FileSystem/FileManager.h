@@ -7,10 +7,7 @@ namespace Heist {
 		FileManager();
 		~FileManager();
 
-		const char* ReadFile() const;
+		static std::string ReadFile(const char* filePath);
 		void WriteFile();
-
 	};
-
-
 }
