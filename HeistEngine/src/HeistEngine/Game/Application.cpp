@@ -8,31 +8,38 @@
 namespace Heist {
 
 	Application::Application(int32 width, int32 height, std::string title) 
-		: window(&eventBus, width, height, title), memoryManager(2 * 1024) {
+		: window(&eventBus, width, height, title), memoryManager(2) {
 		running = true;
 
 		shader.reset(Shader::Create("assets/shaders/basic.vert.glsl", "assets/shaders/basic.frag.glsl"));
 
 		// ----------------- Rendering
 		real32 verticies[] = {
-			 0.5f,  0.5f, 0.0f,  // top right
-			 0.5f, -0.5f, 0.0f,  // bottom right
-			-0.5f, -0.5f, 0.0f,  // bottom left
-			-0.5f,  0.5f, 0.0f   // top left 
+			 0.5f,  0.5f, 0.0f, 0.2f, 0.4f, 0.8f, 1.0f, // top right
+			 0.5f, -0.5f, 0.0f, 0.8f, 0.4f, 0.2f, 1.0f, // bottom right
+			-0.5f, -0.5f, 0.0f, 0.4f, 0.4f, 0.4f, 1.0f, // bottom left
+			-0.5f,  0.5f, 0.0f, 0.4f, 0.4f, 0.8f, 1.0f // top left 
 		};
 		uint32 indicies[] = {
 			0, 1, 3,  // first Triangle
 			1, 2, 3   // second Triangle
 		};
-		uint32 vao;
-		glGenVertexArrays(1, &vao);
-		glBindVertexArray(vao);
+		
+		vertexArray.reset(VertexArray::Create());
 
+		std::shared_ptr<VertexBuffer> vertexBuffer;
 		vertexBuffer.reset(VertexBuffer::Create(verticies, sizeof(verticies)));
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
-		glEnableVertexAttribArray(0);
+		BufferLayout bufferLayout({
+			{ ShaderDataType::Float3, "Position" },
+			{ ShaderDataType::Float4, "Color" },
+		});
+		vertexBuffer->SetLayout(bufferLayout);
 
+		std::shared_ptr<IndexBuffer> indexBuffer;
 		indexBuffer.reset(IndexBuffer::Create(indicies, 6));
+
+		vertexArray->AddVertexBuffer(vertexBuffer);
+		vertexArray->SetIndexBuffer(indexBuffer);
 	}
 
 	Application::~Application() {}
@@ -44,9 +51,9 @@ namespace Heist {
 		window.ClearWindow();
 		// Render stuff go here
 		shader->Bind();
-		vertexBuffer->Bind();
-		indexBuffer->Bind();
-		glDrawElements(GL_TRIANGLES, indexBuffer->count, GL_UNSIGNED_INT, 0);
+		vertexArray->Bind();
+
+		glDrawElements(GL_TRIANGLES, vertexArray->indexBuffer->count, GL_UNSIGNED_INT, 0);
 		// --------------------
 		window.SwapBuffer();
 	}

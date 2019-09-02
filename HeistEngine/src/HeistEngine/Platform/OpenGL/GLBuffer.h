@@ -9,9 +9,7 @@ namespace Heist {
 
 		void Bind() const override;
 		void Unbind() const override;
-		void SetLayout(BufferLayout& layout) override;
-		
-		BufferLayout layout;
+		void SetLayout(BufferLayout& layout) override;	
 	};
 
 	struct GLIndexBuffer : public IndexBuffer {

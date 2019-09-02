@@ -42,7 +42,25 @@ namespace Heist {
 
 	struct BufferElement {
 		BufferElement(ShaderDataType type, const std::string& name)
-			:name(name), type(type), size(ShaderDataTypeSize(type)), offset(0) {};
+			:name(name), type(type), size(ShaderDataTypeSize(type)), offset(0), normalized(false) {
+
+			switch (type)
+			{
+				case ShaderDataType::Float:   componentCount = 1;	   break;
+				case ShaderDataType::Float2:  componentCount = 2;	   break;
+				case ShaderDataType::Float3:  componentCount = 3;	   break;
+				case ShaderDataType::Float4:  componentCount = 4;	   break;
+				case ShaderDataType::Mat3:    componentCount = 3 * 3;  break;
+				case ShaderDataType::Mat4:    componentCount = 4 * 4;  break;
+				case ShaderDataType::Int:     componentCount = 1;	   break;
+				case ShaderDataType::Int2:    componentCount = 2;	   break;
+				case ShaderDataType::Int3:    componentCount = 3;	   break;
+				case ShaderDataType::Int4:    componentCount = 4;	   break;
+				case ShaderDataType::Bool:    componentCount = 1;	   break;
+			}
+
+			HS_CORE_ASSERT(componentCount != 0, "Unknown Shader Data type!");
+		};
 
 		BufferElement() {};
 
@@ -50,9 +68,12 @@ namespace Heist {
 		ShaderDataType type;
 		uint32 offset;
 		uint32 size;
+		uint32 componentCount = 0; // Float -> 1, Float2 -> 2, Float3 -> 3, etc.
+		bool normalized;
 	};
 
 	struct BufferLayout {
+	public:
 		BufferLayout(const std::initializer_list<BufferElement>& elements)
 			:elements(elements), stride(0) {
 			CalculateOffsetAndStride();
@@ -61,6 +82,11 @@ namespace Heist {
 		BufferLayout() {};
 
 		inline const std::vector<BufferElement>& GetElements() const { return elements; }
+		
+		std::vector<BufferElement>::iterator begin() { return elements.begin(); }
+		std::vector<BufferElement>::iterator end() { return elements.end(); }
+		std::vector<BufferElement>::const_iterator begin() const { return elements.begin(); }
+		std::vector<BufferElement>::const_iterator end() const { return elements.end(); }
 
 		std::vector<BufferElement> elements;
 		uint32 stride;
@@ -90,6 +116,7 @@ namespace Heist {
 		static VertexBuffer* Create(real32* vertices, uint32 size);
 
 		uint32 vbo;
+		BufferLayout layout;
 	};
 
 	struct IndexBuffer {

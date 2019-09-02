@@ -6,6 +6,7 @@
 #include "Core/Memory/Memory.h"
 #include "Core/Renderer/Buffer.h"
 #include "Core/Renderer/Shader.h"
+#include "Core/Renderer/VertexArray.h"
 
 namespace Heist {
 	class Application {
@@ -27,9 +28,8 @@ namespace Heist {
 		LayerStack layerStack;
 		Window window;
 		MemoryManager memoryManager;
-		std::unique_ptr<VertexBuffer> vertexBuffer = nullptr;
-		std::unique_ptr<IndexBuffer> indexBuffer = nullptr;
 		std::unique_ptr<Shader> shader = nullptr;
+		std::shared_ptr<VertexArray> vertexArray;
 	};
 	
 	// To be defined in client
