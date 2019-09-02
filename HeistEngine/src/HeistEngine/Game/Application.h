@@ -29,6 +29,7 @@ namespace Heist {
 		MemoryManager memoryManager;
 		std::unique_ptr<VertexBuffer> vertexBuffer = nullptr;
 		std::unique_ptr<IndexBuffer> indexBuffer = nullptr;
+		std::unique_ptr<Shader> shader = nullptr;
 	};
 	
 	// To be defined in client

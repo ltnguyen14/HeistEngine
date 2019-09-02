@@ -11,10 +11,6 @@ namespace Heist {
 	}
 
 	std::string FileManager::ReadFile(const char* filePath) {
-		char buf[256];
-		GetCurrentDirectoryA(256, buf);
-		std::cout << std::string(buf) + '\\' << std::endl;
-
 		std::ifstream file(filePath);
 		HS_CORE_ASSERT(!file.fail(), "Cannot open file path: " + std::string(filePath));
 		std::string content;

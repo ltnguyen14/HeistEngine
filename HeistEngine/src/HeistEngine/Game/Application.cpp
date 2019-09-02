@@ -6,24 +6,12 @@
 #include <glad/glad.h>
 
 namespace Heist {
-	const char* vertexShaderSource = "#version 330 core\n"
-		"layout (location = 0) in vec3 aPos;\n"
-		"void main()\n"
-		"{\n"
-		"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-		"}\0";
-	const char* fragmentShaderSource = "#version 330 core\n"
-		"out vec4 FragColor;\n"
-		"void main()\n"
-		"{\n"
-		"   FragColor = vec4(0.2f, 0.4f, 0.8f, 1.0f);\n"
-		"}\n\0";
 
 	Application::Application(int32 width, int32 height, std::string title) 
 		: window(&eventBus, width, height, title), memoryManager(2 * 1024) {
 		running = true;
 
-		std::unique_ptr<Shader> shader(Shader::Create("assets/shaders/basic.vert.glsl", "assets/shaders/basic.frag.glsl"));
+		shader.reset(Shader::Create("assets/shaders/basic.vert.glsl", "assets/shaders/basic.frag.glsl"));
 
 		// ----------------- Rendering
 		real32 verticies[] = {
@@ -42,7 +30,7 @@ namespace Heist {
 
 		vertexBuffer.reset(VertexBuffer::Create(verticies, sizeof(verticies)));
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
-		glEnableVertexAttribArray(0); 
+		glEnableVertexAttribArray(0);
 
 		indexBuffer.reset(IndexBuffer::Create(indicies, 6));
 	}
@@ -55,6 +43,9 @@ namespace Heist {
 	void Application::OnRender() {
 		window.ClearWindow();
 		// Render stuff go here
+		shader->Bind();
+		vertexBuffer->Bind();
+		indexBuffer->Bind();
 		glDrawElements(GL_TRIANGLES, indexBuffer->count, GL_UNSIGNED_INT, 0);
 		// --------------------
 		window.SwapBuffer();

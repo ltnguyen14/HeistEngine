@@ -22,6 +22,10 @@ namespace Heist {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
+	void GLVertexBuffer::SetLayout(BufferLayout& layout) {
+		this->layout = layout;
+	}
+
 	// ----------------------------------------------------------------------------
 
 	GLIndexBuffer::GLIndexBuffer(uint32* indicies, uint32 count) {
