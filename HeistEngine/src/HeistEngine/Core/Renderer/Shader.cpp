@@ -8,10 +8,10 @@
 namespace Heist {
 
 	Shader* Shader::Create(const char* vertexPath, const char* fragPath) {
-		switch (Renderer::rendererAPI) {
-		case RendererAPI::OpenGL:
+		switch (Renderer::GetRenderAPI()) {
+		case RenderAPI::API::OpenGL:
 			return new GLShader(vertexPath, fragPath);
-		case RendererAPI::None:
+		case RenderAPI::API::None:
 			return nullptr;
 		}
 

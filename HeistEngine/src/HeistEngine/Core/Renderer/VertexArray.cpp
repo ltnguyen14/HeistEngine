@@ -7,10 +7,10 @@
 namespace Heist {
 
 	VertexArray* VertexArray::Create() {
-		switch (Renderer::rendererAPI) {
-		case RendererAPI::OpenGL:
+		switch (Renderer::GetRenderAPI()) {
+		case RenderAPI::API::OpenGL:
 			return new GLVertexArray();
-		case RendererAPI::None:
+		case RenderAPI::API::None:
 			return nullptr;
 		}
 

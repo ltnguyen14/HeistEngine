@@ -28,7 +28,7 @@ namespace Heist {
 		LayerStack layerStack;
 		Window window;
 		MemoryManager memoryManager;
-		std::unique_ptr<Shader> shader = nullptr;
+		std::shared_ptr<Shader> shader;
 		std::shared_ptr<VertexArray> vertexArray;
 	};
 	

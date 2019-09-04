@@ -9,10 +9,10 @@ namespace Heist {
 
 	VertexBuffer* VertexBuffer::Create(real32* vertices, uint32 size)
 	{
-		switch (Renderer::rendererAPI) {
-		case RendererAPI::OpenGL:
+		switch (Renderer::GetRenderAPI()) {
+		case RenderAPI::API::OpenGL:
 			return new GLVertexBuffer(vertices, size);
-		case RendererAPI::None:
+		case RenderAPI::API::None:
 			return nullptr;
 		}
 
@@ -22,10 +22,10 @@ namespace Heist {
 
 	IndexBuffer* IndexBuffer::Create(uint32* indicies, uint32 size)
 	{
-		switch (Renderer::rendererAPI) {
-		case RendererAPI::OpenGL:
+		switch (Renderer::GetRenderAPI()) {
+		case RenderAPI::API::OpenGL:
 			return new GLIndexBuffer(indicies, size);
-		case RendererAPI::None:
+		case RenderAPI::API::None:
 			return nullptr;
 		}
 

@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "Core/Math/Math.h"
 #include "Platform/Assertions.h"
+#include "Core/Renderer/Renderer.h"
 
 #include <glad/glad.h>
 
@@ -50,10 +51,13 @@ namespace Heist {
 	void Application::OnRender() {
 		window.ClearWindow();
 		// Render stuff go here
-		shader->Bind();
-		vertexArray->Bind();
 
-		glDrawElements(GL_TRIANGLES, vertexArray->indexBuffer->count, GL_UNSIGNED_INT, 0);
+		Renderer::BeginScene();
+
+		Renderer::Submit(shader, vertexArray);
+
+		Renderer::EndScene();
+
 		// --------------------
 		window.SwapBuffer();
 	}
