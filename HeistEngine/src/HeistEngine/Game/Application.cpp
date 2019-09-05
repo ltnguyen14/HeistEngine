@@ -4,7 +4,7 @@
 #include "Platform/Assertions.h"
 #include "Core/Renderer/Renderer.h"
 
-#include <glad/glad.h>
+#include "glad/glad.h"
 
 namespace Heist {
 
@@ -16,10 +16,10 @@ namespace Heist {
 
 		// ----------------- Rendering
 		real32 verticies[] = {
-			 0.5f,  0.5f, 0.0f, 0.2f, 0.4f, 0.8f, 1.0f, // top right
-			 0.5f, -0.5f, 0.0f, 0.8f, 0.4f, 0.2f, 1.0f, // bottom right
-			-0.5f, -0.5f, 0.0f, 0.4f, 0.4f, 0.4f, 1.0f, // bottom left
-			-0.5f,  0.5f, 0.0f, 0.4f, 0.4f, 0.8f, 1.0f // top left 
+			 1.0f,  1.0f, 0.0f, 0.2f, 0.4f, 0.8f, 1.0f,
+			 1.0f,  0.0f, 0.0f, 0.8f, 0.4f, 0.2f, 1.0f,
+			 0.0f,  0.0f, 0.0f, 0.4f, 0.4f, 0.4f, 1.0f,
+			 0.0f,  1.0f, 0.0f, 0.4f, 0.4f, 0.8f, 1.0f 
 		};
 		uint32 indicies[] = {
 			0, 1, 3,  // first Triangle
@@ -41,6 +41,8 @@ namespace Heist {
 
 		vertexArray->AddVertexBuffer(vertexBuffer);
 		vertexArray->SetIndexBuffer(indexBuffer);
+
+		camera.reset(new Camera({ 0, 0, 0 }, { 0, 0, 0 }, {0, 10.8, 0, 7.2 }));
 	}
 
 	Application::~Application() {}
@@ -52,7 +54,16 @@ namespace Heist {
 		window.ClearWindow();
 		// Render stuff go here
 
-		Renderer::BeginScene();
+		Renderer::BeginScene(camera);
+
+		static real32 x = 0;
+		static real32 y = 0;
+		x += 0.00001;
+		y += 0.00001;
+		mat4 modelMatrix = mat4(1).translate({x, y, 0});
+
+		int32 projMatrixLocation = glGetUniformLocation(shader->programId, "modelMatrix");
+		glUniformMatrix4fv(projMatrixLocation, 1, GL_FALSE, &modelMatrix[0][0]);
 
 		Renderer::Submit(shader, vertexArray);
 

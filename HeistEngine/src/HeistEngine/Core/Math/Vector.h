@@ -67,6 +67,14 @@ namespace Heist {
 		return vec3{ v.x + v2.x, v.y + v2.y, v.z + v2.z };
 	}
 
+	inline bool operator == (const vec3& v, const vec3& v2) {
+		return (v.x == v2.x) && (v.y == v2.y) && (v.z == v2.z);
+	}
+
+	inline bool operator != (const vec3& v, const vec3& v2) {
+		return !(v == v2);
+	}
+
 	inline real32 Magnitude(const vec3& v) {
 		return sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
 	}
@@ -76,7 +84,7 @@ namespace Heist {
 	}
 
 	// -----------------------------------------------
-	// vec3 ------------------------------------------
+	// vec4 ------------------------------------------
 	// -----------------------------------------------
 
 	// Scalar mul
@@ -99,6 +107,14 @@ namespace Heist {
 
 	inline vec4 operator - (const vec4& v, const vec4& v2) {
 		return vec4{ v.x - v2.x, v.y - v2.y, v.z - v2.z, v.q - v2.q };
+	}
+
+	inline bool operator == (const vec4& v, const vec4& v2) {
+		return (v.x == v2.x) && (v.y == v2.y) && (v.z == v2.z) && (v.q == v2.q);
+	}
+
+	inline bool operator != (const vec4& v, const vec4& v2) {
+		return !(v == v2);
 	}
 
 	inline real32 Magnitude(const vec4& v) {
