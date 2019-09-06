@@ -2,9 +2,13 @@
 #include "Window.h"
 #include "Core/Log/Log.h"
 #include "Platform/Assertions.h"
-#include "glad/glad.h"
 
 namespace Heist {
+	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+		Window* win = (Window*)glfwGetWindowUserPointer(window);
+		HS_CORE_INFO(std::to_string(key) + " was pressed!");
+	}
+
 	Window::Window(EventBus *eventBus, int32 width, int32 height, std::string title) 
 		: EventNode(eventBus, "Window"), width(width), height(height), title(title) {
 
@@ -21,15 +25,12 @@ namespace Heist {
 		}
 
 		/* Make the window's context current */
+		glfwSetWindowUserPointer(window, this);
 		glfwMakeContextCurrent(window);
 		glfwSwapInterval(0);
 
-		// GLAD init
-		int gladInit = gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
-		HS_CORE_ASSERT(gladInit, "Failed to init GLAD");
-
-		// OpenGl clear color
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		// Set key callbacks
+		glfwSetKeyCallback(window, key_callback);
 	};
 
 	Window::~Window() {
@@ -44,10 +45,6 @@ namespace Heist {
 	void Window::PollEvents() {
 		/* Poll for and process events */
 		glfwPollEvents();
-	}
-
-	void Window::ClearWindow() {
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
 	void Window::OnNotify(Event event) {

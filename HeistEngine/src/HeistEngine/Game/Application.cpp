@@ -12,8 +12,8 @@ namespace Heist {
 		: window(&eventBus, width, height, title), memoryManager(20) {
 		running = true;
 
-		shader.reset(Shader::Create("assets/shaders/basic.vert.glsl", "assets/shaders/basic.frag.glsl"));
 		Renderer::Init();
+		shader.reset(Shader::Create("assets/shaders/basic.vert.glsl", "assets/shaders/basic.frag.glsl"));
 		// ----------------- Rendering
 		real32 verticies[] = {
 			 1.0f,  1.0f, 0.0f, 0.2f, 0.4f, 0.8f, 1.0f,
@@ -51,19 +51,13 @@ namespace Heist {
 	}
 
 	void Application::OnRender() {
-		window.ClearWindow();
 		// Render stuff go here
 
 		Renderer::BeginScene(camera);
 
-		static real32 x = 0;
-		static real32 y = 0;
-		x += 0.0005;
-		y += 0.0005;
-		mat4 modelMatrix = mat4(1).translate({x, y, 0});
-
-		int32 projMatrixLocation = glGetUniformLocation(shader->programId, "modelMatrix");
-		glUniformMatrix4fv(projMatrixLocation, 1, GL_FALSE, &modelMatrix[0][0]);
+		mat4 modelMatrix(1);
+		int32 modelMatrixLocation = glGetUniformLocation(shader->programId, "modelMatrix");
+		glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, &modelMatrix[0][0]);
 
 		Renderer::Submit(shader, vertexArray);
 

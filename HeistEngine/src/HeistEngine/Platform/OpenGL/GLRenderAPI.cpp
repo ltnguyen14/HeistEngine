@@ -1,9 +1,14 @@
 #include "hspch.h"
 #include "GLRenderAPI.h"
 #include "glad/glad.h"
+#include "GLFW/glfw3.h"
 
 namespace Heist {
 	void GLRenderAPI::Init() {
+		// GLAD init
+		int gladInit = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		HS_CORE_ASSERT(gladInit, "Failed to init GLAD");
+
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}

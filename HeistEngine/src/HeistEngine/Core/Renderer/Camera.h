@@ -1,5 +1,6 @@
 #pragma once
 #include "Core/Math/Math.h"
+#include "Core/Event/EventNode.h"
 
 namespace Heist {
 

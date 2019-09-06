@@ -10,10 +10,13 @@ namespace Heist {
 		void SwapBuffer();
 		void PollEvents();
 		void OnNotify(Event event) override;
-		void ClearWindow();
 
 		inline bool ShouldClose() { return glfwWindowShouldClose(window); };
 
+	public:
+		friend static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+
+	public:
 		GLFWwindow* window;
 		int32 width, height;
 		std::string title;
