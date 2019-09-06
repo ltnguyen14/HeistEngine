@@ -42,7 +42,7 @@ namespace Heist {
 		vertexArray->AddVertexBuffer(vertexBuffer);
 		vertexArray->SetIndexBuffer(indexBuffer);
 
-		camera.reset(new Camera({ 0, 0, 0 }, { 0, 0, 0 }, {0, 10.8, 0, 7.2 }));
+		camera.reset(new Camera({ 0, 0, 0 }, { 0, 0, 0 }, {0, 10.8, 7.2, 0 }));
 	}
 
 	Application::~Application() {}

@@ -24,7 +24,7 @@ namespace Heist {
 		shader->Bind();
 		vertexArray->Bind();
 
-		int32 projMatrixLocation = glGetUniformLocation(shader->programId, "projectionMatrix");
+		int32 projMatrixLocation = glGetUniformLocation(shader->programId, "projectionViewMatrix");
 		glUniformMatrix4fv(projMatrixLocation, 1, GL_FALSE, &s_sceneData->projectionViewMatrix[0][0]);
 
 		RendererCommand::DrawIndexes(vertexArray);

@@ -59,13 +59,13 @@ namespace Heist {
 			data[0][0], data[0][1], data[0][2], data[0][3],
 			data[1][0], data[1][1], data[1][2], data[1][3],
 			data[2][0], data[2][1], data[2][2], data[2][3],
-			v.x,		-v.y,		v.z,		data[3][3],
+			v.x,		v.y,		v.z,		data[3][3],
 		};
 	}
 
 	//---------------------------------------------------------------------
 
-	mat4 MakeOrthoMatrix(real32 left, real32 right, real32 top, real32 bottom, real32 farPlane, real32 nearPlane)
+	mat4 MakeOrthoMatrix(real32 left, real32 right, real32 bottom, real32 top, real32 farPlane, real32 nearPlane)
 	{
 		mat4 data = mat4(1);
 

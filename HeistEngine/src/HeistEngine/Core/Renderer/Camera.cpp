@@ -26,6 +26,6 @@ namespace Heist {
 		viewMatrix = mat4(1);
 		viewMatrix.translate({ -position.x, -position.y, -position.z });
 		// TODO(Lam): scale and rotate view matrix && calculate viewProjectionMatrix
-		projectionViewMatrix = projectionMatrix; // temp
+		projectionViewMatrix = viewMatrix * projectionMatrix;
 	}
 }
