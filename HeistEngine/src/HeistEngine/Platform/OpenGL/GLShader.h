@@ -9,6 +9,7 @@ namespace Heist {
 		virtual ~GLShader();
 
 		int32 LoadShader(const char* vertexPath, const char* fragPath);
+		void UploadUniformMat4(const char* uniformName, const mat4* matrix);
 
 		void Bind() const;
 		void Unbind() const;

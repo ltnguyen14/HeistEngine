@@ -1,6 +1,5 @@
 #include "hspch.h"
 #include "Renderer.h"
-#include "glad/glad.h"
 
 namespace Heist {
 
@@ -20,12 +19,12 @@ namespace Heist {
 
 	}
 
-	void Renderer::Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray) {
+	void Renderer::Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray, const mat4* modelMatrix) {
 		shader->Bind();
 		vertexArray->Bind();
 
-		int32 projMatrixLocation = glGetUniformLocation(shader->programId, "projectionViewMatrix");
-		glUniformMatrix4fv(projMatrixLocation, 1, GL_FALSE, &s_sceneData->projectionViewMatrix[0][0]);
+		shader->UploadUniformMat4("modelMatrix", modelMatrix);
+		shader->UploadUniformMat4("projectionViewMatrix", &s_sceneData->projectionViewMatrix);
 
 		RendererCommand::DrawIndexes(vertexArray);
 	}

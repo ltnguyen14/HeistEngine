@@ -12,7 +12,7 @@ namespace Heist {
 		static void BeginScene(const std::shared_ptr<Camera>& camera);
 		static void EndScene();
 
-		static void Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray);
+		static void Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray, const mat4* modelMatrix);
 		inline static RenderAPI::API GetRenderAPI() { return RenderAPI::GetAPI(); };
 		
 	private:

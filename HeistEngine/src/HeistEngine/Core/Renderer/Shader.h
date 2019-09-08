@@ -1,5 +1,6 @@
 #pragma once
 #include "Macro.h"
+#include "Core/Math/Math.h"
 
 namespace Heist {
 
@@ -8,6 +9,8 @@ namespace Heist {
 		virtual ~Shader() {};
 
 		virtual int32 LoadShader(const char* vertexPath, const char* fragPath) = 0;
+
+		virtual void UploadUniformMat4(const char* uniformName, const mat4* matrix) = 0;
 
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;

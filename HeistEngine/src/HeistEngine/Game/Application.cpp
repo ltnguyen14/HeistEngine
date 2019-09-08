@@ -4,8 +4,6 @@
 #include "Platform/Assertions.h"
 #include "Core/Renderer/Renderer.h"
 
-#include "glad/glad.h"
-
 namespace Heist {
 
 	Application::Application(int32 width, int32 height, std::string title) 
@@ -43,6 +41,8 @@ namespace Heist {
 		vertexArray->SetIndexBuffer(indexBuffer);
 
 		camera.reset(new Camera({ 0, 0, 0 }, { 0, 0, 0 }, {0, 10.8, 7.2, 0 }));
+
+		textureAtlas.reset(TextureAtlas::Create("assets/textures/textureAtlas.png"));
 	}
 
 	Application::~Application() {}
@@ -56,10 +56,7 @@ namespace Heist {
 		Renderer::BeginScene(camera);
 
 		mat4 modelMatrix(1);
-		int32 modelMatrixLocation = glGetUniformLocation(shader->programId, "modelMatrix");
-		glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, &modelMatrix[0][0]);
-
-		Renderer::Submit(shader, vertexArray);
+		Renderer::Submit(shader, vertexArray, &modelMatrix);
 
 		Renderer::EndScene();
 

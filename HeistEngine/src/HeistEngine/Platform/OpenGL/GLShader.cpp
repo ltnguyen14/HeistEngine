@@ -50,6 +50,11 @@ namespace Heist {
 		return programId;
 	}
 
+	void GLShader::UploadUniformMat4(const char* uniformName, const mat4* matrix) {
+		int32 matrixLocation = glGetUniformLocation(programId, uniformName);
+		glUniformMatrix4fv(matrixLocation, 1, GL_FALSE, &(*matrix)[0][0]);
+	}
+
 	void GLShader::Bind() const {
 		glUseProgram(programId);
 	}
