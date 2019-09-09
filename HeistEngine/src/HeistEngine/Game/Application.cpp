@@ -18,32 +18,53 @@ namespace Heist {
 			-0.5, -0.5,	 0.5,		0.0, 0.0,
 			 0.5, -0.5,  0.5,		1.0, 0.0,
 			 0.5,  0.5,  0.5,		1.0, 1.0,
-			-0.5, -0.5,  0.5,		0.0, 1.0,
+			-0.5,  0.5,  0.5,		0.0, 1.0,
+			// right				   
+			 0.5, -0.5,	 0.5,		0.0, 0.0,
+			 0.5, -0.5, -0.5,		1.0, 0.0,
+			 0.5,  0.5, -0.5,		1.0, 1.0,
+			 0.5,  0.5,  0.5,		0.0, 1.0,
 			// back					 	  
 			-0.5, -0.5, -0.5,		0.0, 0.0,
 			 0.5, -0.5, -0.5,		1.0, 0.0,
 			 0.5,  0.5, -0.5,		1.0, 1.0,
 			-0.5,  0.5, -0.5,		0.0, 1.0,
+			// left				   
+			-0.5, -0.5,	-0.5,		0.0, 0.0,
+			-0.5, -0.5,  0.5,		1.0, 0.0,
+			-0.5,  0.5,  0.5,		1.0, 1.0,
+			-0.5,  0.5, -0.5,		0.0, 1.0,
+			// top				   
+			-0.5,  0.5,	 0.5,		0.0, 0.0,
+			 0.5,  0.5,  0.5,		1.0, 0.0,
+			 0.5,  0.5, -0.5,		1.0, 1.0,
+			-0.5,  0.5, -0.5,		0.0, 1.0,
+			// bottom				   
+			-0.5, -0.5,	-0.5,		0.0, 0.0,
+			 0.5, -0.5, -0.5,		1.0, 0.0,
+			 0.5, -0.5,  0.5,		1.0, 1.0,
+			-0.5, -0.5,  0.5,		0.0, 1.0,
+
 		};
 		uint32 indicies[] = {
 			// front
 			0, 1, 2,
 			2, 3, 0,
 			// right
-			1, 5, 6,
-			6, 2, 1,
+			4, 5, 6,
+			6, 7, 4,
 			// back
-			7, 6, 5,
-			5, 4, 7,
+			8, 9, 10,
+			10, 11, 8,
 			// left
-			4, 0, 3,
-			3, 7, 4,
-			// bottom
-			4, 5, 1,
-			1, 0, 4,
+			12, 13, 14,
+			14, 15, 12,
 			// top
-			3, 2, 6,
-			6, 7, 3
+			16, 17, 18,
+			18, 19, 16,
+			// bottom
+			20, 21, 22,
+			22, 23, 20
 		};
 		
 		vertexArray.reset(VertexArray::Create());
@@ -79,11 +100,11 @@ namespace Heist {
 
 		mat4 modelMatrix = mat4(1);
 		static real32 rot = 1;
-		rot += 0.005;
+		rot += 0.05;
 
-		modelMatrix = rotate(modelMatrix, rot, { 0, 1, 0 });
-		modelMatrix = translate(modelMatrix, { 3.0f, 3.0f, 0.0f });
-		// modelMatrix = scale(modelMatrix, { 100.0f, 100.0f, 100.0f });
+		// modelMatrix = rotate(modelMatrix, rot, { 0, 1, 0 });
+		// modelMatrix = translate(modelMatrix, { 0.0f, 0.0f, -100.0f });
+		// modelMatrix = scale(modelMatrix, { 100.0f, 100.0f, 0.0f });
 
 		std::shared_ptr<RawModel> model(new RawModel(shader, textureAtlas, vertexArray, &modelMatrix));
 		Renderer::Submit(model);

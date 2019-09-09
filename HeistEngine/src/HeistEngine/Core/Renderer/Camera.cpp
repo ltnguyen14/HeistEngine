@@ -7,6 +7,7 @@ namespace Heist {
 		:position(position), c_position(position), rotation(rotation), c_rotation(rotation), ortho(ortho)
 	{
 		projectionMatrix = MakeOrthoMatrix(dimensions.x, dimensions.y, dimensions.w, dimensions.h, -1000, 1000);
+		projectionMatrix = MakePerspectiveMatrix(45, 1080/720, -1000, 1000);
 		CalculateViewMatrix();
 	}
 
@@ -25,7 +26,11 @@ namespace Heist {
 	void Camera::CalculateViewMatrix() {
 		viewMatrix = mat4(1);
 		viewMatrix = translate(viewMatrix, { -position.x, -position.y, -position.z });
-		// TODO(Lam): scale and rotate view matrix && calculate viewProjectionMatrix
+
+		viewMatrix = rotate(viewMatrix, rotation.x, { 1, 0, 0 });
+		viewMatrix = rotate(viewMatrix, rotation.y, { 0, 1, 0 });
+		viewMatrix = rotate(viewMatrix, rotation.z, { 0, 0, 1 });
+
 		projectionViewMatrix = projectionMatrix * viewMatrix;
 	}
 }

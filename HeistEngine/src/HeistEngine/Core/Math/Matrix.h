@@ -100,6 +100,7 @@ namespace Heist {
 	}
 
 	mat4 MakeOrthoMatrix(real32 left, real32 right, real32 top, real32 bottom, real32 farPlane, real32 nearPlane);
+	mat4 MakePerspectiveMatrix(real32 fov, real32 aspect, real32 farPlane, real32 nearPlane);
 
 	real32 radian(real32 degree);
 

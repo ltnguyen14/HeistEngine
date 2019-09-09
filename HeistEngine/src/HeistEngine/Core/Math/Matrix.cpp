@@ -71,6 +71,21 @@ namespace Heist {
 		return data;
 	}
 
+	mat4 MakePerspectiveMatrix(real32 fov, real32 aspect, real32 farPlane, real32 nearPlane) {
+		mat4 data = mat4(0);
+		float cotangent = 1.0f / tan(radian(fov) / 2);
+
+		data[0][0] = cotangent / aspect;
+		data[1][1] = cotangent;
+		data[2][2] = (nearPlane + farPlane) / (nearPlane - farPlane);
+		data[3][3] = 0.0f;
+
+		data[3][2] = (2.0f * farPlane * nearPlane) / (nearPlane - farPlane);
+		data[2][3] = -1.0f;
+
+		return data;
+	}
+
 	real32 radian(real32 degree) {
 		return degree * PI / 180;
 	}
