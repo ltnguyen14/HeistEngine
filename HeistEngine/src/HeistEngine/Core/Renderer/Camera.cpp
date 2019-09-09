@@ -24,7 +24,7 @@ namespace Heist {
 
 	void Camera::CalculateViewMatrix() {
 		viewMatrix = mat4(1);
-		viewMatrix.translate({ -position.x, -position.y, -position.z });
+		viewMatrix = translate(viewMatrix, { -position.x, -position.y, -position.z });
 		// TODO(Lam): scale and rotate view matrix && calculate viewProjectionMatrix
 		projectionViewMatrix = projectionMatrix * viewMatrix;
 	}

@@ -6,6 +6,7 @@ namespace Heist {
 
 	struct mat3 {
 
+		mat3() = default;
 		mat3(bool identity);
 		mat3(real32 n00, real32 n01, real32 n02,
 			real32 n10, real32 n11, real32 n12,
@@ -55,8 +56,6 @@ namespace Heist {
 		std::array<real32, 4> & mat4::operator [] (int32 i);
 		const std::array<real32, 4> & mat4::operator [] (int32 i) const;
 
-		mat4 translate(vec3 v);
-
 		std::array<std::array<real32, 4>, 4> data;
 	};
 
@@ -75,7 +74,6 @@ namespace Heist {
 			lhs[2][0] * rhs[0][2] + lhs[2][1] * rhs[1][2] + lhs[2][2] * rhs[2][2]
 		};
 	}
-
 
 	inline mat4 operator * (const mat4& lhs, const mat4& rhs) {
 		return {
@@ -101,6 +99,15 @@ namespace Heist {
 		};
 	}
 
-
 	mat4 MakeOrthoMatrix(real32 left, real32 right, real32 top, real32 bottom, real32 farPlane, real32 nearPlane);
+
+	real32 radian(real32 degree);
+
+	real32 degree(real32 radian);
+
+	mat4 translate(mat4 mat, vec3 v); 
+
+	mat4 scale(mat4 mat, vec3 v); 
+
+	mat4 rotate(mat4 mat, real32 rotation, vec3 axis); 
 }

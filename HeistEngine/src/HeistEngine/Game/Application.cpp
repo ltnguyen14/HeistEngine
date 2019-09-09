@@ -15,15 +15,15 @@ namespace Heist {
 		// ----------------- Rendering
 		real32 verticies[] = {
 			// front				   
-			0.0, 0.0, 0.0,		0.0, 0.0,
-			1.0, 0.0, 0.0,		1.0, 0.0,
-			1.0, 1.0, 0.0,		1.0, 1.0,
-			0.0, 1.0, 0.0,		0.0, 1.0,
+			-0.5, -0.5,	 0.5,		0.0, 0.0,
+			 0.5, -0.5,  0.5,		1.0, 0.0,
+			 0.5,  0.5,  0.5,		1.0, 1.0,
+			-0.5, -0.5,  0.5,		0.0, 1.0,
 			// back					 	  
-			0.0, 0.0, 0.0,		0.0, 0.0,
-			1.0, 0.0, 0.0,		1.0, 0.0,
-			1.0, 1.0, 0.0,		1.0, 1.0,
-			0.0, 1.0, 0.0,		0.0, 1.0,
+			-0.5, -0.5, -0.5,		0.0, 0.0,
+			 0.5, -0.5, -0.5,		1.0, 0.0,
+			 0.5,  0.5, -0.5,		1.0, 1.0,
+			-0.5,  0.5, -0.5,		0.0, 1.0,
 		};
 		uint32 indicies[] = {
 			// front
@@ -57,12 +57,12 @@ namespace Heist {
 		vertexBuffer->SetLayout(bufferLayout);
 
 		std::shared_ptr<IndexBuffer> indexBuffer;
-		indexBuffer.reset(IndexBuffer::Create(indicies, 6));
+		indexBuffer.reset(IndexBuffer::Create(indicies, 6 * 6));
 
 		vertexArray->AddVertexBuffer(vertexBuffer);
 		vertexArray->SetIndexBuffer(indexBuffer);
 
-		camera.reset(new Camera({ 0, 0, 0 }, { 0, 0, 0 }, {0, 10.8, 7.2, 0 }));
+		camera.reset(new Camera({ 0, 0, 0 }, { 0, 0, 0 }, {0, 10.80, 7.20, 0 }));
 
 		textureAtlas.reset(Texture::Create("assets/textures/texture.png"));
 	}
@@ -77,7 +77,13 @@ namespace Heist {
 
 		Renderer::BeginScene(camera);
 
-		mat4 modelMatrix = mat4(1).translate({ 1.0f, 1.0f, 0.0f });
+		mat4 modelMatrix = mat4(1);
+		static real32 rot = 1;
+		rot += 0.005;
+
+		modelMatrix = rotate(modelMatrix, rot, { 0, 1, 0 });
+		modelMatrix = translate(modelMatrix, { 3.0f, 3.0f, 0.0f });
+		// modelMatrix = scale(modelMatrix, { 100.0f, 100.0f, 100.0f });
 
 		std::shared_ptr<RawModel> model(new RawModel(shader, textureAtlas, vertexArray, &modelMatrix));
 		Renderer::Submit(model);

@@ -54,15 +54,6 @@ namespace Heist {
 		return data[i];
 	}
 
-	mat4 mat4::translate(vec3 v) {
-		return {
-			data[0][0], data[0][1], data[0][2], data[0][3],
-			data[1][0], data[1][1], data[1][2], data[1][3],
-			data[2][0], data[2][1], data[2][2], data[2][3],
-			v.x,		v.y,		v.z,		data[3][3],
-		};
-	}
-
 	//---------------------------------------------------------------------
 
 	mat4 MakeOrthoMatrix(real32 left, real32 right, real32 bottom, real32 top, real32 farPlane, real32 nearPlane)
@@ -78,5 +69,60 @@ namespace Heist {
 		data[3][2] = -(farPlane + nearPlane) / (farPlane - nearPlane);
 
 		return data;
+	}
+
+	real32 radian(real32 degree) {
+		return degree * PI / 180;
+	}
+
+	real32 degree(real32 radian) {
+		return radian * (180 / PI);
+	}
+
+	mat4 translate(mat4 mat, vec3 v) {
+		mat4 translationMatrix = {
+			1,		0,		0,		0,
+			0,		1,		0,		0,
+			0,		0,		1,		0,
+			v.x,	v.y,	v.z,	1
+		};
+
+		return mat * translationMatrix;
+	}
+
+	mat4 scale(mat4 mat, vec3 v) {
+		mat4 scaleMatrix = {
+			v.x,	0,		0,		0,
+			0,		v.y,	0,		0,
+			0,		0,		v.z,	0,
+			0,		0,		0,		1
+		};
+
+		return mat * scaleMatrix;
+	}
+
+	mat4 rotate(mat4 mat, real32 rotation, vec3 axis) {
+		mat4 xRot = {
+			1, 0, 0, 0,
+			0, cos(radian(-axis.x * rotation)), -sin(radian(-axis.x * rotation)),	0,
+			0, sin(radian(-axis.x * rotation)),  cos(radian(-axis.x * rotation)),	0,
+			0, 0, 0, 1
+		};
+
+		mat4 yRot = {
+			 cos(radian(-axis.y * rotation)), 0, sin(radian(-axis.y * rotation)), 0,
+			 0,		1,		0,		0,
+			-sin(radian(-axis.y * rotation)), 0, cos(radian(-axis.y * rotation)), 0,
+			 0,		0,		0,		1
+		};
+
+		mat4 zRot = {
+			cos(radian(-axis.z * rotation)), -sin(radian(-axis.z * rotation)), 0, 0,
+			sin(radian(-axis.z * rotation)),  cos(radian(-axis.z * rotation)), 0, 0,
+			0,		0,		1,		0,
+			0,		0,		0,		1
+		};
+
+		return mat * xRot * yRot * zRot;
 	}
 }

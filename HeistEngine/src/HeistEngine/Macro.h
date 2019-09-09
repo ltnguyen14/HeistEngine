@@ -3,6 +3,7 @@
 
 #define HS_ARRAY_COUNT(arr) (sizeof(arr) / sizeof(arr[0]))
 #define BIT(x) (1 << x)
+#define PI 3.14159265
 
 typedef uint8_t uint8;
 typedef uint16_t uint16;
