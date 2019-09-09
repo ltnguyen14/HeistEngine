@@ -6,7 +6,7 @@ namespace Heist {
 	Camera::Camera(vec3 position, vec3 rotation, vec4 dimensions, bool ortho)
 		:position(position), c_position(position), rotation(rotation), c_rotation(rotation), ortho(ortho)
 	{
-		projectionMatrix = MakeOrthoMatrix(dimensions.x, dimensions.y, dimensions.w, dimensions.h, -1, 1);
+		projectionMatrix = MakeOrthoMatrix(dimensions.x, dimensions.y, dimensions.w, dimensions.h, -1000, 1000);
 		CalculateViewMatrix();
 	}
 

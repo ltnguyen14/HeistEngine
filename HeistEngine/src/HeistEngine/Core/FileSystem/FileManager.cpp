@@ -9,7 +9,7 @@ namespace Heist {
 
 	TextureData::~TextureData() {
 		if (img) {
-			stb_image_free(img);
+			stbi_image_free(img);
 		}
 	}
 
@@ -40,7 +40,7 @@ namespace Heist {
 
 	TextureData FileManager::ReadTexture(const char* texturePath) {
 		int32 width, height, comp;
-		stbi_set_flip_vertically_on_load(1);
+		// stbi_set_flip_vertically_on_load(1);
 		unsigned char* img = stbi_load(texturePath, &width, &height, &comp, 4);
 
 		if (!img) {

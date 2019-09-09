@@ -1,15 +1,17 @@
 #pragma once
+#include "Macro.h"
 
 namespace Heist {
 
 	struct TextureData {
+
+		TextureData(int32 width, int32 height, int32 comp, unsigned char* img) : width(width), height(height), comp(comp), img(img) {};
+		~TextureData();
+
 		int32 width;
 		int32 height;
 		int32 comp;
 		unsigned char* img;
-
-		~TextureData();
-		TextureData(int32 width, int32 height, int32 comp, unsigned char* img) : width(width), height(height), comp(comp), img(img){};
 	};
 
 	struct FileManager

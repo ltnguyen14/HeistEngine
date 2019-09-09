@@ -8,7 +8,7 @@
 #include "Core/Renderer/Shader.h"
 #include "Core/Renderer/VertexArray.h"
 #include "Core/Renderer/Camera.h"
-#include "Core/Renderer/TextureAtlas.h"
+#include "Core/Renderer/Texture.h"
 
 namespace Heist {
 	class Application {
@@ -33,7 +33,7 @@ namespace Heist {
 		std::shared_ptr<Camera> camera;
 		std::shared_ptr<Shader> shader;
 		std::shared_ptr<VertexArray> vertexArray;
-		std::shared_ptr<TextureAtlas> textureAtlas;
+		std::shared_ptr<Texture> textureAtlas;
 	};
 	
 	// To be defined in client

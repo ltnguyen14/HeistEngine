@@ -1,5 +1,5 @@
 #include "hspch.h"
-#include "TextureAtlas.h"
+#include "Texture.h"
 #include "Renderer.h"
 #include "Platform/Assertions.h"
 
@@ -7,7 +7,7 @@
 
 namespace Heist {
 
-	TextureAtlas* TextureAtlas::Create(const char* texturePath)
+	Texture* Texture::Create(const char* texturePath)
 	{
 		switch (Renderer::GetRenderAPI()) {
 		case RenderAPI::API::OpenGL:

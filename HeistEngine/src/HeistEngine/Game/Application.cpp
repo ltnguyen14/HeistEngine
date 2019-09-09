@@ -14,14 +14,36 @@ namespace Heist {
 		shader.reset(Shader::Create("assets/shaders/basic.vert.glsl", "assets/shaders/basic.frag.glsl"));
 		// ----------------- Rendering
 		real32 verticies[] = {
-			 1.0f,  1.0f, 0.0f, 0.2f, 0.4f, 0.8f, 1.0f,
-			 1.0f,  0.0f, 0.0f, 0.8f, 0.4f, 0.2f, 1.0f,
-			 0.0f,  0.0f, 0.0f, 0.4f, 0.4f, 0.4f, 1.0f,
-			 0.0f,  1.0f, 0.0f, 0.4f, 0.4f, 0.8f, 1.0f 
+			// front				   
+			0.0, 0.0,  1.0,	0.0f, 1.0f,
+			1.0, 0.0,  1.0,	1.0f, 1.0f,
+			1.0, 1.0,  1.0,	0.0f, 1.0f,
+			0.0, 1.0,  1.0,	0.0f, 0.0f,
+			// back					  
+			0.0, 0.0, -1.0,	0.0f, 1.0f,
+			1.0, 0.0, -1.0,	1.0f, 1.0f,
+			1.0, 1.0, -1.0,	0.0f, 1.0f,
+			0.0, 1.0, -1.0,	0.0f, 0.0f,
 		};
 		uint32 indicies[] = {
-			0, 1, 3,  // first Triangle
-			1, 2, 3   // second Triangle
+			// front
+			0, 1, 2,
+			2, 3, 0,
+			// right
+			1, 5, 6,
+			6, 2, 1,
+			// back
+			7, 6, 5,
+			5, 4, 7,
+			// left
+			4, 0, 3,
+			3, 7, 4,
+			// bottom
+			4, 5, 1,
+			1, 0, 4,
+			// top
+			3, 2, 6,
+			6, 7, 3
 		};
 		
 		vertexArray.reset(VertexArray::Create());
@@ -30,7 +52,7 @@ namespace Heist {
 		vertexBuffer.reset(VertexBuffer::Create(verticies, sizeof(verticies)));
 		BufferLayout bufferLayout({
 			{ ShaderDataType::Float3, "Position" },
-			{ ShaderDataType::Float4, "Color" },
+			{ ShaderDataType::Float2, "Texture Coords" },
 		});
 		vertexBuffer->SetLayout(bufferLayout);
 
@@ -42,7 +64,7 @@ namespace Heist {
 
 		camera.reset(new Camera({ 0, 0, 0 }, { 0, 0, 0 }, {0, 10.8, 7.2, 0 }));
 
-		textureAtlas.reset(TextureAtlas::Create("assets/textures/textureAtlas.png"));
+		textureAtlas.reset(Texture::Create("assets/textures/texture.png"));
 	}
 
 	Application::~Application() {}
@@ -55,8 +77,10 @@ namespace Heist {
 
 		Renderer::BeginScene(camera);
 
-		mat4 modelMatrix(1);
-		Renderer::Submit(shader, vertexArray, &modelMatrix);
+		mat4 modelMatrix = mat4(1).translate({ 1.0f, 1.0f, 0.0f });
+
+		std::shared_ptr<RawModel> model(new RawModel(shader, textureAtlas, vertexArray, &modelMatrix));
+		Renderer::Submit(model);
 
 		Renderer::EndScene();
 

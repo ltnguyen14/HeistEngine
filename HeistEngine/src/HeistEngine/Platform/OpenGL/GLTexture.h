@@ -1,14 +1,14 @@
 #pragma once
-#include "Core/Renderer/TextureAtlas.h"
+#include "Core/Renderer/Texture.h"
 
 namespace Heist {
 
-	struct GLTexture : TextureAtlas {
+	struct GLTexture : Texture {
 
 		GLTexture(const char* texturePath);
 		~GLTexture();
 
-		void Bind();
+		void Bind(int32 textureSlot = 0);
 		void Unbind();
 
 	};

@@ -1,8 +1,8 @@
 #pragma once
 #include "RendererCommand.h"
-#include "Shader.h"
-#include "Core/Renderer/Camera.h"
+#include "Camera.h"
 #include "Core/Math/Math.h"
+#include "Model.h"
 
 namespace Heist {
 
@@ -12,7 +12,7 @@ namespace Heist {
 		static void BeginScene(const std::shared_ptr<Camera>& camera);
 		static void EndScene();
 
-		static void Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray, const mat4* modelMatrix);
+		static void Submit(const std::shared_ptr<RawModel>& model);
 		inline static RenderAPI::API GetRenderAPI() { return RenderAPI::GetAPI(); };
 		
 	private:
