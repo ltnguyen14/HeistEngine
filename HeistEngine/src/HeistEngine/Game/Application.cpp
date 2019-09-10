@@ -67,6 +67,7 @@ namespace Heist {
 			22, 23, 20
 		};
 		
+		// ------------------ First cube
 		vertexArray.reset(VertexArray::Create());
 
 		std::shared_ptr<VertexBuffer> vertexBuffer;
@@ -83,7 +84,45 @@ namespace Heist {
 		vertexArray->AddVertexBuffer(vertexBuffer);
 		vertexArray->SetIndexBuffer(indexBuffer);
 
-		camera.reset(new Camera({ 0, 0, 0 }, { 0, 0, 0 }, {0, 10.80, 7.20, 0 }));
+		// ---------------------- Second cube
+		vertexArray2.reset(VertexArray::Create());
+
+		std::shared_ptr<VertexBuffer> vertexBuffer2;
+		vertexBuffer2.reset(VertexBuffer::Create(verticies, sizeof(verticies)));
+		BufferLayout bufferLayout2({
+			{ ShaderDataType::Float3, "Position" },
+			{ ShaderDataType::Float2, "Texture Coords" },
+			});
+		vertexBuffer2->SetLayout(bufferLayout2);
+
+		std::shared_ptr<IndexBuffer> indexBuffer2;
+		indexBuffer2.reset(IndexBuffer::Create(indicies, 6 * 6));
+
+		vertexArray2->AddVertexBuffer(vertexBuffer2);
+		vertexArray2->SetIndexBuffer(indexBuffer2);
+
+		// ----------------
+
+		// ---------------------- Third cube
+		vertexArray3.reset(VertexArray::Create());
+
+		std::shared_ptr<VertexBuffer> vertexBuffer3;
+		vertexBuffer3.reset(VertexBuffer::Create(verticies, sizeof(verticies)));
+		BufferLayout bufferLayout3({
+			{ ShaderDataType::Float3, "Position" },
+			{ ShaderDataType::Float2, "Texture Coords" },
+			});
+		vertexBuffer3->SetLayout(bufferLayout3);
+
+		std::shared_ptr<IndexBuffer> indexBuffer3;
+		indexBuffer3.reset(IndexBuffer::Create(indicies, 6 * 6));
+
+		vertexArray3->AddVertexBuffer(vertexBuffer3);
+		vertexArray3->SetIndexBuffer(indexBuffer3);
+
+		// ----------------
+
+		camera.reset(new Camera({ 0, 0, 0 }, { 0, 0, 0 }, {0, 1080, 720, 0 }, false));
 
 		textureAtlas.reset(Texture::Create("assets/textures/texture.png"));
 	}
@@ -91,6 +130,8 @@ namespace Heist {
 	Application::~Application() {}
 
 	void Application::OnUpdate(real64 time) {
+		// camera->rotation.y += 0.1;
+		camera->Update();
 	}
 
 	void Application::OnRender() {
@@ -98,16 +139,19 @@ namespace Heist {
 
 		Renderer::BeginScene(camera);
 
-		mat4 modelMatrix = mat4(1);
-		static real32 rot = 1;
-		rot += 0.05;
-
-		// modelMatrix = rotate(modelMatrix, rot, { 0, 1, 0 });
-		// modelMatrix = translate(modelMatrix, { 0.0f, 0.0f, -100.0f });
-		// modelMatrix = scale(modelMatrix, { 100.0f, 100.0f, 0.0f });
+		static real32 rot = 0.0f;
+		rot += 0.01f;
+		mat4 modelMatrix = MakeModelMatrix({ 0, 0, 5 }, { rot, 0, 0 }, {1, 1, 1});
+		mat4 modelMatrix2 = MakeModelMatrix({ 2, 0, 5 }, { 0, rot, 0 }, { 1, 1, 1 });
+		mat4 modelMatrix3 = MakeModelMatrix({ -2, 0, 5 }, { 0, 0, rot }, { 1, 1, 1 });
 
 		std::shared_ptr<RawModel> model(new RawModel(shader, textureAtlas, vertexArray, &modelMatrix));
+		std::shared_ptr<RawModel> model2(new RawModel(shader, textureAtlas, vertexArray2, &modelMatrix2));
+		std::shared_ptr<RawModel> model3(new RawModel(shader, textureAtlas, vertexArray3, &modelMatrix3));
+
 		Renderer::Submit(model);
+		Renderer::Submit(model2);
+		Renderer::Submit(model3);
 
 		Renderer::EndScene();
 

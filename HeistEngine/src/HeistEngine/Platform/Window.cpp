@@ -2,11 +2,19 @@
 #include "Window.h"
 #include "Core/Log/Log.h"
 #include "Platform/Assertions.h"
+#include "glad/glad.h"
 
 namespace Heist {
 	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 		Window* win = (Window*)glfwGetWindowUserPointer(window);
 		HS_CORE_INFO(std::to_string(key) + " was pressed!");
+	}
+
+	void window_size_callback(GLFWwindow* window, int width, int height) {
+		Window* win = (Window*)glfwGetWindowUserPointer(window);
+		win->width = width;
+		win->height = height;
+		glViewport(0, 0, (GLsizei)width, (GLsizei)height);
 	}
 
 	Window::Window(EventBus *eventBus, int32 width, int32 height, std::string title) 
@@ -31,6 +39,7 @@ namespace Heist {
 
 		// Set key callbacks
 		glfwSetKeyCallback(window, key_callback);
+		glfwSetWindowSizeCallback(window, window_size_callback);
 	};
 
 	Window::~Window() {

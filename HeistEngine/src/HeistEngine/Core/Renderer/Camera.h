@@ -22,6 +22,7 @@ namespace Heist {
 
 	private:
 		void CalculateViewMatrix();
+		void CalculateProjectionMatrix(vec4 dimensions);
 	};
 
 }

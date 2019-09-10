@@ -33,6 +33,8 @@ namespace Heist {
 		std::shared_ptr<Camera> camera;
 		std::shared_ptr<Shader> shader;
 		std::shared_ptr<VertexArray> vertexArray;
+		std::shared_ptr<VertexArray> vertexArray2;
+		std::shared_ptr<VertexArray> vertexArray3;
 		std::shared_ptr<Texture> textureAtlas;
 	};
 	

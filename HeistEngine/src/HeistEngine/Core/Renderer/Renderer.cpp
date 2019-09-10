@@ -7,6 +7,7 @@ namespace Heist {
 
 	void Renderer::Init() {
 		RendererCommand::Init();
+		RendererCommand::SetClearColor({ 0.8f, 0.8f, 0.8f, 1.0f });
 	}
 
 	void Renderer::BeginScene(const std::shared_ptr<Camera>& camera) {

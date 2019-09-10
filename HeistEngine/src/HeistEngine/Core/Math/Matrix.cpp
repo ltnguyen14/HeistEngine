@@ -56,7 +56,7 @@ namespace Heist {
 
 	//---------------------------------------------------------------------
 
-	mat4 MakeOrthoMatrix(real32 left, real32 right, real32 bottom, real32 top, real32 farPlane, real32 nearPlane)
+	mat4 MakeOrthoMatrix(real32 left, real32 right, real32 bottom, real32 top, real32 nearPlane, real32 farPlane)
 	{
 		mat4 data = mat4(1);
 
@@ -71,17 +71,17 @@ namespace Heist {
 		return data;
 	}
 
-	mat4 MakePerspectiveMatrix(real32 fov, real32 aspect, real32 farPlane, real32 nearPlane) {
+	mat4 MakePerspectiveMatrix(real32 fov, real32 aspect, real32 nearPlane, real32 farPlane) {
 		mat4 data = mat4(0);
 		float cotangent = 1.0f / tan(radian(fov) / 2);
 
 		data[0][0] = cotangent / aspect;
 		data[1][1] = cotangent;
-		data[2][2] = (nearPlane + farPlane) / (nearPlane - farPlane);
+		data[2][2] = -(nearPlane + farPlane) / (nearPlane - farPlane);
 		data[3][3] = 0.0f;
 
-		data[3][2] = (2.0f * farPlane * nearPlane) / (nearPlane - farPlane);
-		data[2][3] = -1.0f;
+		data[3][2] = -(2.0f * farPlane * nearPlane) / (farPlane - nearPlane);
+		data[2][3] = 1.0f;
 
 		return data;
 	}
@@ -139,5 +139,19 @@ namespace Heist {
 		};
 
 		return mat * xRot * yRot * zRot;
+	}
+
+	mat4 MakeModelMatrix(const vec3& position, const vec3& rotation, const vec3& scaleVec) {
+		mat4 modelMatrix = mat4(1);
+
+		modelMatrix = scale(modelMatrix, scaleVec);
+
+		modelMatrix = rotate(modelMatrix, rotation.x, { 1, 0, 0 });
+		modelMatrix = rotate(modelMatrix, rotation.y, { 0, 1, 0 });
+		modelMatrix = rotate(modelMatrix, rotation.z, { 0, 0, 1 });
+
+		modelMatrix = translate(modelMatrix, position);
+
+		return modelMatrix;
 	}
 }
