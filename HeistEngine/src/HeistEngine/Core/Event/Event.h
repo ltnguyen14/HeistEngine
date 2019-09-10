@@ -13,11 +13,18 @@ namespace Heist {
 
 	struct Event {
 		Event(std::string eventName, int32 eventTypeMask);
-		~Event();
+		virtual ~Event();
 
 		bool handled;
 		std::string eventName;
 		int32 eventTypeMask;
+	};
+
+	struct KeyEvent : public Event {
+		KeyEvent(int32 value, int32 action);
+		~KeyEvent();
+
+		int32 value, action;
 	};
 
 }

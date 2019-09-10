@@ -7,9 +7,10 @@
 namespace Heist {
 
 	Application::Application(int32 width, int32 height, std::string title) 
-		: window(&eventBus, width, height, title), memoryManager(20) {
+		: window(&eventBus, width, height, title), memoryManager(20), inputManager(&eventBus) {
 		running = true;
 
+		inputManager.StartUp();
 		Renderer::Init();
 		shader.reset(Shader::Create("assets/shaders/basic.vert.glsl", "assets/shaders/basic.frag.glsl"));
 		// ----------------- Rendering
@@ -127,11 +128,17 @@ namespace Heist {
 		textureAtlas.reset(Texture::Create("assets/textures/texture.png"));
 	}
 
-	Application::~Application() {}
+	Application::~Application() {
+		inputManager.ShutDown();
+	}
 
 	void Application::OnUpdate(real64 time) {
+		eventBus.Notify(); // TODO(LAM): Need to move this somewhere
 		// camera->rotation.y += 0.1;
 		camera->Update();
+		if (inputManager.GetKey(HS_KEY_A)) {
+			HS_CORE_WARN("A button is pressed!");
+		}
 	}
 
 	void Application::OnRender() {
@@ -198,7 +205,6 @@ namespace Heist {
 
 			// Render
 			this->OnRender();
-			eventBus.Notify(); // TODO(LAM): Need to move this somewhere
 			frameTime = float(clock() - current);
 		};
 	}

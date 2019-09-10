@@ -9,15 +9,15 @@ namespace Heist {
 		EventNode(EventBus *eventBus, std::string name);
 		~EventNode();
 
-		virtual void OnNotify(Event event);
+		virtual void OnNotify(Event *event);
 
-		std::function<void(Event)> GetNotificationFunc() {
-			return [=](Event event) {
+		std::function<void(Event*)> GetNotificationFunc() {
+			return [=](Event *event) {
 				return OnNotify(event);
 			};
 		}
 
-		void SendEvent(Event event) {
+		void SendEvent(Event *event) {
 			eventBus->SendEvent(event);
 		}
 

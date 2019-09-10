@@ -9,7 +9,6 @@ namespace Heist {
 
 		void SwapBuffer();
 		void PollEvents();
-		void OnNotify(Event event) override;
 
 		inline bool ShouldClose() { return glfwWindowShouldClose(window); };
 

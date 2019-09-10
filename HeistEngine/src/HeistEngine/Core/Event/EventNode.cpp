@@ -10,6 +10,6 @@ namespace Heist {
 
 	EventNode::~EventNode() {}
 
-	void EventNode::OnNotify(Event event) {
+	void EventNode::OnNotify(Event *event) {
 	}
 }

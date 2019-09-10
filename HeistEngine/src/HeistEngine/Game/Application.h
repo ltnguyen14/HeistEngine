@@ -9,6 +9,7 @@
 #include "Core/Renderer/VertexArray.h"
 #include "Core/Renderer/Camera.h"
 #include "Core/Renderer/Texture.h"
+#include "Core/Manager/InputManager.h"
 
 namespace Heist {
 	class Application {
@@ -30,6 +31,7 @@ namespace Heist {
 		LayerStack layerStack;
 		Window window;
 		MemoryManager memoryManager;
+		InputManager inputManager;
 		std::shared_ptr<Camera> camera;
 		std::shared_ptr<Shader> shader;
 		std::shared_ptr<VertexArray> vertexArray;

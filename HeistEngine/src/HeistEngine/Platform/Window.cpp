@@ -7,7 +7,9 @@
 namespace Heist {
 	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 		Window* win = (Window*)glfwGetWindowUserPointer(window);
-		HS_CORE_INFO(std::to_string(key) + " was pressed!");
+
+		KeyEvent* event = new KeyEvent(key, action);
+		win->SendEvent(event);
 	}
 
 	void window_size_callback(GLFWwindow* window, int width, int height) {
@@ -56,6 +58,4 @@ namespace Heist {
 		glfwPollEvents();
 	}
 
-	void Window::OnNotify(Event event) {
-	}
 }
