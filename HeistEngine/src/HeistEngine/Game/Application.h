@@ -30,8 +30,8 @@ namespace Heist {
 		EventBus eventBus;
 		LayerStack layerStack;
 		Window window;
-		MemoryManager memoryManager;
-		InputManager* inputManager;
+		MemoryManager *memoryManager;
+		InputManager *inputManager;
 		std::shared_ptr<Camera> camera;
 		std::shared_ptr<Shader> shader;
 		std::shared_ptr<VertexArray> vertexArray;

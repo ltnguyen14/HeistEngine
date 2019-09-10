@@ -8,13 +8,17 @@
 namespace Heist {
 
 	Application::Application(int32 width, int32 height, std::string title) 
-		: window(width, height, title), memoryManager(20) {
+		: window(width, height, title) {
 		running = true;
 
 		//Subsystem start up
+		memoryManager = MemoryManager::Instance();
+		memoryManager->StartUp(500);
 		window.StartUp();
 		inputManager = InputManager::Instance();
 		inputManager->StartUp();
+
+		// Event Bus Subscription
 		window.SubscribeToBus(&eventBus);
 		inputManager->SubscribeToBus(&eventBus);
 
@@ -139,6 +143,7 @@ namespace Heist {
 	Application::~Application() {
 		window.ShutDown();
 		inputManager->ShutDown();
+		memoryManager->ShutDown();
 	}
 
 	void Application::OnUpdate(real64 time) {

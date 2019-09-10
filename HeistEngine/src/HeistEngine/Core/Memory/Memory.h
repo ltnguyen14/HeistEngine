@@ -6,8 +6,10 @@ namespace Heist {
 	class MemoryManager
 	{
 	public:
-		MemoryManager(uintmax stackSize_mb); // stack size is in megabyte
-		~MemoryManager();
+		static MemoryManager* Instance();
+
+		void StartUp(uintmax stackSize_mb);
+		void ShutDown();
 
 		void* Alloc(uintmax size_byte);
 		void ClearStack();
@@ -16,6 +18,13 @@ namespace Heist {
 		void* startPointer;
 		void* endPointer;
 		uintmax stackSize_mb;
+
+	private:
+		MemoryManager() {};
+		MemoryManager(MemoryManager const&) {};
+		MemoryManager& operator=(MemoryManager const&) {};
+
+		static MemoryManager* g_memoryManager;
 	};
 
 }

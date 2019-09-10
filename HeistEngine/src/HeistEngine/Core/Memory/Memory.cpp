@@ -4,9 +4,8 @@
 
 namespace Heist {
 
-	MemoryManager::MemoryManager(uintmax stackSize_mb)
-		:stackSize_mb(stackSize_mb)
-	{
+	void MemoryManager::StartUp(uintmax stackSize_mb) {
+		this->stackSize_mb = stackSize_mb;
 		HS_CORE_TRACE("Memory initialized with the size of {}MB", stackSize_mb);
 		startPointer = malloc(stackSize_mb * 1024 * 1024);
 		endPointer = (char*)startPointer + stackSize_mb * 1024 * 1024;
@@ -14,7 +13,17 @@ namespace Heist {
 		marker = startPointer;
 	}
 
-	MemoryManager::~MemoryManager()
+	MemoryManager* MemoryManager::g_memoryManager = nullptr;
+
+	MemoryManager* MemoryManager::Instance() {
+		if (!g_memoryManager) {
+			g_memoryManager = new MemoryManager();
+		}
+
+		return g_memoryManager;
+	}
+
+	void MemoryManager::ShutDown()
 	{
 		free(startPointer);
 	}
