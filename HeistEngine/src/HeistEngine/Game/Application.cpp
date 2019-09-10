@@ -3,6 +3,7 @@
 #include "Core/Math/Math.h"
 #include "Platform/Assertions.h"
 #include "Core/Renderer/Renderer.h"
+#include "Core/FileSystem/FileManager.h"
 
 namespace Heist {
 

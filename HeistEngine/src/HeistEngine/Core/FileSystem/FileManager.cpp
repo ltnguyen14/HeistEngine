@@ -35,6 +35,14 @@ namespace Heist {
 		return content;
 	}
 
+	json FileManager::ReadJSON(const char* filePath)
+	{
+		std::string content = ReadFile(filePath);
+		auto jsonContent = json::parse(content);
+
+		return jsonContent;
+	}
+
 	void FileManager::WriteFile() {
 	}
 

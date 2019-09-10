@@ -1,5 +1,8 @@
 #pragma once
 #include "Macro.h"
+#include "External/json/json.hpp"
+
+using json = nlohmann::json;
 
 namespace Heist {
 
@@ -20,6 +23,8 @@ namespace Heist {
 		~FileManager();
 
 		static std::string ReadFile(const char* filePath);
+		static json ReadJSON(const char* filePath);
+
 		static void WriteFile();
 
 		static TextureData ReadTexture(const char* texturePath);
