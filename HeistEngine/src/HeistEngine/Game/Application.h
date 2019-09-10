@@ -31,7 +31,7 @@ namespace Heist {
 		LayerStack layerStack;
 		Window window;
 		MemoryManager memoryManager;
-		InputManager inputManager;
+		InputManager* inputManager;
 		std::shared_ptr<Camera> camera;
 		std::shared_ptr<Shader> shader;
 		std::shared_ptr<VertexArray> vertexArray;

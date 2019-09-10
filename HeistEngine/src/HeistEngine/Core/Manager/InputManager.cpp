@@ -5,9 +5,14 @@
 
 namespace Heist {
 
-	InputManager::InputManager(EventBus* eventBus)
-		: EventNode(eventBus, "Input Manager") {
+	InputManager* InputManager::g_inputManager = nullptr;
 
+	InputManager* InputManager::Instance() {
+		if (!g_inputManager) {
+			g_inputManager = new InputManager();
+		}
+
+		return g_inputManager;
 	}
 
 	InputManager::~InputManager() {

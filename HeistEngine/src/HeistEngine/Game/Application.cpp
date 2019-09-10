@@ -8,10 +8,17 @@
 namespace Heist {
 
 	Application::Application(int32 width, int32 height, std::string title) 
-		: window(&eventBus, width, height, title), memoryManager(20), inputManager(&eventBus) {
+		: window(width, height, title), memoryManager(20) {
 		running = true;
 
-		inputManager.StartUp();
+		//Subsystem start up
+		window.StartUp();
+		inputManager = InputManager::Instance();
+		inputManager->StartUp();
+		window.SubscribeToBus(&eventBus);
+		inputManager->SubscribeToBus(&eventBus);
+
+		// --------------------
 		Renderer::Init();
 		shader.reset(Shader::Create("assets/shaders/basic.vert.glsl", "assets/shaders/basic.frag.glsl"));
 		// ----------------- Rendering
@@ -130,14 +137,15 @@ namespace Heist {
 	}
 
 	Application::~Application() {
-		inputManager.ShutDown();
+		window.ShutDown();
+		inputManager->ShutDown();
 	}
 
 	void Application::OnUpdate(real64 time) {
 		eventBus.Notify(); // TODO(LAM): Need to move this somewhere
 		// camera->rotation.y += 0.1;
 		camera->Update();
-		if (inputManager.GetKey(HS_KEY_A)) {
+		if (inputManager->GetKey(HS_KEY_A)) {
 			HS_CORE_WARN("A button is pressed!");
 		}
 	}

@@ -4,8 +4,11 @@
 
 namespace Heist {
 	struct Window : public EventNode {
-		Window(EventBus *eventBus, int32 width, int32 height, std::string title);
+		Window(int32 width, int32 height, std::string title);
 		~Window();
+
+		void StartUp() override;
+		void ShutDown() override;
 
 		void SwapBuffer();
 		void PollEvents();

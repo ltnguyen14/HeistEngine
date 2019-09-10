@@ -19,8 +19,8 @@ namespace Heist {
 		glViewport(0, 0, (GLsizei)width, (GLsizei)height);
 	}
 
-	Window::Window(EventBus *eventBus, int32 width, int32 height, std::string title) 
-		: EventNode(eventBus, "Window"), width(width), height(height), title(title) {
+	Window::Window(int32 width, int32 height, std::string title) 
+		: EventNode("Window"), width(width), height(height), title(title) {
 
 		/* Initialize the library */
 		if (!glfwInit())
@@ -46,6 +46,14 @@ namespace Heist {
 
 	Window::~Window() {
 		glfwTerminate();
+	}
+
+	void Window::StartUp() {
+
+	}
+
+	void Window::ShutDown() {
+
 	}
 
 	void Window::SwapBuffer() {

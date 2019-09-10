@@ -6,8 +6,12 @@ namespace Heist {
 
 	struct EventNode {
 
-		EventNode(EventBus *eventBus, std::string name);
+		EventNode(std::string name);
 		~EventNode();
+
+		void SubscribeToBus(EventBus* eventBus);
+		virtual void StartUp() = 0;
+		virtual void ShutDown() = 0;
 
 		virtual void OnNotify(Event *event);
 
