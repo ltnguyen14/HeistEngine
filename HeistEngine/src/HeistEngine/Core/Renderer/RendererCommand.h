@@ -21,7 +21,6 @@ namespace Heist {
 			s_renderAPI->DrawIndexes(vertexArray);
 		}
 
-	private:
 		static RenderAPI* s_renderAPI;
 	};
 }

@@ -8,6 +8,8 @@ namespace Heist {
 
 	struct Renderer {
 
+		static void ShutDown();
+
 		static void Init();
 		static void BeginScene(const std::shared_ptr<Camera>& camera);
 		static void EndScene();

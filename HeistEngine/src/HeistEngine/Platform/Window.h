@@ -1,6 +1,7 @@
 #pragma once
 #include "Core/Event/EventNode.h"
 #include "GLFW/glfw3.h"
+#include "Core/Memory/Memory.h"
 
 namespace Heist {
 	struct Window : public EventNode {
@@ -21,6 +22,7 @@ namespace Heist {
 
 	public:
 		GLFWwindow* window;
+		MemoryManager* g_memoryManager;
 		int32 width, height;
 		std::string title;
 	};

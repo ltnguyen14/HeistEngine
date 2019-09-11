@@ -5,6 +5,11 @@ namespace Heist {
 
 	Renderer::SceneData* Renderer::s_sceneData = new Renderer::SceneData;
 
+	void Renderer::ShutDown() {
+		delete s_sceneData;
+		delete RendererCommand::s_renderAPI;
+	}
+
 	void Renderer::Init() {
 		RendererCommand::Init();
 		RendererCommand::SetClearColor({ 0.8f, 0.8f, 0.8f, 1.0f });

@@ -144,15 +144,21 @@ namespace Heist {
 		window.ShutDown();
 		inputManager->ShutDown();
 		memoryManager->ShutDown();
+		Renderer::ShutDown();
+
+		delete inputManager;
+		delete memoryManager;
+		for (auto layer : layerStack.layers) {
+			delete layer;
+		}
 	}
 
 	void Application::OnUpdate(real64 time) {
 		eventBus.Notify(); // TODO(LAM): Need to move this somewhere
 		// camera->rotation.y += 0.1;
 		camera->Update();
-		if (inputManager->GetKey(HS_KEY_A)) {
-			HS_CORE_WARN("A button is pressed!");
-		}
+
+		memoryManager->ClearStack();
 	}
 
 	void Application::OnRender() {

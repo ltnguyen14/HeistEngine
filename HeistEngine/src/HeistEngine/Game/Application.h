@@ -21,7 +21,7 @@ namespace Heist {
 		void OnRender();
 
 		void PushLayer(Layer *layer);
-		void PopLayer(Layer* layer);
+		void PopLayer(Layer *layer);
 
 		void Run();
 
