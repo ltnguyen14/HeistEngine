@@ -8,8 +8,6 @@ namespace Heist {
 	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 		Window* win = (Window*)glfwGetWindowUserPointer(window);
 		
-		// KeyEvent* event = new KeyEvent(key, action);
-
 		KeyEvent* event = (KeyEvent*)win->g_memoryManager->Alloc(sizeof(KeyEvent));
 		new(event) KeyEvent(key, action);
 
