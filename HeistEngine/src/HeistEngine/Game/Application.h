@@ -10,6 +10,7 @@
 #include "Core/Renderer/Camera.h"
 #include "Core/Renderer/Texture.h"
 #include "Core/Manager/InputManager.h"
+#include "ECS/ComponentManager.h"
 
 namespace Heist {
 	class Application {
@@ -38,6 +39,7 @@ namespace Heist {
 		std::shared_ptr<VertexArray> vertexArray2;
 		std::shared_ptr<VertexArray> vertexArray3;
 		std::shared_ptr<Texture> textureAtlas;
+		std::shared_ptr<ComponentManager> componentManager;
 	};
 	
 	// To be defined in client

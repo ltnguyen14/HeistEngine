@@ -7,6 +7,16 @@
 
 namespace Heist {
 
+	struct TestComponent : public BaseComponent {
+		int32 x;
+		int32 y;
+	};
+
+	struct TestComponent2 : public BaseComponent {
+		int32 x;
+		int32 y;
+	};
+
 	Application::Application(int32 width, int32 height, std::string title) 
 		: window(width, height, title) {
 		running = true;
@@ -138,6 +148,14 @@ namespace Heist {
 		camera.reset(new Camera({ 0, 0, 0 }, { 0, 0, 0 }, {0, 1080, 720, 0 }, false));
 
 		textureAtlas.reset(Texture::Create("assets/textures/texture.png"));
+
+		// ECS Test
+		componentManager.reset(new ComponentManager());
+		componentManager->AddComponentType<TestComponent>();
+		componentManager->AddComponentType<TestComponent2>();
+
+		std::vector<TestComponent*> testVec = componentManager->GetComponents<TestComponent>();
+
 	}
 
 	Application::~Application() {
