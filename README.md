@@ -13,3 +13,7 @@ are not on Windows then you are out of luck :)
 Development take places in the main branch.
 
 Stable release is in the Release branch.
+
+## Future Roadmap
+
+Trello board can be found here: https://trello.com/b/eYYYpAAv/heist-engine
