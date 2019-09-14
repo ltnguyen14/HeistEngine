@@ -4,9 +4,7 @@
 namespace Heist {
 
 	struct Entity {
-
 		int32 id;
-
 	};
 
 }

@@ -9,9 +9,8 @@ namespace Heist {
 	public:
 
 		BaseComponent();
-		~BaseComponent();
+		virtual ~BaseComponent();
 
 		static int32 componentTypeId;
 	};
-
 }

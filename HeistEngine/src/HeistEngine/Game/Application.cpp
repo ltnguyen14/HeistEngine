@@ -8,11 +8,13 @@
 namespace Heist {
 
 	struct TestComponent : public BaseComponent {
+		TestComponent(int32 x, int32 y): x(x), y(y) {};
 		int32 x;
 		int32 y;
 	};
 
 	struct TestComponent2 : public BaseComponent {
+		TestComponent2(int32 x, int32 y) : x(x), y(y) {};
 		int32 x;
 		int32 y;
 	};
@@ -155,7 +157,13 @@ namespace Heist {
 		componentManager->AddComponentType<TestComponent2>();
 
 		std::vector<TestComponent*> testVec = componentManager->GetComponents<TestComponent>();
+		//componentManager->AddComponents<TestComponent>({ {1, 2} });
 
+		std::vector<TestComponent> testVecx;
+		const std::initializer_list<TestComponent>& testInit = { { 1, 2 } };
+		for (auto i : testInit) {
+			testVecx.push_back(i);
+		}
 	}
 
 	Application::~Application() {
