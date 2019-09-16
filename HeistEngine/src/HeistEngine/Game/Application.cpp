@@ -7,17 +7,8 @@
 
 namespace Heist {
 
-	struct TestComponent : public BaseComponent {
-		TestComponent(int32 x, int32 y): x(x), y(y) {};
-		int32 x;
-		int32 y;
-	};
-
-	struct TestComponent2 : public BaseComponent {
-		TestComponent2(int32 x, int32 y) : x(x), y(y) {};
-		int32 x;
-		int32 y;
-	};
+	int32 TestComponent::componentTypeId = 0;
+	int32 TestComponent2::componentTypeId = 0;
 
 	Application::Application(int32 width, int32 height, std::string title) 
 		: window(width, height, title) {
@@ -157,13 +148,7 @@ namespace Heist {
 		componentManager->AddComponentType<TestComponent2>();
 
 		std::vector<TestComponent*> testVec = componentManager->GetComponents<TestComponent>();
-		//componentManager->AddComponents<TestComponent>({ {1, 2} });
-
-		std::vector<TestComponent> testVecx;
-		const std::initializer_list<TestComponent>& testInit = { { 1, 2 } };
-		for (auto i : testInit) {
-			testVecx.push_back(i);
-		}
+		componentManager->AddComponents<TestComponent>({ {1, 2} });
 	}
 
 	Application::~Application() {

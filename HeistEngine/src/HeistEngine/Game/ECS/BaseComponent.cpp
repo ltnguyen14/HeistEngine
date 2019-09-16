@@ -9,7 +9,4 @@ namespace Heist {
 	BaseComponent::~BaseComponent() {
 
 	}
-
-	int32 BaseComponent::componentTypeId = 0;
-
 }

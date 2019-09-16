@@ -13,6 +13,23 @@
 #include "ECS/ComponentManager.h"
 
 namespace Heist {
+
+	struct TestComponent : public BaseComponent {
+		TestComponent(int32 x, int32 y) : x(x), y(y) {};
+		int32 x;
+		int32 y;
+
+		static int32 componentTypeId;
+	};
+
+	struct TestComponent2 : public BaseComponent {
+		TestComponent2(int32 x, int32 y) : x(x), y(y) {};
+		int32 x;
+		int32 y;
+
+		static int32 componentTypeId;
+	};
+
 	class Application {
 	public:
 		Application(int32 width, int32 height, std::string title);
