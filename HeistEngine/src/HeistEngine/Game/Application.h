@@ -20,6 +20,7 @@ namespace Heist {
 		int32 y;
 
 		static int32 componentTypeId;
+		static std::string name;
 	};
 
 	struct TestComponent2 : public BaseComponent {
@@ -28,6 +29,7 @@ namespace Heist {
 		int32 y;
 
 		static int32 componentTypeId;
+		static std::string name;
 	};
 
 	class Application {

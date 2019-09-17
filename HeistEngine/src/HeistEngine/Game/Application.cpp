@@ -10,6 +10,9 @@ namespace Heist {
 	int32 TestComponent::componentTypeId = 0;
 	int32 TestComponent2::componentTypeId = 0;
 
+	std::string TestComponent::name = "TestComponent";
+	std::string TestComponent2::name = "TestComponent2";
+
 	Application::Application(int32 width, int32 height, std::string title) 
 		: window(width, height, title) {
 		running = true;
@@ -147,8 +150,12 @@ namespace Heist {
 		componentManager->AddComponentType<TestComponent>();
 		componentManager->AddComponentType<TestComponent2>();
 
-		std::vector<TestComponent*> testVec = componentManager->GetComponents<TestComponent>();
-		componentManager->AddComponents<TestComponent>({ {1, 2} });
+		Entity ent1("Entity 1");
+		componentManager->AddEntity(ent1);
+		componentManager->AddComponents<TestComponent>(ent1, { {10, 20} });
+		std::vector<std::shared_ptr<BaseComponent>> testVec = componentManager->GetComponents<TestComponent>();
+		std::shared_ptr<TestComponent> castVec = std::static_pointer_cast<TestComponent>(testVec[0]);
+		HS_CORE_INFO("Cast vec x {} y {} ", castVec->x, castVec->y);
 	}
 
 	Application::~Application() {
