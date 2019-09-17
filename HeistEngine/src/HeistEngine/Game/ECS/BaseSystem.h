@@ -9,7 +9,9 @@ namespace Heist {
 		virtual ~BaseSystem() {};
 		virtual void Update(real32 delta) = 0;
 
-		static ComponentManager* componentManager;
+		static void RegisterComponentManager(ComponentManager *componentManager);
+
+		static ComponentManager *componentManager;
 	};
 
 }
