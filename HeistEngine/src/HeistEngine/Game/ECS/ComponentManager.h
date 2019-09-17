@@ -3,10 +3,11 @@
 #include "Entity.h"
 #include "Core/Log/Log.h"
 #include "Platform/Assertions.h"
+#include "BaseSystem.h"
 
 namespace Heist {
 
-	class ComponentManager {
+	struct ComponentManager {
 	public:
 		
 		template<class T>

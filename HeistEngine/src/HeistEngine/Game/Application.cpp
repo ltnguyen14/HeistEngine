@@ -13,6 +13,14 @@ namespace Heist {
 	std::string TestComponent::name = "TestComponent";
 	std::string TestComponent2::name = "TestComponent2";
 
+	void TestSystem::Update(real32 delta) {
+		auto dataVec = BaseSystem::componentManager->GetComponents<TestComponent>();
+		for (auto data : dataVec) {
+			std::shared_ptr<TestComponent> dataPointer = std::static_pointer_cast<TestComponent>(data);
+			HS_CORE_INFO("Updating component type {}, data x {}, data y {}", dataPointer->componentTypeId, dataPointer->x, dataPointer->y);
+		}
+	}
+
 	Application::Application(int32 width, int32 height, std::string title) 
 		: window(width, height, title) {
 		running = true;
@@ -155,7 +163,8 @@ namespace Heist {
 		componentManager->AddComponents<TestComponent>(ent1, { {10, 20} });
 		std::vector<std::shared_ptr<BaseComponent>> testVec = componentManager->GetComponents<TestComponent>();
 		std::shared_ptr<TestComponent> castVec = std::static_pointer_cast<TestComponent>(testVec[0]);
-		HS_CORE_INFO("Cast vec x {} y {} ", castVec->x, castVec->y);
+
+		BaseSystem::SubscribeToManager(componentManager);
 	}
 
 	Application::~Application() {
@@ -175,6 +184,8 @@ namespace Heist {
 		eventBus.Notify(); // TODO(LAM): Need to move this somewhere
 		// camera->rotation.y += 0.1;
 		camera->Update();
+
+		TestSystem::Update(time);
 
 		memoryManager->ClearStack();
 	}

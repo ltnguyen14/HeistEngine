@@ -32,6 +32,12 @@ namespace Heist {
 		static std::string name;
 	};
 
+	struct TestSystem : public BaseSystem {
+		TestSystem() {};
+
+		static void Update(real32 delta);
+	};
+
 	class Application {
 	public:
 		Application(int32 width, int32 height, std::string title);
