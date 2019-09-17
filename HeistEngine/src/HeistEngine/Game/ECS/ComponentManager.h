@@ -3,7 +3,6 @@
 #include "Entity.h"
 #include "Core/Log/Log.h"
 #include "Platform/Assertions.h"
-#include "BaseSystem.h"
 
 namespace Heist {
 
@@ -62,4 +61,5 @@ namespace Heist {
 
 		 return rawRes;
 	}
+
 }

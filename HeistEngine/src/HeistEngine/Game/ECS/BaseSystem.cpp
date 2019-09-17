@@ -5,8 +5,4 @@ namespace Heist {
 
 	ComponentManager* BaseSystem::componentManager = nullptr;
 
-	void BaseSystem::SubscribeToManager(ComponentManager *componentManager) {
-		componentManager = componentManager;
-	}
-
 }

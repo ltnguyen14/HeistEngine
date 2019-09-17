@@ -14,11 +14,11 @@ namespace Heist {
 	std::string TestComponent2::name = "TestComponent2";
 
 	void TestSystem::Update(real32 delta) {
-		auto dataVec = BaseSystem::componentManager->GetComponents<TestComponent>();
-		for (auto data : dataVec) {
-			std::shared_ptr<TestComponent> dataPointer = std::static_pointer_cast<TestComponent>(data);
-			HS_CORE_INFO("Updating component type {}, data x {}, data y {}", dataPointer->componentTypeId, dataPointer->x, dataPointer->y);
-		}
+		// auto dataVec = BaseSystem::componentManager->GetComponents<TestComponent>();
+		// for (auto data : dataVec) {
+		// 	std::shared_ptr<TestComponent> dataPointer = std::static_pointer_cast<TestComponent>(data);
+		// 	HS_CORE_INFO("Updating component type {}, data x {}, data y {}", dataPointer->componentTypeId, dataPointer->x, dataPointer->y);
+		// }
 	}
 
 	Application::Application(int32 width, int32 height, std::string title) 
@@ -164,7 +164,8 @@ namespace Heist {
 		std::vector<std::shared_ptr<BaseComponent>> testVec = componentManager->GetComponents<TestComponent>();
 		std::shared_ptr<TestComponent> castVec = std::static_pointer_cast<TestComponent>(testVec[0]);
 
-		BaseSystem::SubscribeToManager(componentManager);
+		// BaseSystem::componentManager = componentManager.get();
+
 	}
 
 	Application::~Application() {

@@ -6,10 +6,10 @@ namespace Heist {
 	struct BaseSystem {
 		BaseSystem() {};
 
-		static void SubscribeToManager(ComponentManager* componentManager);
 		virtual ~BaseSystem() {};
+		virtual void Update(real32 delta) = 0;
 
-		static ComponentManager *componentManager;
+		static ComponentManager* componentManager;
 	};
 
 }

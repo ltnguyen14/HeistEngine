@@ -11,6 +11,7 @@
 #include "Core/Renderer/Texture.h"
 #include "Core/Manager/InputManager.h"
 #include "ECS/ComponentManager.h"
+#include "ECS/BaseSystem.h"
 
 namespace Heist {
 
