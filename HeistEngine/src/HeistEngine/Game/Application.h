@@ -12,6 +12,7 @@
 #include "Core/Manager/InputManager.h"
 
 namespace Heist {
+
 	class Application {
 	public:
 		Application(int32 width, int32 height, std::string title);
