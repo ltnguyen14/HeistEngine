@@ -57,10 +57,10 @@ NOTE: The initializor list should match the constructor
 7. Create a system inherit from BaseSystem
 ```
 struct TestSystem : public BaseSystem {
-		TestSystem() {};
+	TestSystem() {};
 
-		static void Update(real32 delta);
-	};
+	static void Update(real32 delta);
+};
 ```
 NOTE: A `System` needs a static Update function
 
