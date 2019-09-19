@@ -21,6 +21,10 @@ namespace Heist {
 			s_renderAPI->DrawIndexes(vertexArray);
 		}
 
+		inline static void VBOSubData(uint32 offsetBytes, real32 *data) {
+			s_renderAPI->VBOSubData(offsetBytes, data);
+		}
+
 		static RenderAPI* s_renderAPI;
 	};
 }

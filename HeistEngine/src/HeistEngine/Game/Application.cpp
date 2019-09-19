@@ -3,6 +3,8 @@
 #include "Core/Math/Math.h"
 #include "Platform/Assertions.h"
 #include "Core/Renderer/Renderer.h"
+#include "Core/Renderer/Renderer2D.h"
+
 #include "Core/FileSystem/FileManager.h"
 
 namespace Heist {
@@ -24,6 +26,9 @@ namespace Heist {
 
 		// --------------------
 		Renderer::Init();
+		Renderer2D::Init();
+
+#if 0
 		shader.reset(Shader::Create("assets/shaders/basic.vert.glsl", "assets/shaders/basic.frag.glsl"));
 		// ----------------- Rendering
 		real32 verticies[] = {
@@ -134,8 +139,8 @@ namespace Heist {
 		vertexArray3->SetIndexBuffer(indexBuffer3);
 
 		// ----------------
-
-		camera.reset(new Camera({ 0, 0, 0 }, { 0, 0, 0 }, {0, 1080, 720, 0 }, false));
+#endif
+		camera.reset(new Camera({ 0, 0, 0 }, { 0, 0, 0 }, {0, 1080, 720, 0 }, true));
 
 		textureAtlas.reset(Texture::Create("assets/textures/texture.png"));
 	}
@@ -163,7 +168,9 @@ namespace Heist {
 
 	void Application::OnRender() {
 		// Render stuff go here
+		RendererCommand::ClearScreen();
 
+#if 0
 		Renderer::BeginScene(camera);
 
 		static real32 rot = 0.0f;
@@ -181,7 +188,11 @@ namespace Heist {
 		Renderer::Submit(model3);
 
 		Renderer::EndScene();
+#endif
 
+		Renderer2D::BeginScene(camera);
+		Renderer2D::DrawSprite({ 0.0f, 0.0f }, { 32.0f, 32.0f }, {0.2f, 0.4f, 0.8f, 1.0f});
+		Renderer2D::EndScene();
 		// --------------------
 		window.SwapBuffer();
 	}

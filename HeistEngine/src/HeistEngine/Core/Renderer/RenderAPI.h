@@ -16,6 +16,7 @@ namespace Heist {
 		virtual void ClearScreen() = 0;
 
 		virtual void DrawIndexes(const std::shared_ptr<VertexArray>& vertexArray) = 0;
+		virtual void VBOSubData(uint32 offsetBytes, real32* data) = 0;
 
 		inline static API GetAPI() { return s_API; }
 	private:	

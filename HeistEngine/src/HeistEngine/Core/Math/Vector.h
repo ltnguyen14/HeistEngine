@@ -3,6 +3,15 @@
 
 // Vectors
 namespace Heist {
+	typedef union vec2 {
+		vec2() = default;
+		vec2(real32 x, real32 y) : x(x), y(y) {};
+		struct {
+			real32 x;
+			real32 y;
+		};
+	} vec2;
+
 	typedef union vec3 {
 		vec3() = default;
 		vec3(real32 x, real32 y, real32 z) : x(x), y(y), z(z) {};
@@ -41,6 +50,47 @@ namespace Heist {
 			real32 h;
 		};
 	} vec4;
+
+	// vec2 ------------------------------------------
+	// -----------------------------------------------
+
+	// Scalar mul
+	inline vec2 operator * (const vec2& v, real32 s) {
+		return vec2{ v.x * s, v.y * s };
+	}
+
+	inline vec2 operator / (const vec2& v, real32 s) {
+		s = 1.0f / s;
+		return v * s;
+	}
+
+	inline vec2 operator - (const vec2& v) {
+		return vec2{ -v.x, -v.y };
+	}
+
+	inline vec2 operator + (const vec2& v, const vec2& v2) {
+		return vec2{ v.x + v2.x, v.y + v2.y };
+	}
+
+	inline vec2 operator - (const vec2& v, const vec2& v2) {
+		return vec2{ v.x + v2.x, v.y + v2.y };
+	}
+
+	inline bool operator == (const vec2& v, const vec2& v2) {
+		return (v.x == v2.x) && (v.y == v2.y);
+	}
+
+	inline bool operator != (const vec2& v, const vec2& v2) {
+		return !(v == v2);
+	}
+
+	inline real32 Magnitude(const vec2& v) {
+		return sqrt(v.x * v.x + v.y * v.y);
+	}
+
+	inline vec2 Normalize(const vec2& v) {
+		return (v / Magnitude(v));
+	}
 
 	// vec3 ------------------------------------------
 	// -----------------------------------------------

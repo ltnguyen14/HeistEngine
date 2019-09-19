@@ -26,4 +26,8 @@ namespace Heist {
 	void GLRenderAPI::DrawIndexes(const std::shared_ptr<VertexArray>& vertexArray) {
 		glDrawElements(GL_TRIANGLES, vertexArray->indexBuffer->count, GL_UNSIGNED_INT, nullptr);
 	}
+
+	void GLRenderAPI::VBOSubData(uint32 offsetBytes, real32* data) {
+		glBufferSubData(GL_ARRAY_BUFFER, offsetBytes, sizeof(data), data);
+	}
 }

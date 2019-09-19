@@ -4,10 +4,14 @@
 
 namespace Heist {
 
-	GLVertexBuffer::GLVertexBuffer(real32* vertices, uint32 size) {
+	GLVertexBuffer::GLVertexBuffer(real32* vertices, uint32 size, bool staticDraw) {
 		glCreateBuffers(1, &vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+		if (staticDraw) {
+			glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+		} else {
+			glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_DYNAMIC_DRAW);
+		}
 	}
 
 	GLVertexBuffer::~GLVertexBuffer() {
@@ -28,11 +32,16 @@ namespace Heist {
 
 	// ----------------------------------------------------------------------------
 
-	GLIndexBuffer::GLIndexBuffer(uint32* indicies, uint32 count) {
+	GLIndexBuffer::GLIndexBuffer(uint32* indicies, uint32 count, bool staticDraw) {
 		this->count = count;
 		glCreateBuffers(1, &ebo);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32), indicies, GL_STATIC_DRAW);
+
+		if (staticDraw) {
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32), indicies, GL_STATIC_DRAW);
+		} else {
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32), indicies, GL_DYNAMIC_DRAW);
+		}
 	}
 
 	GLIndexBuffer::~GLIndexBuffer() {

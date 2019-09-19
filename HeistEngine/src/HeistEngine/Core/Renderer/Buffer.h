@@ -113,7 +113,7 @@ namespace Heist {
 
 		virtual void SetLayout(BufferLayout& layout) = 0;
 
-		static VertexBuffer* Create(real32* vertices, uint32 size);
+		static VertexBuffer* Create(real32* vertices, uint32 size, bool staticDraw = true);
 
 		uint32 vbo;
 		BufferLayout layout;
@@ -125,7 +125,7 @@ namespace Heist {
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
 
-		static IndexBuffer* Create(uint32* indicies, uint32 size);
+		static IndexBuffer* Create(uint32* indicies, uint32 size, bool staticDraw = true);
 
 		uint32 ebo, count;
 	};

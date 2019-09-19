@@ -17,7 +17,6 @@ namespace Heist {
 
 	void Renderer::BeginScene(const std::shared_ptr<Camera>& camera) {
 		HS_CORE_ASSERT(camera != nullptr, "Camera pointer is null");
-		RendererCommand::ClearScreen();
 		s_sceneData->projectionViewMatrix = camera->projectionViewMatrix;
 	}
 
@@ -31,7 +30,7 @@ namespace Heist {
 		model->texture->Bind();
 
 		model->shader->UploadUniformMat4("modelMatrix", model->modelMatrix);
-		model->shader->UploadUniformMat4("projectionViewMatrix", &s_sceneData->projectionViewMatrix);
+		model->shader->UploadUniformMat4("projectionViewMatrix", &s_sceneData->projectionViewMatrix); // Once we get a command queue this can be done for each shader instead of model
 
 		RendererCommand::DrawIndexes(model->vertexArray);
 	}
