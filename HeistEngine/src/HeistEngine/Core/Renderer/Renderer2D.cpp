@@ -5,7 +5,7 @@
 namespace Heist {
 
 	struct Vertex2D {
-		vec2 position;
+		vec3 position;
 		vec4 color;
 	};
 
@@ -35,7 +35,7 @@ namespace Heist {
 		// VBO
 		spriteVertexBuffer.reset(VertexBuffer::Create(nullptr, BUFFER_QUAD_SIZE * sizeof(Vertex2D), false));
 		BufferLayout bufferLayout({
-			{ShaderDataType::Float2, "Position"},
+			{ShaderDataType::Float3, "Position"},
 			{ShaderDataType::Float4, "Color"},
 		});
 		spriteVertexBuffer->SetLayout(bufferLayout);
@@ -92,17 +92,6 @@ namespace Heist {
 		RendererCommand::VBOSubData(quadCount * sizeof(Vertex2D) * 4, vertices);
 		quadCount++;
 	}
-
-	// void Renderer2D::Submit(const std::shared_ptr<Sprite>& sprite) {
-	// 	// sprite->shader->Bind();
-	// 	// sprite->vertexArray->Bind();
-	// 	// sprite->texture->Bind();
-	// 	// 
-	// 	// sprite->shader->UploadUniformMat4("modelMatrix", sprite->modelMatrix);
-	// 	// sprite->shader->UploadUniformMat4("projectionViewMatrix", &s_sceneData->projectionViewMatrix); // NOTE(LAM): Once we get a command queue this can be done for each shader instead of model
-	// 	// 
-	// 	// RendererCommand::DrawIndexes(sprite->vertexArray);
-	// }
 
 	void Renderer2D::Flush() {
 		
