@@ -6,6 +6,11 @@
 
 namespace Heist {
 
+	struct Vertex2D {
+		vec3 position;
+		vec4 color;
+	};
+
 	struct Renderer2D {
 
 		static void ShutDown();
@@ -35,6 +40,7 @@ namespace Heist {
 		static const int32 BUFFER_QUAD_SIZE = 100000;
 		static const int32 IB_COUNT = BUFFER_QUAD_SIZE * 6;
 
+		static real32* vertices;
 		static uint32 quadCount;
 	};
 }
