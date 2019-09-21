@@ -191,7 +191,7 @@ namespace Heist {
 #endif
 
 		Renderer2D::BeginScene(camera);
-		Renderer2D::DrawSprite({ 0.0f, 0.0f }, { 32.0f, 32.0f }, {0.2f, 0.4f, 0.8f, 1.0f});
+		Renderer2D::DrawSprite({ 0.0f, 0.0f }, { 32.0f, 32.0f }, {0.7f, 0.4f, 0.8f, 1.0f});
 		Renderer2D::EndScene();
 		// --------------------
 		window.SwapBuffer();

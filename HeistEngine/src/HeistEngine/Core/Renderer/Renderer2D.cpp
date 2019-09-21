@@ -89,7 +89,7 @@ namespace Heist {
 			position.x + scale.x, position.y + scale.y, position.z, color.r, color.g, color.b, color.a,
 			position.x + scale.x, position.y, position.z, color.r, color.g, color.b, color.a,
 		};
-		RendererCommand::VBOSubData(quadCount * sizeof(Vertex2D) * 4, vertices);
+		RendererCommand::VBOSubData(quadCount * sizeof(Vertex2D) * 4, sizeof(Vertex2D) * 4, vertices);
 		quadCount++;
 	}
 

@@ -27,7 +27,7 @@ namespace Heist {
 		glDrawElements(GL_TRIANGLES, vertexArray->indexBuffer->count, GL_UNSIGNED_INT, nullptr);
 	}
 
-	void GLRenderAPI::VBOSubData(uint32 offsetBytes, real32* data) {
-		glBufferSubData(GL_ARRAY_BUFFER, offsetBytes, sizeof(data), data);
+	void GLRenderAPI::VBOSubData(uint32 offsetBytes, uint32 sizeBytes, real32* data) {
+		glBufferSubData(GL_ARRAY_BUFFER, offsetBytes, sizeBytes, data);
 	}
 }
