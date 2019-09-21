@@ -26,6 +26,16 @@ namespace Heist {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
+	void GLVertexBuffer::ResetBuffer(real32* vertices, uint32 size, bool staticDraw) {
+		Bind();
+		if (staticDraw) {
+			glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+		}
+		else {
+			glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_DYNAMIC_DRAW);
+		}
+	}
+
 	void GLVertexBuffer::SetLayout(BufferLayout& layout) {
 		this->layout = layout;
 	}

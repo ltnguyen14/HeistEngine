@@ -23,9 +23,6 @@ namespace Heist {
 	}
 
 	void Renderer2D::Init() {
-		const int32 BUFFER_QUAD_SIZE = 100000;
-		const int32 IB_COUNT = BUFFER_QUAD_SIZE * 6;
-
 		RendererCommand::Init();
 		RendererCommand::SetClearColor({ 0.8f, 0.8f, 0.8f, 1.0f });
 
@@ -33,7 +30,7 @@ namespace Heist {
 		spriteVertexArray.reset(VertexArray::Create());
 
 		// VBO
-		spriteVertexBuffer.reset(VertexBuffer::Create(nullptr, BUFFER_QUAD_SIZE * sizeof(Vertex2D), false));
+		spriteVertexBuffer.reset(VertexBuffer::Create(nullptr, BUFFER_QUAD_SIZE * 4 * sizeof(Vertex2D), false));
 		BufferLayout bufferLayout({
 			{ShaderDataType::Float3, "Position"},
 			{ShaderDataType::Float4, "Color"},
@@ -71,11 +68,7 @@ namespace Heist {
 	}
 
 	void Renderer2D::EndScene() {
-		spriteShader->Bind();
-		spriteShader->UploadUniformMat4("modelMatrix", &mat4(1));
-		spriteShader->UploadUniformMat4("projectionViewMatrix", &s_sceneData->projectionViewMatrix); // NOTE(LAM): Once we get a command queue this can be done for each shader instead of model
-
-		RendererCommand::DrawIndexes(spriteVertexArray);
+		Flush();
 	}
 
 	void Renderer2D::DrawSprite(const vec2 position, const vec2 scale, const vec4 color) {
@@ -89,12 +82,23 @@ namespace Heist {
 			position.x + scale.x, position.y + scale.y, position.z, color.r, color.g, color.b, color.a,
 			position.x + scale.x, position.y, position.z, color.r, color.g, color.b, color.a,
 		};
+
+		if (quadCount == BUFFER_QUAD_SIZE) {
+			Flush();
+			spriteVertexBuffer->ResetBuffer(nullptr, BUFFER_QUAD_SIZE * 4 * sizeof(Vertex2D), false);
+		}
+
 		RendererCommand::VBOSubData(quadCount * sizeof(Vertex2D) * 4, sizeof(Vertex2D) * 4, vertices);
 		quadCount++;
 	}
 
 	void Renderer2D::Flush() {
-		
+		spriteShader->Bind();
+		spriteShader->UploadUniformMat4("modelMatrix", &mat4(1));
+		spriteShader->UploadUniformMat4("projectionViewMatrix", &s_sceneData->projectionViewMatrix); // NOTE(LAM): Once we get a command queue this can be done for each shader instead of model
+
+		RendererCommand::DrawIndexes(spriteVertexArray);
+		quadCount = 0;
 	}
 
 }

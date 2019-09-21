@@ -32,6 +32,9 @@ namespace Heist {
 		static std::shared_ptr<IndexBuffer> spriteIndexBuffer;
 		static std::shared_ptr<Shader> spriteShader;
 
+		static const int32 BUFFER_QUAD_SIZE = 100000;
+		static const int32 IB_COUNT = BUFFER_QUAD_SIZE * 6;
+
 		static uint32 quadCount;
 	};
 }

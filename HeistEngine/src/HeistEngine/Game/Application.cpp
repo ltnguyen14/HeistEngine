@@ -160,7 +160,7 @@ namespace Heist {
 
 	void Application::OnUpdate(real64 time) {
 		eventBus.Notify(); // TODO(LAM): Need to move this somewhere
-		// camera->rotation.y += 0.1;
+		camera->position.x += 4.0f;
 		camera->Update();
 
 		memoryManager->ClearStack();
@@ -191,7 +191,11 @@ namespace Heist {
 #endif
 
 		Renderer2D::BeginScene(camera);
-		Renderer2D::DrawSprite({ 0.0f, 0.0f }, { 32.0f, 32.0f }, {0.7f, 0.4f, 0.8f, 1.0f});
+		for (int32 y = 0; y < 250; y++) {
+			for (int32 x = 0; x < 250; x++) {
+				Renderer2D::DrawSprite({ x * 33.0f, y * 33.0f }, { 32.0f, 32.0f }, { 0.2f, 0.4f, 0.8f, 1.0f });
+			}
+		}
 		Renderer2D::EndScene();
 		// --------------------
 		window.SwapBuffer();
@@ -237,6 +241,7 @@ namespace Heist {
 			// Render
 			this->OnRender();
 			frameTime = float(clock() - current);
+			HS_CORE_INFO("Time: {}ms, FPS: {}", frameTime, 1000/frameTime);
 		};
 	}
 }

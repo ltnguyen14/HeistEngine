@@ -12,8 +12,8 @@ namespace Heist {
 		void Update();
 
 		// ----------
-		vec3 position, c_position;
-		vec3 rotation, c_rotation;
+		vec3 position;
+		vec3 rotation;
 		bool ortho;
 
 		mat4 projectionMatrix;
@@ -21,6 +21,7 @@ namespace Heist {
 		mat4 projectionViewMatrix;
 
 	private:
+		vec3 c_position, c_rotation;
 		void CalculateViewMatrix();
 		void CalculateProjectionMatrix(vec4 dimensions);
 	};
