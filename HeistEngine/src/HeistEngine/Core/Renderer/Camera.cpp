@@ -9,7 +9,7 @@ namespace Heist {
 		if (ortho) {
 			projectionMatrix = MakeOrthoMatrix(dimensions.x, dimensions.y, dimensions.w, dimensions.h, -1000, 1000);
 		} else {
-			projectionMatrix = MakePerspectiveMatrix(45, dimensions.y / dimensions.w, 0.1f, 100.0f);
+			projectionMatrix = MakePerspectiveMatrix(90, dimensions.y / dimensions.w, 0.1f, 100.0f);
 		}
 
 		CalculateViewMatrix();
@@ -25,6 +25,17 @@ namespace Heist {
 			c_rotation = rotation;
 			this->CalculateViewMatrix();
 		}
+	}
+
+	void Camera::UpdateDimension(vec4 dimensions) {
+		if (ortho) {
+			projectionMatrix = MakeOrthoMatrix(dimensions.x, dimensions.y, dimensions.w, dimensions.h, -1000, 1000);
+		}
+		else {
+			projectionMatrix = MakePerspectiveMatrix(90, dimensions.y / dimensions.w, 0.1f, 100.0f);
+		}
+
+		CalculateViewMatrix();
 	}
 
 	void Camera::CalculateViewMatrix() {

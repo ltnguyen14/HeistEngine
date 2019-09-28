@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "Core/Math/Math.h"
 #include "Model.h"
+#include "Core/FileSystem/FileManager.h"
 
 namespace Heist {
 
@@ -15,6 +16,7 @@ namespace Heist {
 		static void EndScene();
 
 		static void Submit(const std::shared_ptr<RawModel>& model);
+		static void Submit(const std::shared_ptr<Model3D>& model, const std::shared_ptr<Shader>& shader);
 		inline static RenderAPI::API GetRenderAPI() { return RenderAPI::GetAPI(); };
 		
 	private:

@@ -25,5 +25,6 @@ namespace Heist {
 		MemoryManager* g_memoryManager;
 		int32 width, height;
 		std::string title;
+		bool resize = false;
 	};
 }

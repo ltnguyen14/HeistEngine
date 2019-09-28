@@ -35,6 +35,44 @@ namespace Heist {
 		return content;
 	}
 
+	Model3D FileManager::ReadOBJFile(const char* filePath)
+	{
+		Model3D model;
+		std::ifstream fileStream;
+		fileStream.open(filePath);
+		std::string line;
+
+		std::string tag;
+		real32 v1, v2, v3, v4, v5;
+
+		while (std::getline(fileStream, line)) {
+			uint32 faceIndex = 0;
+			std::stringstream sl(line);
+			sl >> tag;
+			if (tag == "v") {
+				sl >> v1 >> v2 >> v3;
+				model.verticies.push_back(v1);
+				model.verticies.push_back(v2);
+				model.verticies.push_back(v3);
+			} else if (tag == "f") {
+				for (uint32 i; sl >> i;) {
+					faceIndex++;
+					if (faceIndex == 1) { // indicies
+						model.indicies.push_back(i - 1); // obj index start at 1
+					}
+					if (sl.peek() == '/' || sl.peek() == ' ') {
+						if (sl.peek() == ' ')
+							faceIndex = 0;
+						sl.ignore();
+					}
+				}
+			}
+		}
+
+		fileStream.close();
+		return model;
+	}
+
 	json FileManager::ReadJSON(const char* filePath)
 	{
 		std::string content = ReadFile(filePath);

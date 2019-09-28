@@ -140,9 +140,34 @@ namespace Heist {
 
 		// ----------------
 #endif
-		camera.reset(new Camera({ 0, 0, 0 }, { 0, 0, 0 }, {0, 1080, 720, 0 }, true));
+		camera.reset(new Camera({ 0, 0, 0 }, { 0, 0, 0 }, {0, 1080, 720, 0 }, false));
 
 		textureAtlas.reset(Texture::Create("assets/textures/texture.png"));
+
+		// Test loading model
+		auto testModel = FileManager::ReadOBJFile("assets/models/sphere.obj");
+
+		shader.reset(Shader::Create("assets/shaders/basic.vert.glsl", "assets/shaders/basic.frag.glsl"));
+		vertexArray.reset(VertexArray::Create());
+
+		std::shared_ptr<VertexBuffer> vertexBuffer;
+		HS_CORE_ASSERT(testModel.verticies.size() > 0, "No verticies passed in");
+		vertexBuffer.reset(
+			VertexBuffer::Create(testModel.verticies.data(), testModel.verticies.size() * sizeof(testModel.verticies[0]))
+		);
+		BufferLayout bufferLayout({
+			{ ShaderDataType::Float3, "Position" },
+			});
+		vertexBuffer->SetLayout(bufferLayout);
+
+		std::shared_ptr<IndexBuffer> indexBuffer;
+		HS_CORE_ASSERT(testModel.indicies.size() > 0, "No indicies passed in");
+		indexBuffer.reset(
+			IndexBuffer::Create(testModel.indicies.data(), testModel.indicies.size())
+		);
+
+		vertexArray->AddVertexBuffer(vertexBuffer);
+		vertexArray->SetIndexBuffer(indexBuffer);
 	}
 
 	Application::~Application() {
@@ -160,8 +185,13 @@ namespace Heist {
 
 	void Application::OnUpdate(real64 time) {
 		eventBus.Notify(); // TODO(LAM): Need to move this somewhere
-		camera->position.x += 4.0f;
+		// camera->position.x += 4.0f;
 		camera->Update();
+
+		if (window.resize) {
+			camera->UpdateDimension({ 0, (real32)window.width, (real32)window.height, 0 });
+			window.resize = false;
+		}
 
 		memoryManager->ClearStack();
 	}
@@ -171,6 +201,7 @@ namespace Heist {
 		RendererCommand::ClearScreen();
 
 #if 0
+		// Render 3D
 		Renderer::BeginScene(camera);
 
 		static real32 rot = 0.0f;
@@ -188,8 +219,8 @@ namespace Heist {
 		Renderer::Submit(model3);
 
 		Renderer::EndScene();
-#endif
 
+		// Render 2D
 		Renderer2D::BeginScene(camera);
 		for (int32 y = 0; y < 250; y++) {
 			for (int32 x = 0; x < 250; x++) {
@@ -197,6 +228,22 @@ namespace Heist {
 			}
 		}
 		Renderer2D::EndScene();
+
+#endif
+		// Test loading models
+		Renderer::BeginScene(camera);
+
+		static real32 rot = 0.0f;
+		rot += 0.01f;
+		mat4 modelMatrix = MakeModelMatrix({ 0, 0, 50 }, { rot, 0, 0 }, { 1, 1, 1 });
+
+		std::shared_ptr<RawModel> model(new RawModel(shader, textureAtlas, vertexArray, &modelMatrix));
+
+		Renderer::Submit(model);
+
+
+		Renderer::EndScene();
+
 		// --------------------
 		window.SwapBuffer();
 	}
@@ -241,7 +288,7 @@ namespace Heist {
 			// Render
 			this->OnRender();
 			frameTime = float(clock() - current);
-			HS_CORE_INFO("Time: {}ms, FPS: {}", frameTime, 1000/frameTime);
+			// HS_CORE_INFO("Time: {}ms, FPS: {}", frameTime, 1000/frameTime);
 		};
 	}
 }

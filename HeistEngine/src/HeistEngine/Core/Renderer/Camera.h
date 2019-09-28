@@ -10,6 +10,7 @@ namespace Heist {
 		~Camera();
 
 		void Update();
+		void UpdateDimension(vec4 dimensions);
 
 		// ----------
 		vec3 position;

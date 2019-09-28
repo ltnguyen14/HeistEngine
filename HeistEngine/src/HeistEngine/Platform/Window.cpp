@@ -18,6 +18,7 @@ namespace Heist {
 		Window* win = (Window*)glfwGetWindowUserPointer(window);
 		win->width = width;
 		win->height = height;
+		win->resize = true;
 		glViewport(0, 0, (GLsizei)width, (GLsizei)height);
 	}
 

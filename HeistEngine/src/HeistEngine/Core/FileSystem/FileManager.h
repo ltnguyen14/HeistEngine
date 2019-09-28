@@ -1,6 +1,7 @@
 #pragma once
 #include "Macro.h"
 #include "External/json/json.hpp"
+#include "Core/Math/Math.h"
 
 using json = nlohmann::json;
 
@@ -17,12 +18,21 @@ namespace Heist {
 		unsigned char* img;
 	};
 
+	struct Model3D {
+		std::vector<real32> verticies;
+		std::vector<uint32> indicies;
+		vec3 position;
+		vec3 rotation;
+		vec3 scale;
+	};
+
 	struct FileManager
 	{
 		FileManager();
 		~FileManager();
 
 		static std::string ReadFile(const char* filePath);
+		static Model3D ReadOBJFile(const char* filePath);
 		static json ReadJSON(const char* filePath);
 
 		static void WriteFile();
