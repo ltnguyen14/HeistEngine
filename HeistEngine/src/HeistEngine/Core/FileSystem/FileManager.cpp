@@ -1,6 +1,7 @@
 #include "hspch.h"
 #include "FileManager.h"
 #include "Platform/Assertions.h"
+#include "Platform/Assertions.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "External/stb_image.h"
@@ -35,9 +36,35 @@ namespace Heist {
 		return content;
 	}
 
-	Model3D FileManager::ReadOBJFile(const char* filePath)
+	Model3D* FileManager::CreateModelFromRawData(RawModel3D* rawModel, const std::shared_ptr<Shader>& shader, const std::shared_ptr<Texture>& texture)
 	{
-		Model3D model;
+		std::shared_ptr<VertexArray> vertexArray(VertexArray::Create());
+
+		// Verticies
+		HS_CORE_ASSERT(rawModel->verticies.size() > 0, "No verticies passed in");
+		std::shared_ptr<VertexBuffer> vertexBuffer(
+			VertexBuffer::Create(rawModel->verticies.data(), rawModel->verticies.size() * sizeof(rawModel->verticies[0]))
+		);
+		BufferLayout bufferLayout({
+			{ ShaderDataType::Float3, "Position" },
+			});
+		vertexBuffer->SetLayout(bufferLayout);
+
+		// Indicies
+		HS_CORE_ASSERT(rawModel->indicies.size() > 0, "No indicies passed in");
+		std::shared_ptr<IndexBuffer> indexBuffer(
+			IndexBuffer::Create(rawModel->indicies.data(), rawModel->indicies.size())
+		);
+
+		vertexArray->AddVertexBuffer(vertexBuffer);
+		vertexArray->SetIndexBuffer(indexBuffer);
+
+		return new Model3D(shader, texture, vertexArray);
+	}
+
+	RawModel3D FileManager::ReadOBJFile(const char* filePath)
+	{
+		RawModel3D model;
 		std::ifstream fileStream;
 		fileStream.open(filePath);
 		std::string line;

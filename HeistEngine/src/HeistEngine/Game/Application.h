@@ -10,6 +10,7 @@
 #include "Core/Renderer/Camera.h"
 #include "Core/Renderer/Texture.h"
 #include "Core/Manager/InputManager.h"
+#include "Core/FileSystem/FileManager.h"
 
 namespace Heist {
 
@@ -35,10 +36,8 @@ namespace Heist {
 		InputManager *inputManager;
 		std::shared_ptr<Camera> camera;
 		std::shared_ptr<Shader> shader;
-		std::shared_ptr<VertexArray> vertexArray;
-		std::shared_ptr<VertexArray> vertexArray2;
-		std::shared_ptr<VertexArray> vertexArray3;
 		std::shared_ptr<Texture> textureAtlas;
+		std::shared_ptr<Model3D> testModel;
 	};
 	
 	// To be defined in client

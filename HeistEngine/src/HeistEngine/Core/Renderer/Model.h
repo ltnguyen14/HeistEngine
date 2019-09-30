@@ -6,8 +6,8 @@
 
 namespace Heist {
 
-	struct RawModel {
-		RawModel(std::shared_ptr<Shader>& shader,
+	struct RawModelData {
+		RawModelData(std::shared_ptr<Shader>& shader,
 			std::shared_ptr<Texture>& texture,
 			std::shared_ptr<VertexArray>& vertexArray,
 			mat4* modelMatrix) 

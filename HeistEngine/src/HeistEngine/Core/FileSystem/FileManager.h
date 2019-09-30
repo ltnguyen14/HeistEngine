@@ -2,6 +2,9 @@
 #include "Macro.h"
 #include "External/json/json.hpp"
 #include "Core/Math/Math.h"
+#include "Core/Renderer/Shader.h"
+#include "Core/Renderer/Texture.h"
+#include "Core/Renderer/VertexArray.h"
 
 using json = nlohmann::json;
 
@@ -18,12 +21,43 @@ namespace Heist {
 		unsigned char* img;
 	};
 
-	struct Model3D {
+	struct RawModel3D {
 		std::vector<real32> verticies;
 		std::vector<uint32> indicies;
+	};
+
+	struct Model3D {
+
+		Model3D(const std::shared_ptr<Shader>& shader, const std::shared_ptr<Texture>& texture, const std::shared_ptr<VertexArray>& vertexArray)
+			: shader(shader), texture(texture), vertexArray(vertexArray), 
+			position(0, 0, 0), rotation(0, 0, 0), scale(1, 1, 1), c_position(position), c_rotation(rotation), c_scale(scale), c_modelMatrix(1) {};
+
+		mat4 GetModelMatrix() {
+			if ((position != c_position) || (rotation != c_rotation) || (scale != c_scale)) {
+				c_modelMatrix = MakeModelMatrix(position, rotation, scale);
+				c_position = position;
+				c_rotation = rotation;
+				c_scale = scale;
+
+				return c_modelMatrix;
+			} else {
+				return c_modelMatrix;
+			}
+		};
+
+		std::shared_ptr<Shader> shader;
+		std::shared_ptr<Texture> texture;
+		std::shared_ptr<VertexArray> vertexArray;
+
 		vec3 position;
 		vec3 rotation;
 		vec3 scale;
+
+		vec3 c_position;
+		vec3 c_rotation;
+		vec3 c_scale;
+
+		mat4 c_modelMatrix;
 	};
 
 	struct FileManager
@@ -32,7 +66,8 @@ namespace Heist {
 		~FileManager();
 
 		static std::string ReadFile(const char* filePath);
-		static Model3D ReadOBJFile(const char* filePath);
+		static Model3D* CreateModelFromRawData(RawModel3D *rawModel, const std::shared_ptr<Shader>& shader, const std::shared_ptr<Texture>& texture);
+		static RawModel3D ReadOBJFile(const char* filePath);
 		static json ReadJSON(const char* filePath);
 
 		static void WriteFile();
