@@ -43,7 +43,11 @@ namespace Heist {
 		model->shader->UploadUniformMat4("modelMatrix", &model->GetModelMatrix());
 		model->shader->UploadUniformMat4("projectionViewMatrix", &s_sceneData->projectionViewMatrix); // Once we get a command queue this can be done for each shader instead of model
 
-		RendererCommand::DrawIndexes(model->vertexArray);
+		if (model->useIndicies) {
+			RendererCommand::DrawIndexes(model->vertexArray);
+		} else {
+			RendererCommand::DrawVerticies(model->vertexArray);
+		}
 
 	}
 }

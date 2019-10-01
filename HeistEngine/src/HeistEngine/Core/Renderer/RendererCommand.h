@@ -21,6 +21,10 @@ namespace Heist {
 			s_renderAPI->DrawIndexes(vertexArray);
 		}
 
+		inline static void DrawVerticies(const std::shared_ptr<VertexArray>& vertexArray) {
+			s_renderAPI->DrawVerticies(vertexArray);
+		}
+
 		inline static void VBOSubData(uint32 offsetBytes, uint32 sizeBytes, real32 *data) {
 			s_renderAPI->VBOSubData(offsetBytes, sizeBytes, data);
 		}

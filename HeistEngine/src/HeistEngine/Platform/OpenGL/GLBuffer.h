@@ -4,7 +4,7 @@
 namespace Heist {
 
 	struct GLVertexBuffer : public VertexBuffer {
-		GLVertexBuffer(real32* vertices, uint32 size, bool staticDraw);
+		GLVertexBuffer(real32* vertices, uint32 size, uint32 count, bool staticDraw);
 		~GLVertexBuffer();
 
 		void Bind() const override;

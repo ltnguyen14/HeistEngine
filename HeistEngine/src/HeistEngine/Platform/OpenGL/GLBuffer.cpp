@@ -4,8 +4,9 @@
 
 namespace Heist {
 
-	GLVertexBuffer::GLVertexBuffer(real32* vertices, uint32 size, bool staticDraw) {
+	GLVertexBuffer::GLVertexBuffer(real32* vertices, uint32 size, uint32 count, bool staticDraw) {
 		glCreateBuffers(1, &vbo);
+		this->count = count;
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		if (staticDraw) {
 			glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);

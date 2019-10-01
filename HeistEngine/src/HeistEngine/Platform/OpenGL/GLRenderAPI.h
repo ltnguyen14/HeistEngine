@@ -10,6 +10,8 @@ namespace Heist {
 		void ClearScreen() override;
 
 		void DrawIndexes(const std::shared_ptr<VertexArray>& vertexArray) override;
+		void DrawVerticies(const std::shared_ptr<VertexArray>& vertexArray) override;
+
 		void VBOSubData(uint32 offsetBytes, uint32 sizeBytes, real32* data) override;
 
 	};

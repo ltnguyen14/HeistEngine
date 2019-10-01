@@ -114,9 +114,10 @@ namespace Heist {
 		virtual void SetLayout(BufferLayout& layout) = 0;
 		virtual void ResetBuffer(real32* vertices, uint32 size, bool staticDraw) = 0;
 
-		static VertexBuffer* Create(real32* vertices, uint32 size, bool staticDraw = true);
+		static VertexBuffer* Create(real32* vertices, uint32 size, uint32 count, bool staticDraw = true);
 
 		uint32 vbo;
+		uint32 count;
 		BufferLayout layout;
 	};
 

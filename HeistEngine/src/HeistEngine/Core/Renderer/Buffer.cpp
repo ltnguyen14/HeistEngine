@@ -7,11 +7,11 @@
 
 namespace Heist {
 
-	VertexBuffer* VertexBuffer::Create(real32* vertices, uint32 size, bool staticDraw)
+	VertexBuffer* VertexBuffer::Create(real32* vertices, uint32 size, uint32 count, bool staticDraw)
 	{
 		switch (Renderer::GetRenderAPI()) {
 		case RenderAPI::API::OpenGL:
-			return new GLVertexBuffer(vertices, size, staticDraw);
+			return new GLVertexBuffer(vertices, size, count, staticDraw);
 		case RenderAPI::API::None:
 			return nullptr;
 		}

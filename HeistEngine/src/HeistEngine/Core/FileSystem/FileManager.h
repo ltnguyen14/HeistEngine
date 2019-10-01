@@ -23,14 +23,16 @@ namespace Heist {
 
 	struct RawModel3D {
 		std::vector<real32> verticies;
+		std::vector<real32> normals;
 		std::vector<uint32> indicies;
+		std::vector<real32> dataBuffer;
 	};
 
 	struct Model3D {
 
-		Model3D(const std::shared_ptr<Shader>& shader, const std::shared_ptr<Texture>& texture, const std::shared_ptr<VertexArray>& vertexArray)
+		Model3D(const std::shared_ptr<Shader>& shader, const std::shared_ptr<Texture>& texture, const std::shared_ptr<VertexArray>& vertexArray, bool useIndicies)
 			: shader(shader), texture(texture), vertexArray(vertexArray), 
-			position(0, 0, 0), rotation(0, 0, 0), scale(1, 1, 1), c_position(position), c_rotation(rotation), c_scale(scale), c_modelMatrix(1) {};
+			position(0, 0, 0), rotation(0, 0, 0), scale(1, 1, 1), c_position(position), c_rotation(rotation), c_scale(scale), c_modelMatrix(1), useIndicies(useIndicies) {};
 
 		mat4 GetModelMatrix() {
 			if ((position != c_position) || (rotation != c_rotation) || (scale != c_scale)) {
@@ -44,6 +46,8 @@ namespace Heist {
 				return c_modelMatrix;
 			}
 		};
+
+		bool useIndicies;
 
 		std::shared_ptr<Shader> shader;
 		std::shared_ptr<Texture> texture;

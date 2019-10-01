@@ -43,23 +43,26 @@ namespace Heist {
 		// Verticies
 		HS_CORE_ASSERT(rawModel->verticies.size() > 0, "No verticies passed in");
 		std::shared_ptr<VertexBuffer> vertexBuffer(
-			VertexBuffer::Create(rawModel->verticies.data(), rawModel->verticies.size() * sizeof(rawModel->verticies[0]))
+			VertexBuffer::Create(rawModel->dataBuffer.data(), rawModel->dataBuffer.size() * sizeof(rawModel->dataBuffer[0]), rawModel->normals.size()) 
+			// Since each vertex has its own normal, the sizes of the two are equal
 		);
 		BufferLayout bufferLayout({
 			{ ShaderDataType::Float3, "Position" },
+			{ ShaderDataType::Float3, "Normals" },
 			});
 		vertexBuffer->SetLayout(bufferLayout);
 
 		// Indicies
-		HS_CORE_ASSERT(rawModel->indicies.size() > 0, "No indicies passed in");
-		std::shared_ptr<IndexBuffer> indexBuffer(
-			IndexBuffer::Create(rawModel->indicies.data(), rawModel->indicies.size())
-		);
-
 		vertexArray->AddVertexBuffer(vertexBuffer);
-		vertexArray->SetIndexBuffer(indexBuffer);
+		if (rawModel->indicies.size() > 0) {
+			std::shared_ptr<IndexBuffer> indexBuffer(
+				IndexBuffer::Create(rawModel->indicies.data(), rawModel->indicies.size())
+			);
+			vertexArray->SetIndexBuffer(indexBuffer);
+			return new Model3D(shader, texture, vertexArray, true);
+		}
 
-		return new Model3D(shader, texture, vertexArray);
+		return new Model3D(shader, texture, vertexArray, false);
 	}
 
 	RawModel3D FileManager::ReadOBJFile(const char* filePath)
@@ -82,10 +85,17 @@ namespace Heist {
 				model.verticies.push_back(v2);
 				model.verticies.push_back(v3);
 			} else if (tag == "f") {
-				for (uint32 i; sl >> i;) {
+				for (uint64 i; sl >> i;) {
 					faceIndex++;
 					if (faceIndex == 1) { // indicies
-						model.indicies.push_back(i - 1); // obj index start at 1
+						// model.indicies.push_back(i - 1); // obj index start at 1
+						model.dataBuffer.push_back(model.verticies[(i - 1) * 3 + 0]);
+						model.dataBuffer.push_back(model.verticies[(i - 1) * 3 + 1]);
+						model.dataBuffer.push_back(model.verticies[(i - 1) * 3 + 2]);
+					} else if (faceIndex == 3) {
+						model.dataBuffer.push_back(model.normals[(i - 1) * 3 + 0]);
+						model.dataBuffer.push_back(model.normals[(i - 1) * 3 + 1]);
+						model.dataBuffer.push_back(model.normals[(i - 1) * 3 + 2]);
 					}
 					if (sl.peek() == '/' || sl.peek() == ' ') {
 						if (sl.peek() == ' ')
@@ -93,6 +103,11 @@ namespace Heist {
 						sl.ignore();
 					}
 				}
+			} else if (tag == "vn") {
+				sl >> v1 >> v2 >> v3;
+				model.normals.push_back(v1);
+				model.normals.push_back(v2);
+				model.normals.push_back(v3);
 			}
 		}
 
