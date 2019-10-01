@@ -69,6 +69,8 @@ namespace Heist {
 		RawModel3D model;
 		std::ifstream fileStream;
 		fileStream.open(filePath);
+		HS_CORE_ASSERT(!fileStream.fail(), "Cannot open file path: " + std::string(filePath));
+
 		std::string line;
 
 		std::string tag;

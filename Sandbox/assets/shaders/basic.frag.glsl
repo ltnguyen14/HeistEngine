@@ -5,6 +5,7 @@ in vec3 v_FragPosition;
 
 out vec4 fragColor;
 uniform vec3 lightPosition;
+uniform vec3 viewPosition;
 
 vec4 CalculateLighting(vec3 lightColor, vec3 objectColor) {
 	// Ambient	
@@ -17,7 +18,14 @@ vec4 CalculateLighting(vec3 lightColor, vec3 objectColor) {
 	float diff = max(dot(norm, lightDir), 0.0);
 	vec3 diffuse = diff * lightColor;
 
-	vec3 color = (ambient + diffuse) * objectColor;
+	// Specular
+	float specularStrength = 0.5;
+	vec3 viewDir = normalize(viewPosition - v_FragPosition);
+	vec3 reflectDir = reflect(-lightDir, norm);
+	float spec = pow(max(dot(viewDir, reflectDir), 0.0), 16);
+	vec3 specular = specularStrength * spec * lightColor;
+
+	vec3 color = (ambient + diffuse + specular) * objectColor;
 	return vec4(color, 1.0);
 }
 

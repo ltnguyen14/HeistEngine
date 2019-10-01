@@ -8,6 +8,7 @@
 namespace Heist {
 
 	struct SceneData {
+		std::shared_ptr<Camera> camera;
 		mat4 projectionViewMatrix;
 		vec3 lightPosition;
 	};

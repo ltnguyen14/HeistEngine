@@ -26,15 +26,16 @@ namespace Heist {
 		Renderer::Init();
 		Renderer2D::Init();
 
-		camera.reset(new Camera({ 0, 0, -10 }, { 0, 0, 0 }, {0, 1080, 720, 0 }, false));
+		camera.reset(new Camera({ 0, 0, -5 }, { 0, 0, 0 }, {0, 1080, 720, 0 }, false));
 
 		textureAtlas.reset(Texture::Create("assets/textures/texture.png"));
 		shader.reset(Shader::Create("assets/shaders/basic.vert.glsl", "assets/shaders/basic.frag.glsl"));
 
 		// Test loading model
-		auto rawModel = FileManager::ReadOBJFile("assets/models/car.obj");
+		auto rawModel = FileManager::ReadOBJFile("assets/models/monkey_high_res.obj");
 		testModel.reset(FileManager::CreateModelFromRawData(&rawModel, shader, textureAtlas));
 		testModel->position = { 0, 0, 0 };
+		testModel->scale = { 2, 2, 2 };
 	}
 
 	Application::~Application() {
@@ -60,7 +61,7 @@ namespace Heist {
 			window.resize = false;
 		}
 
-		// testModel->rotation.x += 1.0f;
+		testModel->rotation.y += 1.0f;
 
 		memoryManager->ClearStack();
 	}
@@ -70,8 +71,7 @@ namespace Heist {
 		RendererCommand::ClearScreen();
 
 		// Test loading models
-		vec3 lightPosition = { 10, 0, -10 };
-		testModel->rotation.y += 0.01f;
+		vec3 lightPosition = { 0, -10, -5 };
 		Renderer::BeginScene(camera, lightPosition);
 
 		Renderer::Submit(testModel);

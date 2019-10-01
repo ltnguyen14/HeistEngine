@@ -19,6 +19,7 @@ namespace Heist {
 		HS_CORE_ASSERT(camera != nullptr, "Camera pointer is null");
 		s_sceneData->projectionViewMatrix = camera->projectionViewMatrix;
 		s_sceneData->lightPosition = lightPosition;
+		s_sceneData->camera = camera;
 	}
 
 	void Renderer::EndScene() {
@@ -33,6 +34,7 @@ namespace Heist {
 		model->shader->UploadUniformMat4("modelMatrix", model->modelMatrix);
 		model->shader->UploadUniformMat4("projectionViewMatrix", &s_sceneData->projectionViewMatrix); // Once we get a command queue this can be done for each shader instead of model
 		model->shader->UploadUniformVec3("lightPosition", &s_sceneData->lightPosition);
+		model->shader->UploadUniformVec3("viewPosition", &s_sceneData->camera->position);
 
 		RendererCommand::DrawIndexes(model->vertexArray);
 	}
