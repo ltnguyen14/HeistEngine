@@ -43,8 +43,7 @@ namespace Heist {
 		// Verticies
 		HS_CORE_ASSERT(rawModel->verticies.size() > 0, "No verticies passed in");
 		std::shared_ptr<VertexBuffer> vertexBuffer(
-			VertexBuffer::Create(rawModel->dataBuffer.data(), rawModel->dataBuffer.size() * sizeof(rawModel->dataBuffer[0]), rawModel->normals.size()) 
-			// Since each vertex has its own normal, the sizes of the two are equal
+			VertexBuffer::Create(rawModel->dataBuffer.data(), rawModel->dataBuffer.size() * sizeof(rawModel->dataBuffer[0]), rawModel->verticiesNum) 
 		);
 		BufferLayout bufferLayout({
 			{ ShaderDataType::Float3, "Position" },
@@ -103,6 +102,7 @@ namespace Heist {
 						sl.ignore();
 					}
 				}
+				model.verticiesNum += 3;
 			} else if (tag == "vn") {
 				sl >> v1 >> v2 >> v3;
 				model.normals.push_back(v1);

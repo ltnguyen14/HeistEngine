@@ -22,6 +22,7 @@ namespace Heist {
 	};
 
 	struct RawModel3D {
+		uint32 verticiesNum = 0;
 		std::vector<real32> verticies;
 		std::vector<real32> normals;
 		std::vector<uint32> indicies;

@@ -7,6 +7,7 @@ namespace Heist {
 
 		inline static void Init() {
 			s_renderAPI->Init();
+			RendererCommand::SetClearColor({ 0.3f, 0.3f, 0.3f, 1.0f });
 		}
 
 		inline static void SetClearColor(vec4 color) {

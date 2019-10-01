@@ -1,20 +1,27 @@
 #version 410 core
 
-in vec2 v_Normals;
+in vec3 v_Normal;
+in vec3 v_FragPosition;
 
 out vec4 fragColor;
-uniform sampler2D outTexture; 
+uniform vec3 lightPosition;
 
 vec4 CalculateLighting(vec3 lightColor, vec3 objectColor) {
+	// Ambient	
 	float ambientStrength = 0.2;
 	vec3 ambient = ambientStrength * lightColor;
 
-	vec3 color = ambient * objectColor;
+	// Diffuse
+	vec3 norm = normalize(v_Normal);
+	vec3 lightDir = normalize(lightPosition - v_FragPosition);
+	float diff = max(dot(norm, lightDir), 0.0);
+	vec3 diffuse = diff * lightColor;
+
+	vec3 color = (ambient + diffuse) * objectColor;
 	return vec4(color, 1.0);
 }
 
 void main() {
-	// fragColor = texture(outTexture, v_TexCoords);
 	vec3 lightColor = vec3(1, 1, 1);
 	vec3 objectColor = vec3(0.2, 0.4, 0.8);
 	fragColor = CalculateLighting(lightColor, objectColor);

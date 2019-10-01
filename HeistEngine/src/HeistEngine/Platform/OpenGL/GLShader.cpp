@@ -55,6 +55,15 @@ namespace Heist {
 		glUniformMatrix4fv(matrixLocation, 1, GL_FALSE, &(*matrix)[0][0]);
 	}
 
+	void GLShader::UploadUniformVec3(const char* uniformName, const vec3* vector) {
+		int32 matrixLocation = glGetUniformLocation(programId, uniformName);
+		glUniform3f(matrixLocation, vector->x, vector->y, vector->z);
+	}
+	void GLShader::UploadUniformVec4(const char* uniformName, const vec4* vector) {
+		int32 matrixLocation = glGetUniformLocation(programId, uniformName);
+		glUniform4f(matrixLocation, vector->x, vector->y, vector->z, vector->q);
+	}
+
 	void GLShader::Bind() const {
 		glUseProgram(programId);
 	}

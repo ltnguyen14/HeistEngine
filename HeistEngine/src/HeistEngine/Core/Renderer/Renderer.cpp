@@ -3,7 +3,7 @@
 
 namespace Heist {
 
-	Renderer::SceneData* Renderer::s_sceneData = new Renderer::SceneData;
+	SceneData* Renderer::s_sceneData = new SceneData;
 
 	void Renderer::ShutDown() {
 		delete s_sceneData;
@@ -15,9 +15,10 @@ namespace Heist {
 		RendererCommand::SetClearColor({ 0.8f, 0.8f, 0.8f, 1.0f });
 	}
 
-	void Renderer::BeginScene(const std::shared_ptr<Camera>& camera) {
+	void Renderer::BeginScene(const std::shared_ptr<Camera>& camera, vec3 lightPosition) {
 		HS_CORE_ASSERT(camera != nullptr, "Camera pointer is null");
 		s_sceneData->projectionViewMatrix = camera->projectionViewMatrix;
+		s_sceneData->lightPosition = lightPosition;
 	}
 
 	void Renderer::EndScene() {
@@ -31,6 +32,7 @@ namespace Heist {
 
 		model->shader->UploadUniformMat4("modelMatrix", model->modelMatrix);
 		model->shader->UploadUniformMat4("projectionViewMatrix", &s_sceneData->projectionViewMatrix); // Once we get a command queue this can be done for each shader instead of model
+		model->shader->UploadUniformVec3("lightPosition", &s_sceneData->lightPosition);
 
 		RendererCommand::DrawIndexes(model->vertexArray);
 	}
@@ -42,6 +44,7 @@ namespace Heist {
 
 		model->shader->UploadUniformMat4("modelMatrix", &model->GetModelMatrix());
 		model->shader->UploadUniformMat4("projectionViewMatrix", &s_sceneData->projectionViewMatrix); // Once we get a command queue this can be done for each shader instead of model
+		model->shader->UploadUniformVec3("lightPosition", &s_sceneData->lightPosition);
 
 		if (model->useIndicies) {
 			RendererCommand::DrawIndexes(model->vertexArray);

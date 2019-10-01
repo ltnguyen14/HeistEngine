@@ -21,7 +21,6 @@ namespace Heist {
 
 	void Renderer2D::Init() {
 		RendererCommand::Init();
-		RendererCommand::SetClearColor({ 0.8f, 0.8f, 0.8f, 1.0f });
 
 		// VAO
 		spriteVertexArray.reset(VertexArray::Create());
