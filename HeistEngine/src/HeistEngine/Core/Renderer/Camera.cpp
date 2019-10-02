@@ -9,7 +9,7 @@ namespace Heist {
 		if (ortho) {
 			projectionMatrix = MakeOrthoMatrix(dimensions.x, dimensions.y, dimensions.w, dimensions.h, -1000, 1000);
 		} else {
-			projectionMatrix = MakePerspectiveMatrix(90, dimensions.y / dimensions.w, 0.1f, 100.0f);
+			projectionMatrix = MakePerspectiveMatrix(135, dimensions.y / dimensions.w, 0.1f, 100.0f);
 		}
 
 		CalculateViewMatrix();

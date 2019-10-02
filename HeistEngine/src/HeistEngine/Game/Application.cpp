@@ -26,16 +26,16 @@ namespace Heist {
 		Renderer::Init();
 		Renderer2D::Init();
 
-		camera.reset(new Camera({ 0, 0, -5 }, { 0, 0, 0 }, {0, 1080, 720, 0 }, false));
+		camera.reset(new Camera({ 0, 0, 0 }, { 0, 0, 0 }, {0, 1080, 720, 0 }, false));
 
 		textureAtlas.reset(Texture::Create("assets/textures/texture.png"));
 		shader.reset(Shader::Create("assets/shaders/basic.vert.glsl", "assets/shaders/basic.frag.glsl"));
 
 		// Test loading model
-		auto rawModel = FileManager::ReadOBJFile("assets/models/monkey_high_res.obj");
+		auto rawModel = FileManager::ReadOBJFile("assets/models/monkey.obj");
 		testModel.reset(FileManager::CreateModelFromRawData(&rawModel, shader, textureAtlas));
-		testModel->position = { 0, 0, 0 };
-		testModel->scale = { 2, 2, 2 };
+		testModel->position = { 0, 0, 5 };
+		// testModel->scale = { 2, 2, 2 };
 	}
 
 	Application::~Application() {
@@ -61,7 +61,38 @@ namespace Heist {
 			window.resize = false;
 		}
 
-		testModel->rotation.y += 1.0f;
+		// Basic camera movement - Please remove
+		if (inputManager->GetKey(HS_KEY_Q)) {
+			camera->position.y += 0.2f;
+ 		}
+		if (inputManager->GetKey(HS_KEY_E)) {
+			camera->position.y -= 0.2f;
+		}
+
+		if (inputManager->GetKey(HS_KEY_W)) {
+			camera->position.z += 0.2f;
+		}
+		if (inputManager->GetKey(HS_KEY_S)) {
+			camera->position.z -= 0.2f;
+		}
+
+		if (inputManager->GetKey(HS_KEY_A)) {
+			camera->position.x -= 0.2f;
+		}
+		if (inputManager->GetKey(HS_KEY_D)) {
+			camera->position.x += 0.2f;
+		}
+
+		if (inputManager->GetKey(HS_KEY_Z)) {
+			camera->rotation.y += 2.0f;
+		}
+		if (inputManager->GetKey(HS_KEY_X)) {
+			camera->rotation.y -= 2.0f;
+		}
+
+		// --------------------------------------
+
+		testModel->rotation.y += 0.3f;
 
 		memoryManager->ClearStack();
 	}
@@ -71,10 +102,17 @@ namespace Heist {
 		RendererCommand::ClearScreen();
 
 		// Test loading models
-		vec3 lightPosition = { 0, -10, -5 };
-		Renderer::BeginScene(camera, lightPosition);
+		vec3 lightPosition = { 0, 5, 0 };
+		vec3 lightColor = { 0.7f, 0.6f, 0.2f };
+
+		auto rawModel = FileManager::ReadOBJFile("assets/models/cube.obj");
+		std::shared_ptr<Model3D> testModel2(FileManager::CreateModelFromRawData(&rawModel, shader, textureAtlas));
+		testModel2->position = lightPosition;
+
+		Renderer::BeginScene(camera, lightPosition, lightColor);
 
 		Renderer::Submit(testModel);
+		Renderer::Submit(testModel2);
 
 		Renderer::EndScene();
 
@@ -116,11 +154,12 @@ namespace Heist {
 			while (lag >= MS_PER_UPDATE && loops < MAX_FRAME_SKIP) {
 				this->OnUpdate(MS_PER_UPDATE);
 				lag -= MS_PER_UPDATE;
+
+				// Render
+				this->OnRender();
 				loops++;
 			}
 
-			// Render
-			this->OnRender();
 			frameTime = float(clock() - current);
 		};
 	}

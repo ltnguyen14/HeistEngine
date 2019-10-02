@@ -11,13 +11,14 @@ namespace Heist {
 		std::shared_ptr<Camera> camera;
 		mat4 projectionViewMatrix;
 		vec3 lightPosition;
+		vec3 lightColor;
 	};
 
 	struct Renderer {
 		static void ShutDown();
 
 		static void Init();
-		static void BeginScene(const std::shared_ptr<Camera>& camera, vec3 lightPosition);
+		static void BeginScene(const std::shared_ptr<Camera>& camera, vec3 lightPosition, vec3 lightColor);
 		static void EndScene();
 
 		static void Submit(const std::shared_ptr<RawModelData>& model);
