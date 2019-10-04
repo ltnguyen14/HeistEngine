@@ -47,6 +47,7 @@ namespace Heist {
 		);
 		BufferLayout bufferLayout({
 			{ ShaderDataType::Float3, "Position" },
+			{ ShaderDataType::Float2, "Texture Coords" },
 			{ ShaderDataType::Float3, "Normals" },
 			});
 		vertexBuffer->SetLayout(bufferLayout);
@@ -58,10 +59,10 @@ namespace Heist {
 				IndexBuffer::Create(rawModel->indicies.data(), rawModel->indicies.size())
 			);
 			vertexArray->SetIndexBuffer(indexBuffer);
-			return new Model3D(shader, material, texture, vertexArray, true);
+			return new Model3D(shader, material, vertexArray, true);
 		}
 
-		return new Model3D(shader, material, texture, vertexArray, false);
+		return new Model3D(shader, material, vertexArray, false);
 	}
 
 	RawModel3D FileManager::ReadOBJFile(const char* filePath)
@@ -93,6 +94,9 @@ namespace Heist {
 						model.dataBuffer.push_back(model.verticies[(i - 1) * 3 + 0]);
 						model.dataBuffer.push_back(model.verticies[(i - 1) * 3 + 1]);
 						model.dataBuffer.push_back(model.verticies[(i - 1) * 3 + 2]);
+					} else if (faceIndex == 2) {
+						model.dataBuffer.push_back(model.textureCoord[(i - 1) * 2 + 0]);
+						model.dataBuffer.push_back(model.textureCoord[(i - 1) * 2 + 1]);
 					} else if (faceIndex == 3) {
 						model.dataBuffer.push_back(model.normals[(i - 1) * 3 + 0]);
 						model.dataBuffer.push_back(model.normals[(i - 1) * 3 + 1]);
@@ -110,6 +114,10 @@ namespace Heist {
 				model.normals.push_back(v1);
 				model.normals.push_back(v2);
 				model.normals.push_back(v3);
+			} else if (tag == "vt") {
+				sl >> v1 >> v2;
+				model.textureCoord.push_back(v1);
+				model.textureCoord.push_back(v2);
 			}
 		}
 
@@ -130,7 +138,7 @@ namespace Heist {
 
 	TextureData FileManager::ReadTexture(const char* texturePath) {
 		int32 width, height, comp;
-		// stbi_set_flip_vertically_on_load(1);
+		stbi_set_flip_vertically_on_load(1);
 		unsigned char* img = stbi_load(texturePath, &width, &height, &comp, 4);
 
 		if (!img) {

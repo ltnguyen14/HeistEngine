@@ -36,9 +36,12 @@ namespace Heist {
 		InputManager *inputManager;
 		std::shared_ptr<Camera> camera;
 		std::shared_ptr<Shader> shader;
+		std::shared_ptr<Shader> sunShader;
 		std::shared_ptr<Texture> textureAtlas;
+		std::shared_ptr<Texture> textureSpecAtlas;
 		std::shared_ptr<Model3D> testModel;
 		std::shared_ptr<Material3D> material;
+		RawModel3D sunModel;
 	};
 	
 	// To be defined in client

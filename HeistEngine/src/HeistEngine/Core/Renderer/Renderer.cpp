@@ -27,18 +27,20 @@ namespace Heist {
 	}
 
 	void Renderer::Submit(const std::shared_ptr<Model3D>& model) {
+		int32 textureSlot = 0;
+
 		model->shader->Bind();
 		model->vertexArray->Bind();
-		model->texture->Bind();
+		model->material->texture->Bind(textureSlot);
+		model->material->specular->Bind(textureSlot + 1);
 
 		// Model
 		model->shader->UploadUniformMat4("modelMatrix", &model->GetModelMatrix());
 		model->shader->UploadUniformMat4("projectionViewMatrix", &s_sceneData->projectionViewMatrix); // Once we get a command queue this can be done for each shader instead of model
 
 		// Material
-		model->shader->UploadUniformVec3("material.ambient", &model->material->ambient);
-		model->shader->UploadUniformVec3("material.diffuse", &model->material->diffuse);
-		model->shader->UploadUniformVec3("material.specular", &model->material->specular);
+		model->shader->UploadUniform1f("material.diffuse", textureSlot);
+		model->shader->UploadUniform1f("material.specular", textureSlot + 1);
 		model->shader->UploadUniform1f("material.reflectiveness", model->material->reflectiveness);
 
 		// Light

@@ -28,21 +28,24 @@ namespace Heist {
 
 		camera.reset(new Camera({ 0, 0, 0 }, { 0, 0, 0 }, {0, 1080, 720, 0 }, false));
 
-		textureAtlas.reset(Texture::Create("assets/textures/texture.png"));
+		textureAtlas.reset(Texture::Create("assets/textures/woodBox.png"));
+		textureSpecAtlas.reset(Texture::Create("assets/textures/woodBox_spec.png"));
+
 		shader.reset(Shader::Create("assets/shaders/basic.vert.glsl", "assets/shaders/basic.frag.glsl"));
+		sunShader.reset(Shader::Create("assets/shaders/basic.vert.glsl", "assets/shaders/sun.frag.glsl"));
 
 		// Material 
 		material.reset(new Material3D(
-			{ 0.19225f, 0.19225f, 0.19225f },
-			{ 0.50754f, 0.50754f, 0.50754f },
-			{ 0.508273f, 0.508273f, 0.508273f },
-			51.2f));
+			textureAtlas,
+			textureSpecAtlas,
+			64.0f));
 
 		// Test loading model
-		auto rawModel = FileManager::ReadOBJFile("assets/models/monkey.obj");
+		auto rawModel = FileManager::ReadOBJFile("assets/models/cube_texture.obj");
 		testModel.reset(FileManager::CreateModelFromRawData(&rawModel, material, shader, textureAtlas));
 		testModel->position = { 0, 0, 5 };
-		// testModel->scale = { 2, 2, 2 };
+
+		sunModel = FileManager::ReadOBJFile("assets/models/sphere.obj");
 	}
 
 	Application::~Application() {
@@ -109,12 +112,11 @@ namespace Heist {
 		RendererCommand::ClearScreen();
 
 		// Test loading models
-		vec3 lightPosition = { -750, 500, 0 };
+		vec3 lightPosition = { -5, 0, -2 };
 
-		Light3D light(lightPosition, { 0.2f, 0.2f, 0.2f }, { 0.8f, 0.8f, 0.8f }, { 1.0f, 1.0f, 1.0f });
+		Light3D light(lightPosition, { 0.2f, 0.2f, 0.2f }, { 0.5f, 0.5f, 0.5f }, { 1.0f, 1.0f, 1.0f });
 
-		auto rawModel = FileManager::ReadOBJFile("assets/models/cube.obj");
-		std::shared_ptr<Model3D> testModel2(FileManager::CreateModelFromRawData(&rawModel, material, shader, textureAtlas));
+		std::shared_ptr<Model3D> testModel2(FileManager::CreateModelFromRawData(&sunModel, material, sunShader, textureAtlas));
 		testModel2->position = lightPosition;
 
 		Renderer::BeginScene(camera, &light);

@@ -10,6 +10,7 @@ namespace Heist {
 		uint32 verticiesNum = 0;
 		std::vector<real32> verticies;
 		std::vector<real32> normals;
+		std::vector<real32> textureCoord;
 		std::vector<uint32> indicies;
 		std::vector<real32> dataBuffer;
 	};
@@ -26,18 +27,17 @@ namespace Heist {
 	};
 
 	struct Material3D {
-		Material3D(vec3 ambient, vec3 diffuse, vec3 specular, real32 reflectiveness = 64)
-			: ambient(ambient), diffuse(diffuse), specular(specular), reflectiveness(reflectiveness){};
-		vec3 ambient;
-		vec3 diffuse;
-		vec3 specular;
+		Material3D(const std::shared_ptr<Texture>& texture, const std::shared_ptr<Texture>& specular, real32 reflectiveness = 64)
+			: texture(texture), specular(specular), reflectiveness(reflectiveness){};
+		std::shared_ptr<Texture> texture;
+		std::shared_ptr<Texture> specular;
 		real32 reflectiveness;
 	};
 
 	struct Model3D {
 
-		Model3D(const std::shared_ptr<Shader>& shader, const std::shared_ptr<Material3D> material, const std::shared_ptr<Texture>& texture, const std::shared_ptr<VertexArray>& vertexArray, bool useIndicies)
-			: shader(shader), texture(texture), vertexArray(vertexArray), material(material),
+		Model3D(const std::shared_ptr<Shader>& shader, const std::shared_ptr<Material3D> material, const std::shared_ptr<VertexArray>& vertexArray, bool useIndicies)
+			: shader(shader), vertexArray(vertexArray), material(material),
 			position(0, 0, 0), rotation(0, 0, 0), scale(1, 1, 1), c_position(position), c_rotation(rotation), c_scale(scale), c_modelMatrix(1), useIndicies(useIndicies) {};
 
 		mat4 GetModelMatrix() {
@@ -58,7 +58,6 @@ namespace Heist {
 
 		std::shared_ptr<Shader> shader;
 		std::shared_ptr<Material3D> material;
-		std::shared_ptr<Texture> texture;
 		std::shared_ptr<VertexArray> vertexArray;
 
 		vec3 position;
