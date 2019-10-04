@@ -39,8 +39,8 @@ namespace Heist {
 		model->shader->UploadUniformMat4("projectionViewMatrix", &s_sceneData->projectionViewMatrix); // Once we get a command queue this can be done for each shader instead of model
 
 		// Material
-		model->shader->UploadUniform1f("material.diffuse", textureSlot);
-		model->shader->UploadUniform1f("material.specular", textureSlot + 1);
+		model->shader->UploadUniform1i("material.diffuse", textureSlot);
+		model->shader->UploadUniform1i("material.specular", textureSlot + 1);
 		model->shader->UploadUniform1f("material.reflectiveness", model->material->reflectiveness);
 
 		// Light

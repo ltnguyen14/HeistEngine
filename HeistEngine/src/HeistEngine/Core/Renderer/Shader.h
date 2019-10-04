@@ -14,6 +14,7 @@ namespace Heist {
 		virtual void UploadUniformVec3(const char* uniformName, const vec3* vector) = 0;
 		virtual void UploadUniformVec4(const char* uniformName, const vec4* vector) = 0;
 		virtual void UploadUniform1f(const char* uniformName, const real32 value) = 0;
+		virtual void UploadUniform1i(const char* uniformName, const int32 value) = 0;
 
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
