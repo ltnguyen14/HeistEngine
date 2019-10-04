@@ -38,6 +38,7 @@ namespace Heist {
 		std::shared_ptr<Shader> shader;
 		std::shared_ptr<Texture> textureAtlas;
 		std::shared_ptr<Model3D> testModel;
+		std::shared_ptr<Material3D> material;
 	};
 	
 	// To be defined in client

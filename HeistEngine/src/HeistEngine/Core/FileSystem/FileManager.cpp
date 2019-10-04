@@ -36,7 +36,7 @@ namespace Heist {
 		return content;
 	}
 
-	Model3D* FileManager::CreateModelFromRawData(RawModel3D* rawModel, const std::shared_ptr<Shader>& shader, const std::shared_ptr<Texture>& texture)
+	Model3D* FileManager::CreateModelFromRawData(RawModel3D* rawModel, const std::shared_ptr<Material3D> material, const std::shared_ptr<Shader>& shader, const std::shared_ptr<Texture>& texture)
 	{
 		std::shared_ptr<VertexArray> vertexArray(VertexArray::Create());
 
@@ -58,10 +58,10 @@ namespace Heist {
 				IndexBuffer::Create(rawModel->indicies.data(), rawModel->indicies.size())
 			);
 			vertexArray->SetIndexBuffer(indexBuffer);
-			return new Model3D(shader, texture, vertexArray, true);
+			return new Model3D(shader, material, texture, vertexArray, true);
 		}
 
-		return new Model3D(shader, texture, vertexArray, false);
+		return new Model3D(shader, material, texture, vertexArray, false);
 	}
 
 	RawModel3D FileManager::ReadOBJFile(const char* filePath)

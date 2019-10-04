@@ -31,9 +31,16 @@ namespace Heist {
 		textureAtlas.reset(Texture::Create("assets/textures/texture.png"));
 		shader.reset(Shader::Create("assets/shaders/basic.vert.glsl", "assets/shaders/basic.frag.glsl"));
 
+		// Material 
+		material.reset(new Material3D(
+			{ 0.19225f, 0.19225f, 0.19225f },
+			{ 0.50754f, 0.50754f, 0.50754f },
+			{ 0.508273f, 0.508273f, 0.508273f },
+			51.2f));
+
 		// Test loading model
 		auto rawModel = FileManager::ReadOBJFile("assets/models/monkey.obj");
-		testModel.reset(FileManager::CreateModelFromRawData(&rawModel, shader, textureAtlas));
+		testModel.reset(FileManager::CreateModelFromRawData(&rawModel, material, shader, textureAtlas));
 		testModel->position = { 0, 0, 5 };
 		// testModel->scale = { 2, 2, 2 };
 	}
@@ -102,14 +109,15 @@ namespace Heist {
 		RendererCommand::ClearScreen();
 
 		// Test loading models
-		vec3 lightPosition = { 0, 5, 0 };
-		vec3 lightColor = { 0.7f, 0.6f, 0.2f };
+		vec3 lightPosition = { -750, 500, 0 };
+
+		Light3D light(lightPosition, { 0.2f, 0.2f, 0.2f }, { 0.8f, 0.8f, 0.8f }, { 1.0f, 1.0f, 1.0f });
 
 		auto rawModel = FileManager::ReadOBJFile("assets/models/cube.obj");
-		std::shared_ptr<Model3D> testModel2(FileManager::CreateModelFromRawData(&rawModel, shader, textureAtlas));
+		std::shared_ptr<Model3D> testModel2(FileManager::CreateModelFromRawData(&rawModel, material, shader, textureAtlas));
 		testModel2->position = lightPosition;
 
-		Renderer::BeginScene(camera, lightPosition, lightColor);
+		Renderer::BeginScene(camera, &light);
 
 		Renderer::Submit(testModel);
 		Renderer::Submit(testModel2);

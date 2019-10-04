@@ -12,6 +12,7 @@ namespace Heist {
 		void UploadUniformMat4(const char* uniformName, const mat4* matrix) override;
 		void UploadUniformVec3(const char* uniformName, const vec3* vector) override;
 		void UploadUniformVec4(const char* uniformName, const vec4* vector) override;
+		void UploadUniform1f(const char* uniformName, const real32 value) override;
 
 		void Bind() const;
 		void Unbind() const;
