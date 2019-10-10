@@ -76,6 +76,8 @@ namespace Heist {
 		Light3D(vec3 position, vec3 ambient, vec3 diffuse, vec3 specular)
 			:position(position), ambient(ambient), diffuse(diffuse), specular(specular) {}
 
+		Light3D() {}
+
 		vec3 position;
 
 		vec3 ambient;

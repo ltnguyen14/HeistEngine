@@ -6,6 +6,7 @@
 #include "HeistEngine/Core/Math/Math.h"
 #include "HeistEngine/Core/Event/EventNode.h"
 #include "HeistEngine/Core/Layer/Layer.h"
+#include "HeistEngine/Core/Renderer/Camera.h"
 
 // Entry Point
 #include "HeistEngine/Game/EntryPoint.h"

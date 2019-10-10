@@ -1,9 +1,5 @@
 #include "hspch.h"
 #include "Application.h"
-#include "Core/Math/Math.h"
-#include "Platform/Assertions.h"
-#include "Core/Renderer/Renderer.h"
-#include "Core/Renderer/Renderer2D.h"
 
 namespace Heist {
 
@@ -26,26 +22,6 @@ namespace Heist {
 		Renderer::Init();
 		Renderer2D::Init();
 
-		camera.reset(new Camera({ 0, 0, 0 }, { 0, 0, 0 }, {0, 1080, 720, 0 }, false));
-
-		textureAtlas.reset(Texture::Create("assets/textures/woodBox.png"));
-		textureSpecAtlas.reset(Texture::Create("assets/textures/woodBox_spec.png"));
-
-		shader.reset(Shader::Create("assets/shaders/basic.vert.glsl", "assets/shaders/basic.frag.glsl"));
-		sunShader.reset(Shader::Create("assets/shaders/basic.vert.glsl", "assets/shaders/sun.frag.glsl"));
-
-		// Material 
-		material.reset(new Material3D(
-			textureAtlas,
-			textureSpecAtlas,
-			64.0f));
-
-		// Test loading model
-		auto rawModel = FileManager::ReadOBJFile("assets/models/cube_texture.obj");
-		testModel.reset(FileManager::CreateModelFromRawData(&rawModel, material, shader, textureAtlas));
-		testModel->position = { 0, 0, 5 };
-
-		sunModel = FileManager::ReadOBJFile("assets/models/sphere.obj");
 	}
 
 	Application::~Application() {
@@ -63,70 +39,27 @@ namespace Heist {
 
 	void Application::OnUpdate(real64 time) {
 		eventBus.Notify(); // TODO(LAM): Need to move this somewhere
-		// camera->position.x += 4.0f;
-		camera->Update();
 
 		if (window.resize) {
-			camera->UpdateDimension({ 0, (real32)window.width, (real32)window.height, 0 });
+			for (auto layer : layerStack.layers) {
+				layer->OnWindowResize(0, (real32)window.width, (real32)window.height, 0);
+			}			
 			window.resize = false;
 		}
 
-		// Basic camera movement - Please remove
-		if (inputManager->GetKey(HS_KEY_Q)) {
-			camera->position.y += 0.2f;
- 		}
-		if (inputManager->GetKey(HS_KEY_E)) {
-			camera->position.y -= 0.2f;
+		for (auto layer : layerStack.layers) {
+			layer->OnUpdate(time);
 		}
-
-		if (inputManager->GetKey(HS_KEY_W)) {
-			camera->position.z += 0.2f;
-		}
-		if (inputManager->GetKey(HS_KEY_S)) {
-			camera->position.z -= 0.2f;
-		}
-
-		if (inputManager->GetKey(HS_KEY_A)) {
-			camera->position.x -= 0.2f;
-		}
-		if (inputManager->GetKey(HS_KEY_D)) {
-			camera->position.x += 0.2f;
-		}
-
-		if (inputManager->GetKey(HS_KEY_Z)) {
-			camera->rotation.y += 2.0f;
-		}
-		if (inputManager->GetKey(HS_KEY_X)) {
-			camera->rotation.y -= 2.0f;
-		}
-
-		// --------------------------------------
-
-		testModel->rotation.y += 0.3f;
-
 		memoryManager->ClearStack();
 	}
 
 	void Application::OnRender() {
-		// Render stuff go here
+		// // Render stuff go here
 		RendererCommand::ClearScreen();
 
-		// Test loading models
-		vec3 lightPosition = { -5, 0, -2 };
-
-		Light3D light(lightPosition, { 0.2f, 0.2f, 0.2f }, { 0.5f, 0.5f, 0.5f }, { 1.0f, 1.0f, 1.0f });
-
-		std::shared_ptr<Model3D> testModel2(FileManager::CreateModelFromRawData(&sunModel, material, sunShader, textureAtlas));
-		testModel2->position = lightPosition;
-
-		Renderer::BeginScene(camera, &light);
-
-		Renderer::Submit(testModel);
-		Renderer::Submit(testModel2);
-
-		Renderer::EndScene();
-
-		// --------------------
+		for (auto layer : layerStack.layers) {
+			layer->OnRender();
+		}
 		window.SwapBuffer();
 	}
 

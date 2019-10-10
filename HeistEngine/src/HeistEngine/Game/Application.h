@@ -11,6 +11,10 @@
 #include "Core/Renderer/Texture.h"
 #include "Core/Manager/InputManager.h"
 #include "Core/FileSystem/FileManager.h"
+#include "Core/Math/Math.h"
+#include "Platform/Assertions.h"
+#include "Core/Renderer/Renderer.h"
+#include "Core/Renderer/Renderer2D.h"
 
 namespace Heist {
 
@@ -34,14 +38,6 @@ namespace Heist {
 		Window window;
 		MemoryManager *memoryManager;
 		InputManager *inputManager;
-		std::shared_ptr<Camera> camera;
-		std::shared_ptr<Shader> shader;
-		std::shared_ptr<Shader> sunShader;
-		std::shared_ptr<Texture> textureAtlas;
-		std::shared_ptr<Texture> textureSpecAtlas;
-		std::shared_ptr<Model3D> testModel;
-		std::shared_ptr<Material3D> material;
-		RawModel3D sunModel;
 	};
 	
 	// To be defined in client
