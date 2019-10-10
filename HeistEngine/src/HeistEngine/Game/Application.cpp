@@ -43,7 +43,7 @@ namespace Heist {
 		if (window.resize) {
 			for (auto layer : layerStack.layers) {
 				layer->OnWindowResize(0, (real32)window.width, (real32)window.height, 0);
-			}			
+			}
 			window.resize = false;
 		}
 
