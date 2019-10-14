@@ -1,4 +1,18 @@
 * Todo List
-** TODO Bug: Texture not showing when running Sandbox
-** TODO Use only one camera for the whole application
+** DONE Bug: Texture not showing when running Sandbox
+   CLOSED: [2019-10-09 Wed 20:30]
+** DONE Window resolution is wrong at initialization
+   CLOSED: [2019-10-13 Sun 20:01]
+   Without resizing the window the resolution/aspect ration is all messed up.
+** DONE Use only one camera for the whole application
+   CLOSED: [2019-10-13 Sun 20:14]
+   Application should only have one camera
+   Let's create one in Application and takes it in through the constructor
+** TODO Different light types
+   Point light, spotlight, directional light, etc.
 ** TODO Multiple lights
+   Add support for multiple lights
+** TODO Add camera movement for Sandbox
+   Add 3rd person camera movement
+** TODO Add simple plane for Sandbox
+   Add plane for sandbox and moving cubes?

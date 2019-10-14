@@ -3,13 +3,13 @@
 
 namespace Heist {
 
-	Application::Application(int32 width, int32 height, std::string title) 
+	Application::Application(int32 width, int32 height, std::string title)
 		: window(width, height, title) {
 		running = true;
 
 		//Subsystem start up
 		memoryManager = MemoryManager::Instance();
-		memoryManager->StartUp(500);
+		memoryManager->StartUp(100);
 		window.StartUp();
 		inputManager = InputManager::Instance();
 		inputManager->StartUp();
@@ -17,6 +17,9 @@ namespace Heist {
 		// Event Bus Subscription
 		window.SubscribeToBus(&eventBus);
 		inputManager->SubscribeToBus(&eventBus);
+
+		// Camera init
+		camera = std::make_shared<Heist::Camera>(Heist::vec3(0, 0, 0), Heist::vec3(0, 0, 0), Heist::vec4(0, width, height, 0), false);
 
 		// --------------------
 		Renderer::Init();
@@ -40,7 +43,9 @@ namespace Heist {
 	void Application::OnUpdate(real64 time) {
 		eventBus.Notify(); // TODO(LAM): Need to move this somewhere
 
+		camera->Update();
 		if (window.resize) {
+			camera->UpdateDimension({ 0, (real32)window.width, (real32)window.height, 0 });
 			for (auto layer : layerStack.layers) {
 				layer->OnWindowResize(0, (real32)window.width, (real32)window.height, 0);
 			}
@@ -54,11 +59,11 @@ namespace Heist {
 	}
 
 	void Application::OnRender() {
-		// // Render stuff go here
+		// Render stuff go here
 		RendererCommand::ClearScreen();
 
 		for (auto layer : layerStack.layers) {
-			layer->OnRender();
+			layer->OnRender(camera);
 		}
 		window.SwapBuffer();
 	}

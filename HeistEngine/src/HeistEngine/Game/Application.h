@@ -38,8 +38,9 @@ namespace Heist {
 		Window window;
 		MemoryManager *memoryManager;
 		InputManager *inputManager;
+		std::shared_ptr<Camera> camera;
 	};
-	
+
 	// To be defined in client
 	Application* CreateApplication();
 }

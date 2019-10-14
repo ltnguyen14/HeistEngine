@@ -1,5 +1,6 @@
 #pragma once
 #include "Core/Event/EventNode.h"
+#include "Core/Renderer/Camera.h"
 
 namespace Heist {
 
@@ -11,7 +12,7 @@ namespace Heist {
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
 		virtual void OnUpdate(real64 time) {}
-		virtual void OnRender() {}
+		virtual void OnRender(const std::shared_ptr<Camera>& camera) {}
 		virtual void OnWindowResize(real32 left, real32 right, real32 bottom, real32 top) {}
 
 		std::string layerName;
