@@ -10,9 +10,14 @@
    Let's create one in Application and takes it in through the constructor
 ** TODO Different light types
    Point light, spotlight, directional light, etc.
+** TODO Object before maximizing screen is scaled down
+   Reproduce by maximizing then minimizing the screen, object scale changes
 ** TODO Multiple lights
    Add support for multiple lights
-** TODO Add camera movement for Sandbox
-   Add 3rd person camera movement
+** IN PROGRESS Add camera movement for Sandbox [0/3] [0%]
+   - State "IN PROGRESS" from "TODO"       [2019-10-14 Mon 06:38]
+   - [ ] Add camera movement layer
+   - [ ] Create third person camera movement
+   - [ ] Create "strategy view" camera
 ** TODO Add simple plane for Sandbox
    Add plane for sandbox and moving cubes?

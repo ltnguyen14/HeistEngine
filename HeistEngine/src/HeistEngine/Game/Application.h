@@ -15,6 +15,7 @@
 #include "Platform/Assertions.h"
 #include "Core/Renderer/Renderer.h"
 #include "Core/Renderer/Renderer2D.h"
+#include "Game/Camera/CameraMovement.h"
 
 namespace Heist {
 
@@ -29,6 +30,8 @@ namespace Heist {
 		void PushLayer(Layer *layer);
 		void PopLayer(Layer *layer);
 
+    void AttachCameraMovement(CameraMovement *cameraMovement);
+
 		void Run();
 
 	private:
@@ -38,6 +41,7 @@ namespace Heist {
 		Window window;
 		MemoryManager *memoryManager;
 		InputManager *inputManager;
+    CameraMovement *cameraMovement;
 		std::shared_ptr<Camera> camera;
 	};
 

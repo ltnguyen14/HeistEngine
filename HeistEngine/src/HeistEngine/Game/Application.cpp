@@ -43,6 +43,9 @@ namespace Heist {
 	void Application::OnUpdate(real64 time) {
 		eventBus.Notify(); // TODO(LAM): Need to move this somewhere
 
+    if (cameraMovement) {
+      cameraMovement->Update();
+    }
 		camera->Update();
 		if (window.resize) {
 			camera->UpdateDimension({ 0, (real32)window.width, (real32)window.height, 0 });
@@ -75,6 +78,11 @@ namespace Heist {
 	void Application::PopLayer(Layer* layer) {
 		layerStack.PopLayer(layer);
 	}
+
+  void Application::AttachCameraMovement(CameraMovement *movement) {
+    cameraMovement = movement;
+	  movement->camera = camera.get();
+  }
 
 	void Application::Run() {
 		// Main loop setup

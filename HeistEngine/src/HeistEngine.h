@@ -6,6 +6,7 @@
 #include "HeistEngine/Core/Event/EventNode.h"
 #include "HeistEngine/Core/Layer/Layer.h"
 #include "HeistEngine/Core/Renderer/Camera.h"
+#include "HeistEngine/Game/Camera/ThirdPersonCameraMovement.h"
 
 #include "HeistEngine/Game/Application.h"
 

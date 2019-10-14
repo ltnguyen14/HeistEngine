@@ -7,7 +7,7 @@ struct TestLayer : public Heist::Layer {
 	}
 
 	void OnAttach() override {
-
+    // Load assets
 		textureAtlas.reset(Heist::Texture::Create("assets/textures/woodBox.png"));
 		textureSpecAtlas.reset(Heist::Texture::Create("assets/textures/woodBox_spec.png"));
 
@@ -67,10 +67,13 @@ class Sandbox : public Heist::Application {
 
 public:
 	Sandbox(): Application(1920, 1080, "Sandbox App") {
+    AttachCameraMovement(&cameraMovement);
 		PushLayer(new TestLayer);
 	};
 
 	~Sandbox() {};
+
+  Heist::ThirdPersonCameraMovement cameraMovement;
 };
 
 Heist::Application* Heist::CreateApplication() {

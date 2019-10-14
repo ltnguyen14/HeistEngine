@@ -31,7 +31,7 @@ out vec4 fragColor;
 vec4 CalculateLighting() {
 	// Ambient	
 	vec3 ambient = vec3(texture(material.diffuse, v_TexCoord)) * light.ambient;
-
+  
 	// Diffuse
 	vec3 norm = normalize(v_Normal);
 	vec3 lightDir = normalize(light.position - v_FragPosition);
