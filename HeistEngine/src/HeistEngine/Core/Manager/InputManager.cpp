@@ -33,6 +33,12 @@ namespace Heist {
 			HS_CORE_ASSERT(keyEvent, "Error type casting event!");
 
 			keys[keyEvent->value] = (keyEvent->action != HS_RELEASE);
-		}
+		} else if (event->eventTypeMask == (MOUSE | POSITION)) {
+      MousePositionEvent *mouseEvent = dynamic_cast<MousePositionEvent*>(event);
+			HS_CORE_ASSERT(mouseEvent, "Error type casting event!");
+
+      xpos = mouseEvent->xpos;
+      ypos = mouseEvent->ypos;
+    }
 	}
 }

@@ -11,4 +11,11 @@ namespace Heist {
 
 	KeyEvent::~KeyEvent() {
 	}
+
+  MousePositionEvent::MousePositionEvent(real64 xpos, real64 ypos)
+    : Event("MousePositionEvent", MOUSE | POSITION), xpos(xpos), ypos(ypos){
+  }
+
+  MousePositionEvent::~MousePositionEvent() {
+  }
 }

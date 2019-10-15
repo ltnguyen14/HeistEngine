@@ -18,6 +18,7 @@ namespace Heist {
 
 	public:
 		friend static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+		friend static void mouse_callback(GLFWwindow* window, real64 xpos, real64 ypos);
 		friend static void window_size_callback(GLFWwindow* window, int width, int height);
 
 	public:

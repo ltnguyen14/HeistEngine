@@ -1,5 +1,6 @@
 #pragma once
 #include "Core/Event/EventNode.h"
+#include "Core/Math/Math.h"
 
 namespace Heist {
 
@@ -12,6 +13,7 @@ namespace Heist {
 		void ShutDown() override;
 
 		inline bool GetKey(int32 key) const { return keys[key]; };
+		inline vec2 GetMousePosition() const { return { (real32)xpos, (real32 )ypos }; };
 
 		void OnNotify(Event *event) override;
 
@@ -23,6 +25,7 @@ namespace Heist {
 		static InputManager* g_inputManager;
 
 		bool keys[512] = { 0 };
+    real64 xpos, ypos;
 	};
 
 }

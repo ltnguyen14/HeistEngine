@@ -8,7 +8,8 @@ namespace Heist {
 		MOUSE = BIT(0),
 		KEYBOARD = BIT(1),
 		APPLICATION = BIT(2),
-		INPUT = BIT(3)
+		INPUT = BIT(3),
+    POSITION = BIT(4)
 	};
 
 	struct Event {
@@ -27,4 +28,10 @@ namespace Heist {
 		int32 value, action;
 	};
 
+	struct MousePositionEvent : public Event {
+		MousePositionEvent(real64 xpos, real64 ypos);
+		~MousePositionEvent();
+
+		real64 xpos, ypos;
+	};
 }
