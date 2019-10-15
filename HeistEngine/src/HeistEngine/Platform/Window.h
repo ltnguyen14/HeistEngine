@@ -15,6 +15,7 @@ namespace Heist {
 		void PollEvents();
 
 		inline bool ShouldClose() { return glfwWindowShouldClose(window); };
+    void OnNotify(Event *event) override;
 
 	public:
 		friend static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);

@@ -1,6 +1,7 @@
 #pragma once
 #include "Core/Event/EventNode.h"
 #include "Core/Math/Math.h"
+#include "Core/Memory/Memory.h"
 
 namespace Heist {
 
@@ -15,6 +16,8 @@ namespace Heist {
 		inline bool GetKey(int32 key) const { return keys[key]; };
 		inline vec2 GetMousePosition() const { return { (real32)xpos, (real32 )ypos }; };
 
+    void SetMousePosition(real64 xpos, real64 ypos);
+
 		void OnNotify(Event *event) override;
 
 	private:
@@ -26,6 +29,7 @@ namespace Heist {
 
 		bool keys[512] = { 0 };
     real64 xpos, ypos;
+    MemoryManager *g_memoryManager;
 	};
 
 }

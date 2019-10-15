@@ -2,6 +2,7 @@
 #include "InputManager.h"
 #include "Core/Log/Log.h"
 #include "Platform/Assertions.h"
+#include "Core/Event/Event.h"
 
 namespace Heist {
 
@@ -20,12 +21,19 @@ namespace Heist {
 	}
 
 	void InputManager::StartUp() {
-
+    g_memoryManager = MemoryManager::Instance();
 	}
 
 	void InputManager::ShutDown() {
 
 	}
+
+  void InputManager::SetMousePosition(real64 xpos, real64 ypos) {
+    MousePositionSetEvent *event = (MousePositionSetEvent*)g_memoryManager->Alloc(sizeof(MousePositionSetEvent));
+    new(event) MousePositionSetEvent(xpos, ypos);
+
+    SendEvent(event);
+  }
 
 	void InputManager::OnNotify(Event *event) {
 		if (event->eventTypeMask == (INPUT | KEYBOARD)) {
@@ -33,7 +41,7 @@ namespace Heist {
 			HS_CORE_ASSERT(keyEvent, "Error type casting event!");
 
 			keys[keyEvent->value] = (keyEvent->action != HS_RELEASE);
-		} else if (event->eventTypeMask == (MOUSE | POSITION)) {
+		} else if (event->eventTypeMask == (INPUT | MOUSE | POSITION)) {
       MousePositionEvent *mouseEvent = dynamic_cast<MousePositionEvent*>(event);
 			HS_CORE_ASSERT(mouseEvent, "Error type casting event!");
 

@@ -81,4 +81,11 @@ namespace Heist {
 		glfwPollEvents();
 	}
 
+  void Window::OnNotify(Event *event) {
+    if (event->eventTypeMask == (INPUT | MOUSE | POSITION | SET)) {
+			MousePositionSetEvent *mouseEvent = dynamic_cast<MousePositionSetEvent*>(event);
+			HS_CORE_ASSERT(mouseEvent, "Error type casting event!");
+      glfwSetCursorPos(window, mouseEvent->xpos, mouseEvent->ypos);
+    }
+  }
 }
