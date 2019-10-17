@@ -21,6 +21,8 @@
    - [X] Add camera movement layer
    - [ ] Create third person camera movement
    - [ ] Create "strategy view" camera
-** TODO Add simple plane for Sandbox
+** TODO Add simple plane for Sandbox - use ECS
    Add plane for sandbox and moving cubes?
 ** TODO Investigate potetial memory leak (MousePositionEvent)
+** TODO Text rendering
+** TODO Time profiler - game update, game render, game init
