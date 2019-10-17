@@ -16,9 +16,9 @@ namespace Heist {
 
 	mat3::mat3(bool identity = false) {
 		if (identity) {
-			data[0][0] = 1; data[0][1] = 0; data[0][2] = 0; 
-			data[1][0] = 0; data[1][1] = 1; data[1][2] = 0; 
-			data[2][0] = 0; data[2][1] = 0; data[2][2] = 1; 
+			data[0][0] = 1; data[0][1] = 0; data[0][2] = 0;
+			data[1][0] = 0; data[1][1] = 1; data[1][2] = 0;
+			data[2][0] = 0; data[2][1] = 0; data[2][2] = 1;
 		}
 		else {
 			data[0][0] = 0; data[0][1] = 0; data[0][2] = 0;
@@ -60,10 +60,10 @@ namespace Heist {
 	{
 		mat4 data = mat4(1);
 
-		data[0][0] =  2 / (right - left); 
-		data[1][1] =  2 / (top - bottom); 
+		data[0][0] =  2 / (right - left);
+		data[1][1] =  2 / (top - bottom);
 		data[2][2] = -2 / (farPlane - nearPlane);
-		
+
 		data[3][0] = -(right + left) / (right - left);
 		data[3][1] = -(top + bottom) / (top - bottom);
 		data[3][2] = -(farPlane + nearPlane) / (farPlane - nearPlane);
@@ -72,16 +72,16 @@ namespace Heist {
 	}
 
 	mat4 MakePerspectiveMatrix(real32 fov, real32 aspect, real32 nearPlane, real32 farPlane) {
-		mat4 data = mat4(0);
+		mat4 data = mat4(1);
 		float cotangent = 1.0f / tan(radian(fov) / 2);
 
 		data[0][0] = cotangent / aspect;
 		data[1][1] = cotangent;
-		data[2][2] = -(nearPlane + farPlane) / (nearPlane - farPlane);
+		data[2][2] = (nearPlane + farPlane) / (nearPlane - farPlane);
 		data[3][3] = 0.0f;
 
 		data[3][2] = -(2.0f * farPlane * nearPlane) / (farPlane - nearPlane);
-		data[2][3] = 1.0f;
+		data[2][3] = -1.0f;
 
 		return data;
 	}
@@ -120,14 +120,14 @@ namespace Heist {
 		mat4 xRot = {
 			1, 0, 0, 0,
 			0, cos(radian(-axis.x * rotation)), -sin(radian(-axis.x * rotation)),	0,
-			0, sin(radian(-axis.x * rotation)),  cos(radian(-axis.x * rotation)),	0,
+			0, sin(radian(-axis.x * rotation)), cos(radian(-axis.x * rotation)),	0,
 			0, 0, 0, 1
 		};
 
 		mat4 yRot = {
 			 cos(radian(-axis.y * rotation)), 0, sin(radian(-axis.y * rotation)), 0,
 			 0,		1,		0,		0,
-			-sin(radian(-axis.y * rotation)), 0, cos(radian(-axis.y * rotation)), 0,
+       -sin(radian(-axis.y * rotation)), 0, cos(radian(-axis.y * rotation)), 0,
 			 0,		0,		0,		1
 		};
 
@@ -138,7 +138,7 @@ namespace Heist {
 			0,		0,		0,		1
 		};
 
-		return mat * xRot * yRot * zRot;
+		return xRot * yRot * zRot * mat;
 	}
 
 	mat4 MakeModelMatrix(const vec3& position, const vec3& rotation, const vec3& scaleVec) {

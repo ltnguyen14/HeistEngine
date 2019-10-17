@@ -20,7 +20,7 @@ struct TestLayer : public Heist::Layer {
 		// Test loading model
 		auto rawModel = Heist::FileManager::ReadOBJFile("assets/models/cube_texture.obj");
 		testModel.reset(Heist::FileManager::CreateModelFromRawData(&rawModel, material, shader, textureAtlas));
-		testModel->position = { 0, 0, 5 };
+		testModel->position = { 0, 0, -5 };
 
 		auto sunRawModel = Heist::FileManager::ReadOBJFile("assets/models/sphere.obj");
 		sunModel.reset(Heist::FileManager::CreateModelFromRawData(&sunRawModel, material, sunShader, textureAtlas));
@@ -32,6 +32,7 @@ struct TestLayer : public Heist::Layer {
 	void OnUpdate(real64 time) override {
 		testModel->rotation.y += 0.3f;
     // testModel->rotation.x += 0.3f;
+    // testModel->position.x += 0.01f;
 	}
 
 	void OnRender(const std::shared_ptr<Heist::Camera>& camera) override {

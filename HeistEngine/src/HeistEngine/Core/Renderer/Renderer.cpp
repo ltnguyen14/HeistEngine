@@ -36,6 +36,7 @@ namespace Heist {
 
 		// Model
 		model->shader->UploadUniformMat4("modelMatrix", &model->GetModelMatrix());
+
 		model->shader->UploadUniformMat4("projectionViewMatrix", &s_sceneData->projectionViewMatrix); // Once we get a command queue this can be done for each shader instead of model
 
 		// Material
@@ -48,7 +49,6 @@ namespace Heist {
 		model->shader->UploadUniformVec3("light.ambient", &s_sceneData->light->ambient);
 		model->shader->UploadUniformVec3("light.diffuse", &s_sceneData->light->diffuse);
 		model->shader->UploadUniformVec3("light.specular", &s_sceneData->light->specular);
-
 
 		if (model->useIndicies) {
 			RendererCommand::DrawIndexes(model->vertexArray);

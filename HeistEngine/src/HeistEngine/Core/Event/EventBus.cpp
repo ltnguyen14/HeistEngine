@@ -20,7 +20,6 @@ namespace Heist {
 				if (!events.front()->handled)
 					receiver(events.front());
 			}
-			// delete events.front();
 			events.pop();
 		}
 	}

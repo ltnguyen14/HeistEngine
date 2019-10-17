@@ -9,7 +9,7 @@ namespace Heist {
 
 		//Subsystem start up
 		memoryManager = MemoryManager::Instance();
-		memoryManager->StartUp(100);
+		memoryManager->StartUp(10);
 		window.StartUp();
 		inputManager = InputManager::Instance();
 		inputManager->StartUp();
