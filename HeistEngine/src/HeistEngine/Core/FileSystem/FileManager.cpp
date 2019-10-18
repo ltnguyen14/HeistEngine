@@ -59,28 +59,45 @@ namespace Heist {
 				IndexBuffer::Create(rawModel->indicies.data(), rawModel->indicies.size())
 			);
 			vertexArray->SetIndexBuffer(indexBuffer);
-			return new Model3D(shader, material, vertexArray, true);
+
+      if (material)
+        return new Model3D(shader, material, vertexArray, true);
+      else
+        return new Model3D(shader, rawModel->rawMaterial, vertexArray, true);
 		}
 
-		return new Model3D(shader, material, vertexArray, false);
+    if (material)
+      return new Model3D(shader, material, vertexArray, false);
+    else
+      return new Model3D(shader, rawModel->rawMaterial, vertexArray, false);
 	}
 
-	RawModel3D FileManager::ReadOBJFile(const char* filePath)
+	RawModel3D FileManager::ReadOBJFile(const char* filePath, const char* fileName)
 	{
 		RawModel3D model;
 		std::ifstream fileStream;
-		fileStream.open(filePath);
-		HS_CORE_ASSERT(!fileStream.fail(), "Cannot open file path: " + std::string(filePath));
+
+	char filePathAndName[50];
+    std::strcpy(filePathAndName, filePath);
+    std::strcat(filePathAndName, fileName);
+
+		fileStream.open(filePathAndName);
+		HS_CORE_ASSERT(!fileStream.fail(), "Cannot open file path: " + std::string(filePathAndName));
 
 		std::string line;
 
-		std::string tag;
+		std::string tag, mtlFileName;
 		real32 v1, v2, v3, v4, v5;
+    bool useMtl = false;
 
 		while (std::getline(fileStream, line)) {
 			uint32 faceIndex = 0;
 			std::stringstream sl(line);
 			sl >> tag;
+      if (tag == "mtllib") {
+        useMtl = true;
+        sl >> mtlFileName;
+      }
 			if (tag == "v") {
 				sl >> v1 >> v2 >> v3;
 				model.verticies.push_back(v1);
@@ -122,6 +139,14 @@ namespace Heist {
 		}
 
 		fileStream.close();
+
+    if (useMtl) {
+      std::string path(filePath);
+      path.append(mtlFileName);
+      std::shared_ptr<RawMaterial3D> mat = std::make_shared<RawMaterial3D>(ReadMTLFile(path.c_str()));
+      model.SetRawMaterial(mat);
+    }
+
 		return model;
 	}
 
@@ -132,6 +157,50 @@ namespace Heist {
 
 		return jsonContent;
 	}
+
+  RawMaterial3D FileManager::ReadMTLFile(const char* filePath) {
+    RawMaterial3D material;
+		std::ifstream fileStream;
+		fileStream.open(filePath);
+		HS_CORE_ASSERT(!fileStream.fail(), "Cannot open file path: " + std::string(filePath));
+
+		std::string line;
+
+		std::string tag;
+
+		while (std::getline(fileStream, line)) {
+			std::stringstream sl(line);
+			sl >> tag;
+			if (tag == "Ns") {
+        real64 shininess;
+        sl >> shininess;
+        material.shininess = shininess;
+			} else if (tag == "Ka") {
+        real32 a1, a2, a3;
+        sl >> a1 >> a2 >> a3;
+        material.ambientColor = { a1, a2, a3 };
+      } else if (tag == "Kd") {
+        real32 d1, d2, d3;
+        sl >> d1 >> d2 >> d3;
+        material.diffuseColor = { d1, d2, d3 };
+      } else if (tag == "Ks") {
+        real32 s1, s2, s3;
+        sl >> s1 >> s2 >> s3;
+        material.specularColor = { s1, s2, s3 };
+      } else if (tag == "illum") {
+        int8 illum;
+        sl >> illum;
+        if (illum == 1) {
+          material.specularHighlight = false;
+        } else {
+          material.specularHighlight = true;
+        }
+      }
+    }
+    fileStream.close();
+
+    return material;
+  }
 
 	void FileManager::WriteFile() {
 	}
@@ -146,7 +215,7 @@ namespace Heist {
 		} else {
 			HS_CORE_TRACE("Texture loaded: {}", texturePath);
 		}
-		
+
 		return {width, height, comp, img};
 	}
 

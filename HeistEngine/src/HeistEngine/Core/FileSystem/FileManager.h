@@ -18,8 +18,9 @@ namespace Heist {
 
 		static std::string ReadFile(const char* filePath);
 		static Model3D* CreateModelFromRawData(RawModel3D *rawModel, const std::shared_ptr<Material3D> material, const std::shared_ptr<Shader>& shader, const std::shared_ptr<Texture>& texture);
-		static RawModel3D ReadOBJFile(const char* filePath);
+		static RawModel3D ReadOBJFile(const char* filePath, const char* fileName);
 		static json ReadJSON(const char* filePath);
+    static RawMaterial3D ReadMTLFile(const char* filePath);
 
 		static void WriteFile();
 

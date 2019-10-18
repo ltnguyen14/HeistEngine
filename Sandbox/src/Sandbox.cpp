@@ -11,18 +11,18 @@ struct TestLayer : public Heist::Layer {
 		textureAtlas.reset(Heist::Texture::Create("assets/textures/woodBox.png"));
 		textureSpecAtlas.reset(Heist::Texture::Create("assets/textures/woodBox_spec.png"));
 
-		shader.reset(Heist::Shader::Create("assets/shaders/basic.vert.glsl", "assets/shaders/basic.frag.glsl"));
+		shader.reset(Heist::Shader::Create("assets/shaders/rawMat.vert.glsl", "assets/shaders/rawMat.frag.glsl"));
 		sunShader.reset(Heist::Shader::Create("assets/shaders/basic.vert.glsl", "assets/shaders/sun.frag.glsl"));
 
 		// Material
 		std::shared_ptr<Heist::Material3D> material = std::make_shared<Heist::Material3D>(textureAtlas, textureSpecAtlas, 64.0f);
 
 		// Test loading model
-		auto rawModel = Heist::FileManager::ReadOBJFile("assets/models/cube_texture.obj");
-		testModel.reset(Heist::FileManager::CreateModelFromRawData(&rawModel, material, shader, textureAtlas));
-		testModel->position = { 0, 0, -5 };
+		auto rawModel = Heist::FileManager::ReadOBJFile("assets/models/", "plane.obj");
+		testModel.reset(Heist::FileManager::CreateModelFromRawData(&rawModel, nullptr, shader, textureAtlas));
+		testModel->position = { 0, -5, -5 };
 
-		auto sunRawModel = Heist::FileManager::ReadOBJFile("assets/models/sphere.obj");
+		auto sunRawModel = Heist::FileManager::ReadOBJFile("assets/models/", "sphere.obj");
 		sunModel.reset(Heist::FileManager::CreateModelFromRawData(&sunRawModel, material, sunShader, textureAtlas));
 
 		Heist::vec3 lightPosition = { -5, 10, -2 };
@@ -30,7 +30,7 @@ struct TestLayer : public Heist::Layer {
 	}
 
 	void OnUpdate(real64 time) override {
-		testModel->rotation.y += 0.3f;
+		// testModel->rotation.y += 0.3f;
     // testModel->rotation.x += 0.3f;
     // testModel->position.x += 0.01f;
 	}
@@ -40,15 +40,6 @@ struct TestLayer : public Heist::Layer {
 		sunModel->position = light.position;
 
 		Heist::Renderer::BeginScene(camera, &light);
-
-    // std::shared_ptr<Heist::Material3D> material = std::make_shared<Heist::Material3D>(textureAtlas, textureSpecAtlas, 64.0f);
-    // auto rawModel = Heist::FileManager::ReadOBJFile("assets/models/cube_texture.obj");
-    // for (int i = 0; i < 100; i++) {
-    //   std::shared_ptr<Heist::Model3D> testModel;
-    //   testModel.reset(Heist::FileManager::CreateModelFromRawData(&rawModel, material, shader, textureAtlas));
-    //   testModel->position.x = i * 5;
-    //   Heist::Renderer::Submit(testModel);
-    // }
 
 		Heist::Renderer::Submit(testModel);
 		Heist::Renderer::Submit(sunModel);

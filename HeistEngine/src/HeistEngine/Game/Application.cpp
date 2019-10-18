@@ -19,7 +19,7 @@ namespace Heist {
 		inputManager->SubscribeToBus(&eventBus);
 
 		// Camera init
-		camera = std::make_shared<Heist::Camera>(Heist::vec3(0, 15, 15), Heist::vec3(0, 0, 0), Heist::vec4(0, width, height, 0), false);
+		camera = std::make_shared<Heist::Camera>(Heist::vec3(0, 5, 0), Heist::vec3(0, 0, 0), Heist::vec4(0, width, height, 0), false);
 
 		// --------------------
 		Renderer::Init();

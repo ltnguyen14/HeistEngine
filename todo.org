@@ -21,7 +21,9 @@
    - [X] Add camera movement layer
    - [X] Create third person camera movement
    - [ ] Create "strategy view" camera
-** TODO Add simple plane for Sandbox - use ECS
+** DONE Add simple plane for Sandbox - use ECS
+   CLOSED: [2019-10-18 Fri 08:24]
+   - State "DONE"       from "TODO"       [2019-10-18 Fri 08:24]
    Add plane for sandbox and moving cubes?
 ** DONE Investigate potetial memory leak (MousePositionEvent)
    CLOSED: [2019-10-17 Thu 21:36]
@@ -29,3 +31,4 @@
    - State "IN PROGRESS" from "TODO"       [2019-10-17 Thu 21:21]
 ** TODO Text rendering
 ** TODO Time profiler - game update, game render, game init
+** TODO Each OBJ file is creating a seperate RawMaterial3D object. Should optimize
