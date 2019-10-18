@@ -3,15 +3,8 @@
 #include "Core/Log/Log.h"
 
 namespace Heist {
-  real64 g_xPos = 100;
-  real64 g_yPos = 100;
-
   ThirdPersonCameraMovement::ThirdPersonCameraMovement() {
     inputManager = InputManager::Instance();
-
-    inputManager->SetMousePosition(g_xPos, g_yPos);
-    old_x = g_xPos;
-    old_y = g_yPos;
   }
 
   ThirdPersonCameraMovement::~ThirdPersonCameraMovement() { }
@@ -26,18 +19,18 @@ namespace Heist {
 
     if (camera) {
       // Camera Movement
-      if (inputManager->GetKey(HS_KEY_W)) {
+      if (inputManager->GetKey(HS_KEY_W) != HS_RELEASE) {
         displacement.x = -cos(radian(camera->rotation.y + 90)) * speed;
         displacement.z = -sin(radian(camera->rotation.y + 90)) * speed;
-      } else if (inputManager->GetKey(HS_KEY_S)) {
+      } else if (inputManager->GetKey(HS_KEY_S) != HS_RELEASE) {
         displacement.x = cos(radian(camera->rotation.y + 90)) * speed;
         displacement.z = sin(radian(camera->rotation.y + 90)) * speed;
       };
 
-      if (inputManager->GetKey(HS_KEY_A)) {
+      if (inputManager->GetKey(HS_KEY_A) != HS_RELEASE) {
         displacement.x = -cos(radian(camera->rotation.y)) * speed;
         displacement.z = -sin(radian(camera->rotation.y)) * speed;
-      } else if (inputManager->GetKey(HS_KEY_D)) {
+        } else if (inputManager->GetKey(HS_KEY_D) != HS_RELEASE) {
         displacement.x = cos(radian(camera->rotation.y)) * speed;
         displacement.z = sin(radian(camera->rotation.y)) * speed;
       };
@@ -47,31 +40,33 @@ namespace Heist {
       camera->position.z += displacement.z;
 
       // Camera Rotation
-      static auto const BOUND = 80;
       constexpr real32 ROTATION_FACTOR = 0.05f;
       real64 change_x, change_y, new_x, new_y;
 
-      new_x = inputManager->GetMousePosition().x;
-      new_y = inputManager->GetMousePosition().y;
+      // Enter rotation mode
+      if (!rotationMode && inputManager->GetKey(HS_MOUSE_BUTTON_MIDDLE) == HS_PRESS) {
+        old_x = inputManager->GetMousePosition().x;
+        old_y = inputManager->GetMousePosition().y;
+        rotationMode = true;
+      }
 
-      if (!std::isinf(new_x) && !std::isinf(new_y)) {
+      if (rotationMode && inputManager->GetKey(HS_MOUSE_BUTTON_MIDDLE) == HS_RELEASE) {
+        rotationMode = false;
+      }
+
+      if (rotationMode) {
+        new_x = inputManager->GetMousePosition().x;
+        new_y = inputManager->GetMousePosition().y;
+
         change_x = new_x - old_x;
         change_y = new_y - old_y;
 
         camera->rotation.y += change_x * ROTATION_FACTOR;
         camera->rotation.x += change_y * ROTATION_FACTOR;
 
-        if (camera->rotation.x > BOUND) camera->rotation.x = BOUND;
-        else if (camera->rotation.x < -BOUND) camera->rotation.x = -BOUND;
-
-        if (camera->rotation.y > 360) camera->rotation.y = 0;
-        else if (camera->rotation.y < 0) camera->rotation.y = 360;
-
-        old_x = g_xPos;
-        old_y = g_yPos;
-        inputManager->SetMousePosition(g_xPos, g_yPos);
+        old_x = new_x;
+        old_y = new_y;
       }
-
     }
   }
 }

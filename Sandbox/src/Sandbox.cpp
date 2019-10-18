@@ -25,7 +25,7 @@ struct TestLayer : public Heist::Layer {
 		auto sunRawModel = Heist::FileManager::ReadOBJFile("assets/models/sphere.obj");
 		sunModel.reset(Heist::FileManager::CreateModelFromRawData(&sunRawModel, material, sunShader, textureAtlas));
 
-		Heist::vec3 lightPosition = { -5, 0, -2 };
+		Heist::vec3 lightPosition = { -5, 10, -2 };
 		light = Heist::Light3D(lightPosition, { 0.2f, 0.2f, 0.2f }, { 0.5f, 0.5f, 0.5f }, { 1.0f, 1.0f, 1.0f });
 	}
 
@@ -40,6 +40,15 @@ struct TestLayer : public Heist::Layer {
 		sunModel->position = light.position;
 
 		Heist::Renderer::BeginScene(camera, &light);
+
+    // std::shared_ptr<Heist::Material3D> material = std::make_shared<Heist::Material3D>(textureAtlas, textureSpecAtlas, 64.0f);
+    // auto rawModel = Heist::FileManager::ReadOBJFile("assets/models/cube_texture.obj");
+    // for (int i = 0; i < 100; i++) {
+    //   std::shared_ptr<Heist::Model3D> testModel;
+    //   testModel.reset(Heist::FileManager::CreateModelFromRawData(&rawModel, material, shader, textureAtlas));
+    //   testModel->position.x = i * 5;
+    //   Heist::Renderer::Submit(testModel);
+    // }
 
 		Heist::Renderer::Submit(testModel);
 		Heist::Renderer::Submit(sunModel);

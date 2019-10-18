@@ -31,6 +31,15 @@ namespace Heist {
 		glViewport(0, 0, (GLsizei)width, (GLsizei)height);
 	}
 
+  void mouse_button_callback(GLFWwindow *window, int button, int action, int mods) {
+    Window *win = (Window*)glfwGetWindowUserPointer(window);
+
+    KeyEvent *event = (KeyEvent*)win->g_memoryManager->Alloc(sizeof(KeyEvent));
+    new(event) KeyEvent(button, action);
+
+    win->SendEvent(event);
+  }
+
 	Window::Window(int32 width, int32 height, std::string title)
 		: EventNode("Window"), width(width), height(height), title(title) {
 
@@ -55,6 +64,7 @@ namespace Heist {
 		glfwSetKeyCallback(window, key_callback);
 		glfwSetWindowSizeCallback(window, window_size_callback);
 		glfwSetCursorPosCallback(window, mouse_callback);
+    glfwSetMouseButtonCallback(window, mouse_button_callback);
 
 		g_memoryManager = MemoryManager::Instance();
 	};

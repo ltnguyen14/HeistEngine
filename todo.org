@@ -16,13 +16,16 @@
    Reproduce by maximizing then minimizing the screen, object scale changes
 ** TODO Multiple lights
    Add support for multiple lights
-** IN PROGRESS Add camera movement for Sandbox [1/3] [33%]
+** IN PROGRESS Add camera movement for Sandbox [2/3] [66%]
    - State "IN PROGRESS" from "TODO"       [2019-10-14 Mon 06:38]
    - [X] Add camera movement layer
-   - [ ] Create third person camera movement
+   - [X] Create third person camera movement
    - [ ] Create "strategy view" camera
 ** TODO Add simple plane for Sandbox - use ECS
    Add plane for sandbox and moving cubes?
-** TODO Investigate potetial memory leak (MousePositionEvent)
+** DONE Investigate potetial memory leak (MousePositionEvent)
+   CLOSED: [2019-10-17 Thu 21:36]
+   - State "DONE"       from "IN PROGRESS" [2019-10-17 Thu 21:36]
+   - State "IN PROGRESS" from "TODO"       [2019-10-17 Thu 21:21]
 ** TODO Text rendering
 ** TODO Time profiler - game update, game render, game init

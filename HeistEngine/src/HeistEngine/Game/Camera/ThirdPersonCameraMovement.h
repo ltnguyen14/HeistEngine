@@ -15,5 +15,6 @@ namespace Heist {
 	private:
 		InputManager *inputManager;
     real64 old_x, old_y;
+    bool rotationMode = false;
 	};
 }

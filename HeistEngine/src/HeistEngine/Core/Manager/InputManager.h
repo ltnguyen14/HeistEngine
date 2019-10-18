@@ -27,7 +27,7 @@ namespace Heist {
 
 		static InputManager* g_inputManager;
 
-		bool keys[512] = { 0 };
+		int32 keys[512] = { 0 };
     real64 xpos, ypos;
     MemoryManager *g_memoryManager;
 	};

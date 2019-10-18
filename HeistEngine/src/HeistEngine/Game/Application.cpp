@@ -9,7 +9,7 @@ namespace Heist {
 
 		//Subsystem start up
 		memoryManager = MemoryManager::Instance();
-		memoryManager->StartUp(10);
+		memoryManager->StartUp(100);
 		window.StartUp();
 		inputManager = InputManager::Instance();
 		inputManager->StartUp();
@@ -19,7 +19,7 @@ namespace Heist {
 		inputManager->SubscribeToBus(&eventBus);
 
 		// Camera init
-		camera = std::make_shared<Heist::Camera>(Heist::vec3(0, 0, 15), Heist::vec3(0, 0, 0), Heist::vec4(0, width, height, 0), false);
+		camera = std::make_shared<Heist::Camera>(Heist::vec3(0, 15, 15), Heist::vec3(0, 0, 0), Heist::vec4(0, width, height, 0), false);
 
 		// --------------------
 		Renderer::Init();
@@ -41,8 +41,6 @@ namespace Heist {
 	}
 
 	void Application::OnUpdate(real64 time) {
-		eventBus.Notify(); // TODO(LAM): Need to move this somewhere
-
     if (cameraMovement) {
       cameraMovement->Update();
     }
@@ -58,6 +56,8 @@ namespace Heist {
 		for (auto layer : layerStack.layers) {
 			layer->OnUpdate(time);
 		}
+
+		eventBus.Notify(); // TODO(LAM): Need to move this somewhere
 		memoryManager->ClearStack();
 	}
 
@@ -110,13 +110,14 @@ namespace Heist {
 			while (lag >= MS_PER_UPDATE && loops < MAX_FRAME_SKIP) {
 				this->OnUpdate(MS_PER_UPDATE);
 				lag -= MS_PER_UPDATE;
-
-        // Render
-        this->OnRender();
-				loops++;
 			}
 
+      // Render
+      this->OnRender();
+      loops++;
+
 			frameTime = float(clock() - current);
+      // HS_CORE_INFO("{} ms", frameTime);
 		};
 	}
 }
