@@ -25,6 +25,27 @@ namespace Heist {
     real32 speed = 0.25f;
 
     if (camera) {
+      // Camera Movement
+      if (inputManager->GetKey(HS_KEY_W)) {
+        displacement.x = -cos(radian(camera->rotation.y + 90)) * speed;
+        displacement.z = -sin(radian(camera->rotation.y + 90)) * speed;
+      } else if (inputManager->GetKey(HS_KEY_S)) {
+        displacement.x = cos(radian(camera->rotation.y + 90)) * speed;
+        displacement.z = sin(radian(camera->rotation.y + 90)) * speed;
+      };
+
+      if (inputManager->GetKey(HS_KEY_A)) {
+        displacement.x = -cos(radian(camera->rotation.y)) * speed;
+        displacement.z = -sin(radian(camera->rotation.y)) * speed;
+      } else if (inputManager->GetKey(HS_KEY_D)) {
+        displacement.x = cos(radian(camera->rotation.y)) * speed;
+        displacement.z = sin(radian(camera->rotation.y)) * speed;
+      };
+
+      camera->position.x += displacement.x;
+      camera->position.y += displacement.y;
+      camera->position.z += displacement.z;
+
       // Camera Rotation
       static auto const BOUND = 80;
       constexpr real32 ROTATION_FACTOR = 0.05f;
@@ -51,26 +72,6 @@ namespace Heist {
         inputManager->SetMousePosition(g_xPos, g_yPos);
       }
 
-      // Camera Movement
-      if (inputManager->GetKey(HS_KEY_W)) {
-        displacement.x = cos(radian(camera->rotation.y + 90)) * speed;
-        displacement.z = sin(radian(camera->rotation.y + 90)) * speed;
-      } else if (inputManager->GetKey(HS_KEY_S)) {
-        displacement.x = -cos(radian(camera->rotation.y + 90)) * speed;
-        displacement.z = -sin(radian(camera->rotation.y + 90)) * speed;
-      };
-
-      if (inputManager->GetKey(HS_KEY_A)) {
-        displacement.x = -cos(radian(camera->rotation.y)) * speed;
-        displacement.z = -sin(radian(camera->rotation.y)) * speed;
-      } else if (inputManager->GetKey(HS_KEY_D)) {
-        displacement.x = cos(radian(camera->rotation.y)) * speed;
-        displacement.z = sin(radian(camera->rotation.y)) * speed;
-      };
-
-      camera->position.x += displacement.x;
-      camera->position.y += displacement.y;
-      camera->position.z += displacement.z;
     }
   }
 }

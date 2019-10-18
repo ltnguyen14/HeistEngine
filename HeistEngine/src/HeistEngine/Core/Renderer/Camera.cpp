@@ -1,7 +1,6 @@
 #include "hspch.h"
 #include "Camera.h"
-#include "../../../../deps/glm/glm/glm.hpp"
-#include "../../../../deps/glm/glm/gtc/matrix_transform.hpp"
+
 
 namespace Heist {
   real32 FOV = 90.0f;
@@ -26,7 +25,7 @@ namespace Heist {
 		if (position != c_position || rotation != c_rotation) {
 			c_position = position;
 			c_rotation = rotation;
-			this->CalculateViewMatrix();
+			CalculateViewMatrix();
 		}
 	}
 
@@ -48,18 +47,9 @@ namespace Heist {
 		viewMatrix = rotate(viewMatrix, rotation.y, { 0, 1, 0 });
 		viewMatrix = rotate(viewMatrix, rotation.z, { 0, 0, 1 });
 
-		glm::mat4 testMatrix(1);
-		testMatrix = glm::rotate(testMatrix, radian(rotation.x), { 1, 0, 0 });
-		testMatrix = glm::rotate(testMatrix, radian(rotation.y), { 0, 1, 0 });
-		testMatrix = glm::rotate(testMatrix, radian(rotation.z), { 0, 0, 1 });
-
 		viewMatrix = translate(viewMatrix, { -position.x, -position.y, -position.z });
-		testMatrix = glm::translate(testMatrix, { -position.x, -position.y, -position.z });
 
-		glm::mat4 persMat = glm::perspective(radian(FOV), 1920.0f / 1080.0f, 0.1f, 1000.0f);
-		mat4 testPers = MakePerspectiveMatrix(FOV, 1920.0f / 1080.0f, 0.1f, 1000.0f);
-
-		projectionViewMatrix = viewMatrix * projectionMatrix ;
+		projectionViewMatrix = projectionMatrix * viewMatrix;
 	}
 
 	void Camera::CalculateProjectionMatrix(vec4 dimensions) {

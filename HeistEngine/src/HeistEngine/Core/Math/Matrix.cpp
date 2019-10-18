@@ -138,19 +138,19 @@ namespace Heist {
 			0,		0,		0,		1
 		};
 
-		return xRot * yRot * zRot * mat;
+		return mat * xRot * yRot * zRot;
 	}
 
 	mat4 MakeModelMatrix(const vec3& position, const vec3& rotation, const vec3& scaleVec) {
 		mat4 modelMatrix = mat4(1);
 
-		modelMatrix = scale(modelMatrix, scaleVec);
+		modelMatrix = translate(modelMatrix, position);
 
 		modelMatrix = rotate(modelMatrix, rotation.x, { 1, 0, 0 });
 		modelMatrix = rotate(modelMatrix, rotation.y, { 0, 1, 0 });
 		modelMatrix = rotate(modelMatrix, rotation.z, { 0, 0, 1 });
 
-		modelMatrix = translate(modelMatrix, position);
+		modelMatrix = scale(modelMatrix, scaleVec);
 
 		return modelMatrix;
 	}
