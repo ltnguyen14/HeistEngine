@@ -18,9 +18,9 @@ namespace Heist {
 		void AddComponents(Entity& entity, const std::initializer_list<T>& initializer);
 
 		template<class T>
-		std::vector<std::shared_ptr<BaseComponent>> GetComponents();
+		std::unordered_map<int32, std::shared_ptr<BaseComponent>> GetComponents();
 
-		std::unordered_map<int32, std::vector<std::shared_ptr<BaseComponent>>> components;
+		std::unordered_map<int32, std::unordered_map<int32, std::shared_ptr<BaseComponent>>> components;
 		std::unordered_map<int32, std::vector<std::shared_ptr<BaseComponent>>> entities;
 	};
 
@@ -48,12 +48,12 @@ namespace Heist {
 		for (auto i : initializer) {
 			std::shared_ptr<T> newComponent = std::make_shared<T>(T(i));
 			entities[entity.id].push_back(newComponent);
-			components[T::componentTypeId].push_back(newComponent);
+			components[T::componentTypeId][entity.id] = newComponent;
 		}
 	}
 
 	template<class T>
-	inline std::vector<std::shared_ptr<BaseComponent>> ComponentManager::GetComponents() {
+	inline std::unordered_map<int32, std::shared_ptr<BaseComponent>> ComponentManager::GetComponents() {
 		 auto got = components.find(T::componentTypeId);
 		 HS_CORE_ASSERT(got != components.end(), "Trying to get unknown Component Type Id!");
 

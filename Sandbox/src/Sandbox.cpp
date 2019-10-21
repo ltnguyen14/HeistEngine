@@ -21,12 +21,13 @@ struct TestLayer : public Heist::Layer {
 		auto planeRawModel = Heist::FileManager::ReadOBJFile("assets/models/", "plane.obj");
 		Heist::Entity plane("Plane");
 		componentManager->AddEntity(plane);
-		componentManager->AddComponents<Heist::RenderableComponent>(plane, { { planeRawModel, shader } });
+		// componentManager->AddComponents<Heist::RenderableComponent>(plane, { { planeRawModel, shader } });
 
 		auto treeRawModel = Heist::FileManager::ReadOBJFile("assets/models/", "tree.obj");
 		Heist::Entity tree("Tree 1");
 		componentManager->AddEntity(tree);
 		componentManager->AddComponents<Heist::RenderableComponent>(tree, {{ treeRawModel, shader }});
+		componentManager->AddComponents<Heist::TransformComponent>(tree, { { {0, 0, 0}, {0, 0, 0}, {0.25f, 0.25f, 0.25f} } });
 
 		auto sunRawModel = Heist::FileManager::ReadOBJFile("assets/models/", "sphere.obj");
 		Heist::Entity sun("Sun");

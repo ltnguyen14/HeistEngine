@@ -6,7 +6,7 @@
 
 namespace Heist {
 	struct TransformComponent : public BaseComponent {
-		TransformComponent(vec3 position, vec3 scale, vec3 rotation) : position(position), rotation(rotation), scale(scale) {};
+		TransformComponent(vec3 position, vec3 rotation, vec3 scale) : position(position), rotation(rotation), scale(scale) {};
 		vec3 position;
 		vec3 scale;
 		vec3 rotation;

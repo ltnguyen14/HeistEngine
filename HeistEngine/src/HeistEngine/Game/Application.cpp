@@ -19,6 +19,7 @@ namespace Heist {
 
 		// Subscribe new component
 		componentManager->AddComponentType<RenderableComponent>();
+		componentManager->AddComponentType<TransformComponent>();
 
 		// Event Bus Subscription
 		window.SubscribeToBus(&eventBus);
