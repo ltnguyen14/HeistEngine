@@ -15,6 +15,8 @@ namespace Heist {
 
 		inline bool GetKey(int32 key) const { return keys[key]; };
 		inline vec2 GetMousePosition() const { return { (real32)xpos, (real32 )ypos }; };
+    inline vec2 GetMouseScroll() const { return { (real32)xoffset, (real32)yoffset }; };
+    inline void ResetScroll() { xoffset = 0; yoffset = 0; };
 
     void SetMousePosition(real64 xpos, real64 ypos);
 
@@ -28,7 +30,9 @@ namespace Heist {
 		static InputManager* g_inputManager;
 
 		int32 keys[512] = { 0 };
-    real64 xpos, ypos;
+    real32 xoffset = 0;
+    real32 yoffset = 0;
+    real32 xpos, ypos;
     MemoryManager *g_memoryManager;
 	};
 

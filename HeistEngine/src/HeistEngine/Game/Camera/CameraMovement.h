@@ -6,6 +6,8 @@ namespace Heist {
 	public:
 		CameraMovement() {};
 		virtual ~CameraMovement() {};
+
+		virtual void AttachCamera(Camera* camera) { };
 		virtual void Update() = 0;
 
 		Camera* camera = nullptr;

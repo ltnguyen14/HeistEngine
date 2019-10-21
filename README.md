@@ -22,6 +22,10 @@ Trello board can be found here: https://trello.com/b/eYYYpAAv/heist-engine
 At the moment the engine is using a very simple ECS system for gameplay programming. Here is a simple example on how to use ECS:
 
 1. Create a `ComponentManager` instance in Application.
+2. Register `componentManager` to `BaseSystem`:
+```
+BaseSystem::RegisterComponentManager(componentManager);
+```
 2. Create a struct that inherit from `Component`:
 
 ```

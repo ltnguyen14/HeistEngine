@@ -7,7 +7,7 @@ namespace Heist {
 		LayerStack();
 		virtual ~LayerStack();
 
-		void PushLayer(Layer *layer);
+		void PushLayer(Layer *layer, const std::shared_ptr<ComponentManager>& componentManager);
 		void PopLayer(Layer *layer);
 
 		std::vector<Layer*> layers;

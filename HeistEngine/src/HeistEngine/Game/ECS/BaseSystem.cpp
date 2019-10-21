@@ -3,9 +3,9 @@
 
 namespace Heist {
 
-	ComponentManager* BaseSystem::componentManager = nullptr;
+	std::shared_ptr<ComponentManager> BaseSystem::componentManager = nullptr;
 
-	void BaseSystem::RegisterComponentManager(ComponentManager* componentManager) {
+	void BaseSystem::RegisterComponentManager(std::shared_ptr<ComponentManager> componentManager) {
 		BaseSystem::componentManager = componentManager;
 	}
 

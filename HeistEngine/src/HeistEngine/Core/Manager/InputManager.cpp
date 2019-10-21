@@ -47,6 +47,12 @@ namespace Heist {
 
       xpos = mouseEvent->xpos;
       ypos = mouseEvent->ypos;
+    } else if (event->eventTypeMask == (INPUT | MOUSE | SCROLL)) {
+      ScrollEvent *scrollEvent = dynamic_cast<ScrollEvent*>(event);
+      HS_CORE_ASSERT(scrollEvent, "Error type casting event!");
+
+      xoffset = scrollEvent->xoffset;
+      yoffset = scrollEvent->yoffset;
     }
 	}
 }

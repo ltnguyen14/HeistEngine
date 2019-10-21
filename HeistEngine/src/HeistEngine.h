@@ -8,6 +8,8 @@
 #include "HeistEngine/Core/Renderer/Camera.h"
 #include "HeistEngine/Game/Camera/ThirdPersonCameraMovement.h"
 #include "HeistEngine/Platform/Assertions.h"
+#include "HeistEngine/Game/ECS/Common/Systems.h"
+#include "HeistEngine/Game/ECS/Common/Components.h"
 
 #include "HeistEngine/Game/Application.h"
 

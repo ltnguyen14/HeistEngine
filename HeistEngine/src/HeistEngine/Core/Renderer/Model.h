@@ -7,7 +7,6 @@
 namespace Heist {
 
 	struct TextureData {
-
 		TextureData(int32 width, int32 height, int32 comp, unsigned char* img) : width(width), height(height), comp(comp), img(img) {};
 		~TextureData();
 
@@ -40,17 +39,19 @@ namespace Heist {
 
   struct RawModel3D {
 		uint32 verticiesNum = 0;
-		std::vector<real32> verticies;
-		std::vector<real32> normals;
-		std::vector<real32> textureCoord;
 		std::vector<uint32> indicies;
 		std::vector<real32> dataBuffer;
+    std::string materialName;
 
     std::shared_ptr<RawMaterial3D> rawMaterial;
     void SetRawMaterial(const std::shared_ptr<RawMaterial3D> mat) {
       rawMaterial = mat;
     }
 	};
+
+  struct RawModelCollection3D {
+	  std::unordered_map<std::string, std::shared_ptr<RawModel3D>> models;
+  };
 
 	struct Model3D {
 
@@ -93,6 +94,10 @@ namespace Heist {
 
 		mat4 c_modelMatrix;
 	};
+
+  struct ModelCollection3D {
+    std::vector<std::shared_ptr<Model3D>> models;
+  };
 
 	struct Light3D {
 

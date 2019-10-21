@@ -10,7 +10,8 @@ namespace Heist {
 		APPLICATION = BIT(2),
 		INPUT = BIT(3),
     POSITION = BIT(4),
-    SET = BIT(5)
+    SCROLL = BIT(5),
+    SET = BIT(6)
 	};
 
 	struct Event {
@@ -41,5 +42,12 @@ namespace Heist {
 		~MousePositionSetEvent() {};
 
 		real64 xpos, ypos;
+	};
+
+	struct ScrollEvent : public Event {
+		ScrollEvent(real64 xoffset, real64 yoffset);
+		~ScrollEvent() {};
+
+		real64 xoffset, yoffset;
 	};
 }

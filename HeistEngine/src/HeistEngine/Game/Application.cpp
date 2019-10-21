@@ -1,5 +1,6 @@
 #include "hspch.h"
 #include "Application.h"
+#include "Game/ECS/Common/Systems.h"
 
 namespace Heist {
 
@@ -13,13 +14,18 @@ namespace Heist {
 		window.StartUp();
 		inputManager = InputManager::Instance();
 		inputManager->StartUp();
+		componentManager = std::make_shared<ComponentManager>(ComponentManager());
+		BaseSystem::RegisterComponentManager(componentManager);
+
+		// Subscribe new component
+		componentManager->AddComponentType<RenderableComponent>();
 
 		// Event Bus Subscription
 		window.SubscribeToBus(&eventBus);
 		inputManager->SubscribeToBus(&eventBus);
 
 		// Camera init
-		camera = std::make_shared<Heist::Camera>(Heist::vec3(0, 5, 0), Heist::vec3(0, 0, 0), Heist::vec4(0, width, height, 0), false);
+		camera = std::make_shared<Heist::Camera>(Heist::vec3(0, 0, 0), Heist::vec3(0, 0, 0), Heist::vec4(0, width, height, 0), false);
 
 		// --------------------
 		Renderer::Init();
@@ -41,6 +47,7 @@ namespace Heist {
 	}
 
 	void Application::OnUpdate(real64 time) {
+
     if (cameraMovement) {
       cameraMovement->Update();
     }
@@ -57,22 +64,26 @@ namespace Heist {
 			layer->OnUpdate(time);
 		}
 
+    inputManager->ResetScroll();
 		eventBus.Notify(); // TODO(LAM): Need to move this somewhere
 		memoryManager->ClearStack();
 	}
 
-	void Application::OnRender() {
+	void Application::OnRender(real64 time) {
 		// Render stuff go here
 		RendererCommand::ClearScreen();
 
 		for (auto layer : layerStack.layers) {
+			Renderer::BeginScene(camera, &layer->light);
 			layer->OnRender(camera);
+			RenderSystem::Update(time);
+			Renderer::EndScene();
 		}
 		window.SwapBuffer();
 	}
 
 	void Application::PushLayer(Layer* layer) {
-		layerStack.PushLayer(layer);
+		layerStack.PushLayer(layer, componentManager);
 	}
 
 	void Application::PopLayer(Layer* layer) {
@@ -80,8 +91,8 @@ namespace Heist {
 	}
 
   void Application::AttachCameraMovement(CameraMovement *movement) {
+    movement->AttachCamera(camera.get());
     cameraMovement = movement;
-	  movement->camera = camera.get();
   }
 
 	void Application::Run() {
@@ -109,12 +120,13 @@ namespace Heist {
 			loops = 0;
 			while (lag >= MS_PER_UPDATE && loops < MAX_FRAME_SKIP) {
 				this->OnUpdate(MS_PER_UPDATE);
+
+        // Render
+        this->OnRender(MS_PER_UPDATE);
+
+        loops++;
 				lag -= MS_PER_UPDATE;
 			}
-
-      // Render
-      this->OnRender();
-      loops++;
 
 			frameTime = float(clock() - current);
       // HS_CORE_INFO("{} ms", frameTime);

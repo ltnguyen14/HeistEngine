@@ -16,11 +16,13 @@
    Reproduce by maximizing then minimizing the screen, object scale changes
 ** TODO Multiple lights
    Add support for multiple lights
-** IN PROGRESS Add camera movement for Sandbox [2/3] [66%]
+** DONE Add camera movement for Sandbox [3/3] [100%]
+   CLOSED: [2019-10-18 Fri 21:05]
+   - State "DONE"       from "IN PROGRESS" [2019-10-18 Fri 21:05]
    - State "IN PROGRESS" from "TODO"       [2019-10-14 Mon 06:38]
    - [X] Add camera movement layer
    - [X] Create third person camera movement
-   - [ ] Create "strategy view" camera
+   - [X] Create "strategy view" camera
 ** DONE Add simple plane for Sandbox - use ECS
    CLOSED: [2019-10-18 Fri 08:24]
    - State "DONE"       from "TODO"       [2019-10-18 Fri 08:24]
@@ -32,3 +34,23 @@
 ** TODO Text rendering
 ** TODO Time profiler - game update, game render, game init
 ** TODO Each OBJ file is creating a seperate RawMaterial3D object. Should optimize
+** DONE FOV is acting weird
+   CLOSED: [2019-10-18 Fri 21:04]
+   - State "DONE"       from "TODO"       [2019-10-18 Fri 21:04]
+** TODO Third camera movement's focus
+   Third camera movement should be able to have a focus point (anchor)
+** DONE Third camera movement move momentum
+   CLOSED: [2019-10-19 Sat 18:30]
+   - State "DONE"       from "IN PROGRESS" [2019-10-19 Sat 18:30]
+   - State "IN PROGRESS" from "TODO"       [2019-10-19 Sat 18:20]
+   When moving camera it should not stop immidiately
+** TODO Simple immediate mode GUI
+   Textured quads, etc. - might be able to use the existing 2D renderer
+** DONE Multiple object in obj file
+   CLOSED: [2019-10-20 Sun 20:15]
+   - State "DONE"       from "IN PROGRESS" [2019-10-20 Sun 20:15]
+   - State "IN PROGRESS" from "TODO"       [2019-10-20 Sun 19:37]
+** DONE Weird lighting bug - Tree fade side not showing right color
+   CLOSED: [2019-10-20 Sun 20:15]
+   - State "DONE"       from "IN PROGRESS" [2019-10-20 Sun 20:15]
+   - State "IN PROGRESS" from "TODO"       [2019-10-20 Sun 20:15]

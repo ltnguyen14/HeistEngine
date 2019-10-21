@@ -11,9 +11,9 @@ namespace Heist {
 	
 	}
 
-	void LayerStack::PushLayer(Layer* layer) {
+	void LayerStack::PushLayer(Layer* layer, const std::shared_ptr<ComponentManager>& componentManager) {
 		layers.push_back(layer);
-		layer->OnAttach();
+		layer->OnAttach(componentManager);
 	}
 
 	void LayerStack::PopLayer(Layer *layer) {

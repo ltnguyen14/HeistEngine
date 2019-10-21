@@ -16,4 +16,8 @@ namespace Heist {
   MousePositionSetEvent::MousePositionSetEvent(real64 xpos, real64 ypos)
     : Event("MousePositionEvent", INPUT | MOUSE | POSITION | SET), xpos(xpos), ypos(ypos){
   }
+
+  ScrollEvent::ScrollEvent(real64 xoffset, real64 yoffset)
+    : Event("MouseScrollEvent", INPUT | MOUSE | SCROLL), xoffset(xoffset), yoffset(yoffset) {
+  }
 }

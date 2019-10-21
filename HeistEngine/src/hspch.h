@@ -15,6 +15,9 @@
 #include <math.h>
 #include <functional>
 #include <time.h>
+#include <future>
+#include <mutex>
+#include <thread>
 
 #ifdef HEIST_PLATFORM_WINDOWS
 	#include <Windows.h>

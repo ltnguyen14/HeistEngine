@@ -16,6 +16,7 @@
 #include "Core/Renderer/Renderer.h"
 #include "Core/Renderer/Renderer2D.h"
 #include "Game/Camera/CameraMovement.h"
+#include "Game/ECS/ComponentManager.h"
 
 namespace Heist {
 
@@ -25,7 +26,7 @@ namespace Heist {
 		virtual ~Application();
 
 		void OnUpdate(real64 time);
-		void OnRender();
+		void OnRender(real64 time);
 
 		void PushLayer(Layer *layer);
 		void PopLayer(Layer *layer);
@@ -34,13 +35,14 @@ namespace Heist {
 
 		void Run();
 
-	private:
+	protected:
 		bool running;
 		EventBus eventBus;
 		LayerStack layerStack;
 		Window window;
 		MemoryManager *memoryManager;
 		InputManager *inputManager;
+		std::shared_ptr<ComponentManager> componentManager;
     CameraMovement *cameraMovement;
 		std::shared_ptr<Camera> camera;
 	};

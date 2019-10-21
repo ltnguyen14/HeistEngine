@@ -12,7 +12,6 @@ namespace Heist {
 
 	void Renderer::Init() {
 		RendererCommand::Init();
-		RendererCommand::SetClearColor({ 0.8f, 0.8f, 0.8f, 1.0f });
 	}
 
 	void Renderer::BeginScene(const std::shared_ptr<Camera>& camera, Light3D *light) {
@@ -32,28 +31,29 @@ namespace Heist {
 		model->shader->Bind();
 		model->vertexArray->Bind();
 
-    if (model->material) {
-      model->material->texture->Bind(textureSlot);
-      model->material->specular->Bind(textureSlot + 1);
-    }
+		if (model->material) {
+		  model->material->texture->Bind(textureSlot);
+		  model->material->specular->Bind(textureSlot + 1);
+		}
 
 		// Model
 		model->shader->UploadUniformMat4("modelMatrix", &model->GetModelMatrix());
+		model->shader->UploadUniformVec3("viewPosition", &s_sceneData->camera->position);
 
 		model->shader->UploadUniformMat4("projectionViewMatrix", &s_sceneData->projectionViewMatrix); // Once we get a command queue this can be done for each shader instead of model
 
 		// Material
-    if (model->material) {
-      model->shader->UploadUniform1i("material.diffuse", textureSlot);
-      model->shader->UploadUniform1i("material.specular", textureSlot + 1);
-      model->shader->UploadUniform1f("material.reflectiveness", model->material->reflectiveness);
-    } else if (model->rawMaterial) {
-      model->shader->UploadUniformVec3("material.ambient", &model->rawMaterial->ambientColor);
-      model->shader->UploadUniformVec3("material.diffuse", &model->rawMaterial->diffuseColor);
-      model->shader->UploadUniformVec3("material.specular", &model->rawMaterial->specularColor);
-      model->shader->UploadUniform1f("material.shininess", model->rawMaterial->shininess);
-      model->shader->UploadUniform1i("material.specularHighlight", model->rawMaterial->specularHighlight);
-    }
+		if (model->material) {
+		  model->shader->UploadUniform1i("material.diffuse", textureSlot);
+		  model->shader->UploadUniform1i("material.specular", textureSlot + 1);
+		  model->shader->UploadUniform1f("material.reflectiveness", model->material->reflectiveness);
+		} else if (model->rawMaterial) {
+		  model->shader->UploadUniformVec3("material.ambient", &model->rawMaterial->ambientColor);
+		  model->shader->UploadUniformVec3("material.diffuse", &model->rawMaterial->diffuseColor);
+		  model->shader->UploadUniformVec3("material.specular", &model->rawMaterial->specularColor);
+		  model->shader->UploadUniform1f("material.shininess", model->rawMaterial->shininess);
+		  model->shader->UploadUniform1i("material.specularHighlight", model->rawMaterial->specularHighlight);
+		}
 
 		// Light
 		model->shader->UploadUniformVec3("light.position", &s_sceneData->light->position);

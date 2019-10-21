@@ -3,7 +3,7 @@
 
 
 namespace Heist {
-  real32 FOV = 90.0f;
+  real32 FOV = 65.0f;
 
 	Camera::Camera(vec3 position, vec3 rotation, vec4 dimensions, bool ortho)
 		:position(position), c_position(position), rotation(rotation), c_rotation(rotation), ortho(ortho)

@@ -23,7 +23,7 @@ namespace Heist {
 		static void Submit(const std::shared_ptr<Model3D>& model);
 
 		inline static RenderAPI::API GetRenderAPI() { return RenderAPI::GetAPI(); };
-		
+
 	private:
 		static SceneData* s_sceneData;
 	};

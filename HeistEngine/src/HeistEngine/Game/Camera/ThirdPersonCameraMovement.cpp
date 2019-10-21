@@ -10,34 +10,52 @@ namespace Heist {
   ThirdPersonCameraMovement::~ThirdPersonCameraMovement() { }
 
   void ThirdPersonCameraMovement::AttachCamera(Camera *camera) {
+    // Set up the camera to look down
     this->camera = camera;
+    camera->rotation.x = 45.0f;
+    camera->position = { 0, 10, 0 };
   }
 
   void ThirdPersonCameraMovement::Update() {
-    vec3 displacement = { 0, 0, 0};
-    real32 speed = 0.25f;
 
+    displacement = displacement * 0.8f;
     if (camera) {
+
+      // Enter rotation mode
+      if (!movingMode && inputManager->GetKey(HS_MOUSE_BUTTON_RIGHT) == HS_PRESS) {
+        old_x = inputManager->GetMousePosition().x;
+        old_y = inputManager->GetMousePosition().y;
+        movingMode = true;
+      }
+
+      if (movingMode && inputManager->GetKey(HS_MOUSE_BUTTON_RIGHT) == HS_RELEASE) {
+        movingMode = false;
+      }
+
       // Camera Movement
-      if (inputManager->GetKey(HS_KEY_W) != HS_RELEASE) {
-        displacement.x = -cos(radian(camera->rotation.y + 90)) * speed;
-        displacement.z = -sin(radian(camera->rotation.y + 90)) * speed;
-      } else if (inputManager->GetKey(HS_KEY_S) != HS_RELEASE) {
-        displacement.x = cos(radian(camera->rotation.y + 90)) * speed;
-        displacement.z = sin(radian(camera->rotation.y + 90)) * speed;
-      };
+      if (movingMode) {
+        real64 change_x, change_y, new_x, new_y;
+        real32 speed = 0.02f;
 
-      if (inputManager->GetKey(HS_KEY_A) != HS_RELEASE) {
-        displacement.x = -cos(radian(camera->rotation.y)) * speed;
-        displacement.z = -sin(radian(camera->rotation.y)) * speed;
-        } else if (inputManager->GetKey(HS_KEY_D) != HS_RELEASE) {
-        displacement.x = cos(radian(camera->rotation.y)) * speed;
-        displacement.z = sin(radian(camera->rotation.y)) * speed;
-      };
+        new_x = inputManager->GetMousePosition().x;
+        new_y = inputManager->GetMousePosition().y;
 
-      camera->position.x += displacement.x;
-      camera->position.y += displacement.y;
-      camera->position.z += displacement.z;
+        change_x = new_x - old_x;
+        change_y = new_y - old_y;
+
+        // Forward
+        displacement.x = -cos(radian(camera->rotation.y + 90)) * speed * change_y;
+        displacement.z = -sin(radian(camera->rotation.y + 90)) * speed * change_y;
+
+        // Sideways
+        displacement.x -= cos(radian(camera->rotation.y)) * speed * change_x;
+        displacement.z -= sin(radian(camera->rotation.y)) * speed * change_x;
+
+        old_x = new_x;
+        old_y = new_y;
+      }
+
+      camera->position = camera->position + displacement;
 
       // Camera Rotation
       constexpr real32 ROTATION_FACTOR = 0.05f;
@@ -67,6 +85,14 @@ namespace Heist {
         old_x = new_x;
         old_y = new_y;
       }
+
+      // Camera levitation
+      real32 yoffset = inputManager->GetMouseScroll().y;
+      real32 levitationFactor = 0.6f;
+      if (yoffset != 0) {
+        camera->position.y -= yoffset * levitationFactor;
+      }
+
     }
   }
 }
