@@ -23,7 +23,6 @@ struct TestLayer : public Heist::Layer {
 		componentManager->AddEntity(plane);
 		componentManager->AddComponents<Heist::RenderableComponent>(plane, { { planeRawModel, shader } });
 
-
 		auto treeRawModel = Heist::FileManager::ReadOBJFile("assets/models/", "tree.obj");
 		Heist::Entity tree("Tree 1");
 		componentManager->AddEntity(tree);
@@ -32,11 +31,11 @@ struct TestLayer : public Heist::Layer {
 		auto sunRawModel = Heist::FileManager::ReadOBJFile("assets/models/", "sphere.obj");
 		Heist::Entity sun("Sun");
 		componentManager->AddEntity(sun);
-		componentManager->AddComponents<Heist::RenderableComponent>(sun, { { sunRawModel, shader } });
-
+		componentManager->AddComponents<Heist::RenderableComponent>(sun, { { sunRawModel, sunShader } });
 
 		Heist::vec3 lightPosition = { 10, 20, 5 };
 		light = Heist::Light3D(lightPosition, { 0.2f, 0.2f, 0.2f }, { 0.5f, 0.5f, 0.5f }, { 1.0f, 1.0f, 1.0f });
+
 	}
 
 	void OnUpdate(real64 time) override {

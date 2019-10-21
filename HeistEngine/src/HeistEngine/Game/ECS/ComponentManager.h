@@ -46,7 +46,7 @@ namespace Heist {
 		HS_CORE_ASSERT(ent != entities.end(), "Trying to add to unknown entity!");
 
 		for (auto i : initializer) {
-			std::shared_ptr<T> newComponent(new T(i));
+			std::shared_ptr<T> newComponent = std::make_shared<T>(T(i));
 			entities[entity.id].push_back(newComponent);
 			components[T::componentTypeId].push_back(newComponent);
 		}
