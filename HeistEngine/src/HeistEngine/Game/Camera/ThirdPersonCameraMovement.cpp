@@ -13,7 +13,6 @@ namespace Heist {
     // Set up the camera to look down
     this->camera = camera;
     camera->rotation.x = 45.0f;
-    camera->position = { 0, 10, 0 };
   }
 
   void ThirdPersonCameraMovement::Update() {

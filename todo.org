@@ -54,6 +54,10 @@
    CLOSED: [2019-10-20 Sun 20:15]
    - State "DONE"       from "IN PROGRESS" [2019-10-20 Sun 20:15]
    - State "IN PROGRESS" from "TODO"       [2019-10-20 Sun 20:15]
-** IN PROGRESS Improve ECS to have system work on two or more components
+** DONE Improve ECS to have system work on two or more components
+   CLOSED: [2019-10-22 Tue 06:34]
+   - State "DONE"       from "IN PROGRESS" [2019-10-22 Tue 06:34]
    - State "IN PROGRESS" from "TODO"       [2019-10-21 Mon 07:31]
-** TODO Model3D are not getting updated - meaning the transform is not cached
+** TODO Model matrix is not getting cached in RenderSystem
+** IN PROGRESS Movement system - sandbox
+   - State "IN PROGRESS" from "TODO"       [2019-10-22 Tue 06:38]

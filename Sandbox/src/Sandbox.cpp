@@ -1,5 +1,7 @@
 #include <iostream>
 #include <HeistEngine.h>
+#include <EntryPoint.h>
+#include "Systems/MovementSystem.h"
 
 struct TestLayer : public Heist::Layer {
 
@@ -21,25 +23,28 @@ struct TestLayer : public Heist::Layer {
 		auto planeRawModel = Heist::FileManager::ReadOBJFile("assets/models/", "plane.obj");
 		Heist::Entity plane("Plane");
 		componentManager->AddEntity(plane);
-		// componentManager->AddComponents<Heist::RenderableComponent>(plane, { { planeRawModel, shader } });
+		componentManager->AddComponents<Heist::RenderableComponent>(plane, { { planeRawModel, shader } });
+		componentManager->AddComponents<Heist::TransformComponent>(plane, { { {0, -2.0f, 0}, {} }});
 
 		auto treeRawModel = Heist::FileManager::ReadOBJFile("assets/models/", "tree.obj");
 		Heist::Entity tree("Tree 1");
 		componentManager->AddEntity(tree);
 		componentManager->AddComponents<Heist::RenderableComponent>(tree, {{ treeRawModel, shader }});
-		componentManager->AddComponents<Heist::TransformComponent>(tree, { { {0, 0, 0}, {0, 0, 0}, {0.25f, 0.25f, 0.25f} } });
+		componentManager->AddComponents<Heist::TransformComponent>(tree, {{ {}, {}, {0.25f, 0.25f, 0.25f} }});
+    componentManager->AddComponents<MovementComponent>(tree, {{ {}, { 0.0f, 0.2f, 0.0f }, {} }});
+
+		Heist::vec3 lightPosition = { 10, 20, 5 };
+		light = Heist::Light3D(lightPosition, { 0.2f, 0.2f, 0.2f }, { 0.5f, 0.5f, 0.5f }, {});
 
 		auto sunRawModel = Heist::FileManager::ReadOBJFile("assets/models/", "sphere.obj");
 		Heist::Entity sun("Sun");
 		componentManager->AddEntity(sun);
 		componentManager->AddComponents<Heist::RenderableComponent>(sun, { { sunRawModel, sunShader } });
-
-		Heist::vec3 lightPosition = { 10, 20, 5 };
-		light = Heist::Light3D(lightPosition, { 0.2f, 0.2f, 0.2f }, { 0.5f, 0.5f, 0.5f }, { 1.0f, 1.0f, 1.0f });
-
+		componentManager->AddComponents<Heist::TransformComponent>(sun, { { lightPosition, {0, 0, 0} }});
 	}
 
 	void OnUpdate(real64 time) override {
+    MovementSystem::Update(time);
 	}
 
 	void OnRender(const std::shared_ptr<Heist::Camera>& camera) override {
@@ -64,7 +69,15 @@ class Sandbox : public Heist::Application {
 
 public:
 	Sandbox(): Application(1920, 1080, "Sandbox App") {
+    camera->position = {0, 20, 20};
     AttachCameraMovement(&cameraMovement);
+
+		// Subscribe new component
+		componentManager->AddComponentType<Heist::RenderableComponent>();
+		componentManager->AddComponentType<Heist::TransformComponent>();
+    componentManager->AddComponentType<MovementComponent>();
+    // ------------------------
+
 		PushLayer(new TestLayer);
 	};
 

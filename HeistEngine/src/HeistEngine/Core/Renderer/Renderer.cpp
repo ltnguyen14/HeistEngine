@@ -26,6 +26,11 @@ namespace Heist {
 	}
 
 	void Renderer::Submit(const std::shared_ptr<Model3D>& model) {
+		mat4 modelMatrix = model->GetModelMatrix();
+    Submit(model, modelMatrix);
+	}
+
+	void Renderer::Submit(const std::shared_ptr<Model3D>& model, const mat4& modelMatrix) {
 		int32 textureSlot = 0;
 
 		model->shader->Bind();
@@ -37,7 +42,7 @@ namespace Heist {
 		}
 
 		// Model
-		model->shader->UploadUniformMat4("modelMatrix", &model->GetModelMatrix());
+		model->shader->UploadUniformMat4("modelMatrix", &modelMatrix);
 		model->shader->UploadUniformVec3("viewPosition", &s_sceneData->camera->position);
 
 		model->shader->UploadUniformMat4("projectionViewMatrix", &s_sceneData->projectionViewMatrix); // Once we get a command queue this can be done for each shader instead of model
@@ -67,5 +72,5 @@ namespace Heist {
 			RendererCommand::DrawVerticies(model->vertexArray);
 		}
 
-	}
+  }
 }

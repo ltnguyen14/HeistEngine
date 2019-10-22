@@ -17,10 +17,6 @@ namespace Heist {
 		componentManager = std::make_shared<ComponentManager>(ComponentManager());
 		BaseSystem::RegisterComponentManager(componentManager);
 
-		// Subscribe new component
-		componentManager->AddComponentType<RenderableComponent>();
-		componentManager->AddComponentType<TransformComponent>();
-
 		// Event Bus Subscription
 		window.SubscribeToBus(&eventBus);
 		inputManager->SubscribeToBus(&eventBus);
