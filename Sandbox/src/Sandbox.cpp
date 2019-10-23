@@ -38,7 +38,13 @@ struct TestLayer : public Heist::Layer {
 		componentManager->AddEntity(*tree);
 		componentManager->AddComponents<Heist::RenderableComponent>(*tree, {{ treeRawModel, shader }});
 		componentManager->AddComponents<Heist::TransformComponent>(*tree, {{ {}, {}, {0.25f, 0.25f, 0.25f} }});
-    componentManager->AddComponents<MovementComponent>(*tree, {{ {}, { 0.0f, 0.2f, 0.0f }, {} }});
+
+		auto personRawModel = Heist::FileManager::ReadOBJFile("assets/models/", "person.obj");
+		person = new Heist::Entity("Person 1");
+		componentManager->AddEntity(*person);
+		componentManager->AddComponents<Heist::RenderableComponent>(*person, {{ personRawModel, shader }});
+		componentManager->AddComponents<Heist::TransformComponent>(*person, {{ { 0.0f, 0.0f, 5.0f }, {} }});
+    componentManager->AddComponents<MovementComponent>(*person, {{ {}, {} }});
 
 		Heist::vec3 lightPosition = { 10, 20, 5 };
 		light = Heist::Light3D(lightPosition, { 0.2f, 0.2f, 0.2f }, { 0.5f, 0.5f, 0.5f }, {});
@@ -51,10 +57,25 @@ struct TestLayer : public Heist::Layer {
 	}
 
 	void OnUpdate(real64 time) override {
-    auto movementComponent = componentManager->GetEntityComponent<MovementComponent>(*tree);
-    if (movementComponent) {
-      movementComponent->rotation.y += 0.5f;
+    auto movementComponent = componentManager->GetEntityComponent<MovementComponent>(*person);
+    auto personTransform = componentManager->GetEntityComponent<Heist::TransformComponent>(*person);
+    static bool goingDown = true;
+    if (movementComponent && personTransform) {
+      if (personTransform->position.x <= 0.0f) {
+        goingDown = true;
+        personTransform->rotation.y = 90.0f;
+      } else if (personTransform->position.x >= 10.0f) {
+        goingDown = false;
+        personTransform->rotation.y = 270.0f;
+      }
+
+      if (goingDown) {
+        movementComponent->position.x += 0.75f * time;
+      } else {
+        movementComponent->position.x -= 0.75f * time;
+      }
     }
+
     MovementSystem::Update(time);
 	}
 
@@ -76,6 +97,7 @@ private:
 	std::shared_ptr<Heist::Shader> sunShader;
 
 	Heist::Entity *tree;
+	Heist::Entity *person;
 };
 
 class Sandbox : public Heist::Application {

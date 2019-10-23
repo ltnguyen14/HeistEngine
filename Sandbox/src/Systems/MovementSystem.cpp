@@ -9,7 +9,6 @@ void MovementSystem::Update(real32 delta) {
     if (movementPointer) {
       dataPointer->position = dataPointer->position + movementPointer->position;
       dataPointer->rotation = dataPointer->rotation + movementPointer->rotation;
-      dataPointer->scale = dataPointer->scale + movementPointer->scale;
 
       movementPointer->position = movementPointer->position * 0.8f;
       movementPointer->rotation = movementPointer->rotation * 0.8f;

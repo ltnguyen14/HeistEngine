@@ -32,7 +32,8 @@
    - State "DONE"       from "IN PROGRESS" [2019-10-17 Thu 21:36]
    - State "IN PROGRESS" from "TODO"       [2019-10-17 Thu 21:21]
 ** TODO Text rendering
-** TODO Time profiler - game update, game render, game init
+** IN PROGRESS Time profiler - game update, game render, game init
+   - State "IN PROGRESS" from "TODO"       [2019-10-23 Wed 07:14]
 ** TODO Each OBJ file is creating a seperate RawMaterial3D object. Should optimize
 ** DONE FOV is acting weird
    CLOSED: [2019-10-18 Fri 21:04]
@@ -59,5 +60,7 @@
    - State "DONE"       from "IN PROGRESS" [2019-10-22 Tue 06:34]
    - State "IN PROGRESS" from "TODO"       [2019-10-21 Mon 07:31]
 ** TODO Model matrix is not getting cached in RenderSystem
-** IN PROGRESS Movement system - sandbox
+** DONE Movement system - sandbox
+   CLOSED: [2019-10-23 Wed 07:14]
+   - State "DONE"       from "IN PROGRESS" [2019-10-23 Wed 07:14]
    - State "IN PROGRESS" from "TODO"       [2019-10-22 Tue 06:38]

@@ -116,10 +116,10 @@ namespace Heist {
 
 			loops = 0;
 			while (lag >= MS_PER_UPDATE && loops < MAX_FRAME_SKIP) {
-				this->OnUpdate(MS_PER_UPDATE);
+				this->OnUpdate(MS_PER_UPDATE / 1000);
 
         // Render
-        this->OnRender(MS_PER_UPDATE);
+        this->OnRender(MS_PER_UPDATE / 1000);
 
         loops++;
 				lag -= MS_PER_UPDATE;
