@@ -12,6 +12,7 @@ struct TestLayer : public Heist::Layer {
     // Load assets
 		// textureAtlas.reset(Heist::Texture::Create("assets/textures/woodBox.png"));
 		// textureSpecAtlas.reset(Heist::Texture::Create("assets/textures/woodBox_spec.png"));
+    this->componentManager = componentManager;
 
 		shader.reset(Heist::Shader::Create("assets/shaders/rawMat.vert.glsl", "assets/shaders/rawMat.frag.glsl"));
 		sunShader.reset(Heist::Shader::Create("assets/shaders/basic.vert.glsl", "assets/shaders/sun.frag.glsl"));
@@ -26,12 +27,18 @@ struct TestLayer : public Heist::Layer {
 		componentManager->AddComponents<Heist::RenderableComponent>(plane, { { planeRawModel, shader } });
 		componentManager->AddComponents<Heist::TransformComponent>(plane, { { {0, -2.0f, 0}, {} }});
 
+		auto rockRawModel = Heist::FileManager::ReadOBJFile("assets/models/", "rock.obj");
+		Heist::Entity rock("Rock 1");
+		componentManager->AddEntity(rock);
+		componentManager->AddComponents<Heist::RenderableComponent>(rock, { { rockRawModel, shader } });
+		componentManager->AddComponents<Heist::TransformComponent>(rock, { { {2.0f, 0.0f, 4.5f}, {}, {0.5f, 0.5f, 0.5f} }});
+
 		auto treeRawModel = Heist::FileManager::ReadOBJFile("assets/models/", "tree.obj");
-		Heist::Entity tree("Tree 1");
-		componentManager->AddEntity(tree);
-		componentManager->AddComponents<Heist::RenderableComponent>(tree, {{ treeRawModel, shader }});
-		componentManager->AddComponents<Heist::TransformComponent>(tree, {{ {}, {}, {0.25f, 0.25f, 0.25f} }});
-    componentManager->AddComponents<MovementComponent>(tree, {{ {}, { 0.0f, 0.2f, 0.0f }, {} }});
+		tree = new Heist::Entity("Tree 1");
+		componentManager->AddEntity(*tree);
+		componentManager->AddComponents<Heist::RenderableComponent>(*tree, {{ treeRawModel, shader }});
+		componentManager->AddComponents<Heist::TransformComponent>(*tree, {{ {}, {}, {0.25f, 0.25f, 0.25f} }});
+    componentManager->AddComponents<MovementComponent>(*tree, {{ {}, { 0.0f, 0.2f, 0.0f }, {} }});
 
 		Heist::vec3 lightPosition = { 10, 20, 5 };
 		light = Heist::Light3D(lightPosition, { 0.2f, 0.2f, 0.2f }, { 0.5f, 0.5f, 0.5f }, {});
@@ -44,6 +51,10 @@ struct TestLayer : public Heist::Layer {
 	}
 
 	void OnUpdate(real64 time) override {
+    auto movementComponent = componentManager->GetEntityComponent<MovementComponent>(*tree);
+    if (movementComponent) {
+      movementComponent->rotation.y += 0.5f;
+    }
     MovementSystem::Update(time);
 	}
 
@@ -63,6 +74,8 @@ private:
 
 	std::shared_ptr<Heist::Shader> shader;
 	std::shared_ptr<Heist::Shader> sunShader;
+
+	Heist::Entity *tree;
 };
 
 class Sandbox : public Heist::Application {

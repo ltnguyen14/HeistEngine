@@ -20,6 +20,9 @@ namespace Heist {
 		template<class T>
 		std::unordered_map<int32, std::shared_ptr<BaseComponent>> GetComponents();
 
+    template<class T>
+    std::shared_ptr<T> GetEntityComponent(const Entity& entity);
+
 		std::unordered_map<int32, std::unordered_map<int32, std::shared_ptr<BaseComponent>>> components;
 		std::unordered_map<int32, std::vector<std::shared_ptr<BaseComponent>>> entities;
 	};
@@ -51,6 +54,18 @@ namespace Heist {
 			components[T::componentTypeId][entity.id] = newComponent;
 		}
 	}
+
+  template<class T>
+    inline std::shared_ptr<T> ComponentManager::GetEntityComponent(const Entity& entity) {
+    auto entityComponents = GetComponents<T>();
+
+    auto component = entityComponents.find(entity.id);
+    if (component != entityComponents.end()) {
+      return std::static_pointer_cast<T>(entityComponents[entity.id]);
+    } else {
+      return nullptr;
+    }
+  }
 
 	template<class T>
 	inline std::unordered_map<int32, std::shared_ptr<BaseComponent>> ComponentManager::GetComponents() {
