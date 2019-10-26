@@ -17,11 +17,11 @@ namespace Heist {
 		static void ShutDown();
 
 		static void Init();
-		static void BeginScene(const std::shared_ptr<Camera>& camera, Light3D *light);
+		static void BeginScene(const std::shared_ptr<Camera>& camera, Light3D* light);
 		static void EndScene();
 
 		static void Submit(const std::shared_ptr<Model3D>& model);
-    static void Submit(const std::shared_ptr<Model3D>& model, const mat4& modelMatrix);
+		static void Submit(const std::shared_ptr<Model3D>& model, const mat4& modelMatrix);
 
 		inline static RenderAPI::API GetRenderAPI() { return RenderAPI::GetAPI(); };
 

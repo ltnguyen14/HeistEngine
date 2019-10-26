@@ -8,14 +8,14 @@ namespace Heist {
 		ThirdPersonCameraMovement();
 		~ThirdPersonCameraMovement();
 
-    void AttachCamera(Camera *camera) override;
+		void AttachCamera(Camera* camera) override;
 		void Update() override;
 
 	private:
-		InputManager *inputManager;
-    real64 old_x, old_y;
-    bool rotationMode = false;
-    bool movingMode = false;
-    vec3 displacement = { 0, 0, 0};
+		InputManager* inputManager;
+		real64 old_x, old_y;
+		bool rotationMode = false;
+		bool movingMode = false;
+		vec3 displacement = { 0, 0, 0 };
 	};
 }

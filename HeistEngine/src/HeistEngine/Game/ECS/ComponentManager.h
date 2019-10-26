@@ -8,7 +8,7 @@ namespace Heist {
 
 	struct ComponentManager {
 	public:
-		
+
 		template<class T>
 		void AddComponentType();
 
@@ -20,8 +20,8 @@ namespace Heist {
 		template<class T>
 		std::unordered_map<int32, std::shared_ptr<BaseComponent>> GetComponents();
 
-    template<class T>
-    std::shared_ptr<T> GetEntityComponent(const Entity& entity);
+		template<class T>
+		std::shared_ptr<T> GetEntityComponent(const Entity& entity);
 
 		std::unordered_map<int32, std::unordered_map<int32, std::shared_ptr<BaseComponent>>> components;
 		std::unordered_map<int32, std::vector<std::shared_ptr<BaseComponent>>> entities;
@@ -34,7 +34,8 @@ namespace Heist {
 		if (got == components.end()) {
 			T::componentTypeId = ++s_componentId;
 			components.insert({ T::componentTypeId, {} });
-		} else {
+		}
+		else {
 			HS_CORE_WARN("Trying to register component type {} twice!", T::name);
 		}
 
@@ -55,26 +56,27 @@ namespace Heist {
 		}
 	}
 
-  template<class T>
-    inline std::shared_ptr<T> ComponentManager::GetEntityComponent(const Entity& entity) {
-    auto entityComponents = GetComponents<T>();
+	template<class T>
+	inline std::shared_ptr<T> ComponentManager::GetEntityComponent(const Entity& entity) {
+		auto entityComponents = GetComponents<T>();
 
-    auto component = entityComponents.find(entity.id);
-    if (component != entityComponents.end()) {
-      return std::static_pointer_cast<T>(entityComponents[entity.id]);
-    } else {
-      return nullptr;
-    }
-  }
+		auto component = entityComponents.find(entity.id);
+		if (component != entityComponents.end()) {
+			return std::static_pointer_cast<T>(entityComponents[entity.id]);
+		}
+		else {
+			return nullptr;
+		}
+	}
 
 	template<class T>
 	inline std::unordered_map<int32, std::shared_ptr<BaseComponent>> ComponentManager::GetComponents() {
-		 auto got = components.find(T::componentTypeId);
-		 HS_CORE_ASSERT(got != components.end(), "Trying to get unknown Component Type Id!");
+		auto got = components.find(T::componentTypeId);
+		HS_CORE_ASSERT(got != components.end(), "Trying to get unknown Component Type Id!");
 
-		 auto rawRes = components[T::componentTypeId];
+		auto rawRes = components[T::componentTypeId];
 
-		 return rawRes;
+		return rawRes;
 	}
 
 }

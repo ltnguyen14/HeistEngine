@@ -9,42 +9,42 @@ struct TestLayer : public Heist::Layer {
 	}
 
 	void OnAttach(const std::shared_ptr<Heist::ComponentManager>& componentManager) override {
-    // Load assets
-		// textureAtlas.reset(Heist::Texture::Create("assets/textures/woodBox.png"));
-		// textureSpecAtlas.reset(Heist::Texture::Create("assets/textures/woodBox_spec.png"));
-    this->componentManager = componentManager;
+		// Load assets
+			// textureAtlas.reset(Heist::Texture::Create("assets/textures/woodBox.png"));
+			// textureSpecAtlas.reset(Heist::Texture::Create("assets/textures/woodBox_spec.png"));
+		this->componentManager = componentManager;
 
 		shader.reset(Heist::Shader::Create("assets/shaders/rawMat.vert.glsl", "assets/shaders/rawMat.frag.glsl"));
 		sunShader.reset(Heist::Shader::Create("assets/shaders/basic.vert.glsl", "assets/shaders/sun.frag.glsl"));
 
 		// Material
-    // std::shared_ptr<Heist::Material3D> material = std::make_shared<Heist::Material3D>(textureAtlas, textureSpecAtlas, 64.0f);
+	// std::shared_ptr<Heist::Material3D> material = std::make_shared<Heist::Material3D>(textureAtlas, textureSpecAtlas, 64.0f);
 
 		// Test loading model
 		auto planeRawModel = Heist::FileManager::ReadOBJFile("assets/models/", "plane.obj");
 		Heist::Entity plane("Plane");
 		componentManager->AddEntity(plane);
 		componentManager->AddComponents<Heist::RenderableComponent>(plane, { { planeRawModel, shader } });
-		componentManager->AddComponents<Heist::TransformComponent>(plane, { { {0, -2.0f, 0}, {} }});
+		componentManager->AddComponents<Heist::TransformComponent>(plane, { { {0, -2.0f, 0}, {} } });
 
 		auto rockRawModel = Heist::FileManager::ReadOBJFile("assets/models/", "rock.obj");
 		Heist::Entity rock("Rock 1");
 		componentManager->AddEntity(rock);
 		componentManager->AddComponents<Heist::RenderableComponent>(rock, { { rockRawModel, shader } });
-		componentManager->AddComponents<Heist::TransformComponent>(rock, { { {2.0f, 0.0f, 4.5f}, {}, {0.5f, 0.5f, 0.5f} }});
+		componentManager->AddComponents<Heist::TransformComponent>(rock, { { {2.0f, 0.0f, 4.5f}, {}, {0.5f, 0.5f, 0.5f} } });
 
 		auto treeRawModel = Heist::FileManager::ReadOBJFile("assets/models/", "tree.obj");
 		tree = new Heist::Entity("Tree 1");
 		componentManager->AddEntity(*tree);
-		componentManager->AddComponents<Heist::RenderableComponent>(*tree, {{ treeRawModel, shader }});
-		componentManager->AddComponents<Heist::TransformComponent>(*tree, {{ {}, {}, {0.25f, 0.25f, 0.25f} }});
+		componentManager->AddComponents<Heist::RenderableComponent>(*tree, { { treeRawModel, shader } });
+		componentManager->AddComponents<Heist::TransformComponent>(*tree, { { {}, {}, {0.25f, 0.25f, 0.25f} } });
 
 		auto personRawModel = Heist::FileManager::ReadOBJFile("assets/models/", "person.obj");
 		person = new Heist::Entity("Person 1");
 		componentManager->AddEntity(*person);
-		componentManager->AddComponents<Heist::RenderableComponent>(*person, {{ personRawModel, shader }});
-		componentManager->AddComponents<Heist::TransformComponent>(*person, {{ { 0.0f, 0.0f, 5.0f }, {} }});
-    componentManager->AddComponents<MovementComponent>(*person, {{ {}, {} }});
+		componentManager->AddComponents<Heist::RenderableComponent>(*person, { { personRawModel, shader } });
+		componentManager->AddComponents<Heist::TransformComponent>(*person, { { { 0.0f, 0.0f, 5.0f }, {} } });
+		componentManager->AddComponents<MovementComponent>(*person, { { {}, {} } });
 
 		Heist::vec3 lightPosition = { 10, 20, 5 };
 		light = Heist::Light3D(lightPosition, { 0.2f, 0.2f, 0.2f }, { 0.5f, 0.5f, 0.5f }, {});
@@ -53,30 +53,32 @@ struct TestLayer : public Heist::Layer {
 		Heist::Entity sun("Sun");
 		componentManager->AddEntity(sun);
 		componentManager->AddComponents<Heist::RenderableComponent>(sun, { { sunRawModel, sunShader } });
-		componentManager->AddComponents<Heist::TransformComponent>(sun, { { lightPosition, {0, 0, 0} }});
+		componentManager->AddComponents<Heist::TransformComponent>(sun, { { lightPosition, {0, 0, 0} } });
 	}
 
 	void OnUpdate(real64 time) override {
-    auto movementComponent = componentManager->GetEntityComponent<MovementComponent>(*person);
-    auto personTransform = componentManager->GetEntityComponent<Heist::TransformComponent>(*person);
-    static bool goingDown = true;
-    if (movementComponent && personTransform) {
-      if (personTransform->position.x <= 0.0f) {
-        goingDown = true;
-        personTransform->rotation.y = 90.0f;
-      } else if (personTransform->position.x >= 10.0f) {
-        goingDown = false;
-        personTransform->rotation.y = 270.0f;
-      }
+		auto movementComponent = componentManager->GetEntityComponent<MovementComponent>(*person);
+		auto personTransform = componentManager->GetEntityComponent<Heist::TransformComponent>(*person);
+		static bool goingDown = true;
+		if (movementComponent && personTransform) {
+			if (personTransform->position.x <= 0.0f) {
+				goingDown = true;
+				personTransform->rotation.y = 90.0f;
+			}
+			else if (personTransform->position.x >= 10.0f) {
+				goingDown = false;
+				personTransform->rotation.y = 270.0f;
+			}
 
-      if (goingDown) {
-        movementComponent->position.x += 0.75f * time;
-      } else {
-        movementComponent->position.x -= 0.75f * time;
-      }
-    }
+			if (goingDown) {
+				movementComponent->position.x += 0.75f * time;
+			}
+			else {
+				movementComponent->position.x -= 0.75f * time;
+			}
+		}
 
-    MovementSystem::Update(time);
+		MovementSystem::Update(time);
 	}
 
 	void OnRender(const std::shared_ptr<Heist::Camera>& camera) override {
@@ -96,29 +98,29 @@ private:
 	std::shared_ptr<Heist::Shader> shader;
 	std::shared_ptr<Heist::Shader> sunShader;
 
-	Heist::Entity *tree;
-	Heist::Entity *person;
+	Heist::Entity* tree;
+	Heist::Entity* person;
 };
 
 class Sandbox : public Heist::Application {
 
 public:
-	Sandbox(): Application(1920, 1080, "Sandbox App") {
-    camera->position = {0, 20, 20};
-    AttachCameraMovement(&cameraMovement);
+	Sandbox() : Application(1920, 1080, "Sandbox App") {
+		camera->position = { 0, 20, 20 };
+		AttachCameraMovement(&cameraMovement);
 
 		// Subscribe new component
 		componentManager->AddComponentType<Heist::RenderableComponent>();
 		componentManager->AddComponentType<Heist::TransformComponent>();
-    componentManager->AddComponentType<MovementComponent>();
-    // ------------------------
+		componentManager->AddComponentType<MovementComponent>();
+		// ------------------------
 
 		PushLayer(new TestLayer);
 	};
 
 	~Sandbox() {};
 
-  Heist::ThirdPersonCameraMovement cameraMovement;
+	Heist::ThirdPersonCameraMovement cameraMovement;
 };
 
 Heist::Application* Heist::CreateApplication() {

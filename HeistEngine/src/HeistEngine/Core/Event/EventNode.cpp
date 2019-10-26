@@ -4,7 +4,7 @@
 
 namespace Heist {
 
-	EventNode::EventNode(std::string name): name(name) {
+	EventNode::EventNode(std::string name) : name(name) {
 	}
 
 	EventNode::~EventNode() {}
@@ -15,6 +15,6 @@ namespace Heist {
 	}
 
 
-	void EventNode::OnNotify(Event *event) {
+	void EventNode::OnNotify(Event* event) {
 	}
 }

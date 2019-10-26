@@ -10,14 +10,15 @@ namespace Heist {
 			std::shared_ptr<TransformComponent> transformPointer = std::static_pointer_cast<TransformComponent>(transformVec[data.first]);
 			for (auto model : dataPointer->modelCollection->models) {
 				if (transformPointer) {
-          vec3 position = model->position + transformPointer->position;
-          vec3 rotation = model->rotation + transformPointer->rotation;
-          vec3 scale = {model->scale.x * transformPointer->scale.x, model->scale.y * transformPointer->scale.y, model->scale.z * transformPointer->scale.z};
+					vec3 position = model->position + transformPointer->position;
+					vec3 rotation = model->rotation + transformPointer->rotation;
+					vec3 scale = { model->scale.x * transformPointer->scale.x, model->scale.y * transformPointer->scale.y, model->scale.z * transformPointer->scale.z };
 
-          Renderer::Submit(model, MakeModelMatrix(position, rotation, scale));
-				} else {
-          Renderer::Submit(model);
-        }
+					Renderer::Submit(model, MakeModelMatrix(position, rotation, scale));
+				}
+				else {
+					Renderer::Submit(model);
+				}
 			}
 		}
 	}

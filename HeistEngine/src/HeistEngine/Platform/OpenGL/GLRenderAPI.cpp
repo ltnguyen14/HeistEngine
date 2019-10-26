@@ -15,7 +15,7 @@ namespace Heist {
 		glEnable(GL_DEPTH_TEST);
 	}
 
-	void GLRenderAPI::SetClearColor(vec4 color){
+	void GLRenderAPI::SetClearColor(vec4 color) {
 		glClearColor(color.r, color.g, color.b, color.a);
 	}
 

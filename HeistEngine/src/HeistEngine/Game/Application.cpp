@@ -36,8 +36,6 @@ namespace Heist {
 		memoryManager->ShutDown();
 		Renderer::ShutDown();
 
-		delete inputManager;
-		delete memoryManager;
 		for (auto layer : layerStack.layers) {
 			delete layer;
 		}
@@ -45,9 +43,9 @@ namespace Heist {
 
 	void Application::OnUpdate(real64 time) {
 
-    if (cameraMovement) {
-      cameraMovement->Update();
-    }
+		if (cameraMovement) {
+			cameraMovement->Update();
+		}
 		camera->Update();
 		if (window.resize) {
 			camera->UpdateDimension({ 0, (real32)window.width, (real32)window.height, 0 });
@@ -61,7 +59,7 @@ namespace Heist {
 			layer->OnUpdate(time);
 		}
 
-    inputManager->ResetScroll();
+		inputManager->ResetScroll();
 		eventBus.Notify(); // TODO(LAM): Need to move this somewhere
 		memoryManager->ClearStack();
 	}
@@ -87,10 +85,10 @@ namespace Heist {
 		layerStack.PopLayer(layer);
 	}
 
-  void Application::AttachCameraMovement(CameraMovement *movement) {
-    movement->AttachCamera(camera.get());
-    cameraMovement = movement;
-  }
+	void Application::AttachCameraMovement(CameraMovement* movement) {
+		movement->AttachCamera(camera.get());
+		cameraMovement = movement;
+	}
 
 	void Application::Run() {
 		// Main loop setup
@@ -118,15 +116,15 @@ namespace Heist {
 			while (lag >= MS_PER_UPDATE && loops < MAX_FRAME_SKIP) {
 				this->OnUpdate(MS_PER_UPDATE / 1000);
 
-        // Render
-        this->OnRender(MS_PER_UPDATE / 1000);
+				// Render
+				this->OnRender(MS_PER_UPDATE / 1000);
 
-        loops++;
+				loops++;
 				lag -= MS_PER_UPDATE;
 			}
 
 			frameTime = float(clock() - current);
-      // HS_CORE_INFO("{} ms", frameTime);
+			// HS_CORE_INFO("{} ms", frameTime);
 		};
 	}
 }

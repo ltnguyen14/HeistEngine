@@ -6,7 +6,7 @@ namespace Heist {
 	struct Texture {
 
 		virtual ~Texture() {};
-		
+
 		virtual void Bind(int32 textureSlot = 0) = 0;
 		virtual void Unbind() = 0;
 

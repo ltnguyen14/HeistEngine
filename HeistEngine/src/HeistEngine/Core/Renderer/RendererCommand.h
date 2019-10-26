@@ -26,7 +26,7 @@ namespace Heist {
 			s_renderAPI->DrawVerticies(vertexArray);
 		}
 
-		inline static void VBOSubData(uint32 offsetBytes, uint32 sizeBytes, real32 *data) {
+		inline static void VBOSubData(uint32 offsetBytes, uint32 sizeBytes, real32* data) {
 			s_renderAPI->VBOSubData(offsetBytes, sizeBytes, data);
 		}
 

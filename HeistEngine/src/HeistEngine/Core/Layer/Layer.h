@@ -18,7 +18,7 @@ namespace Heist {
 		virtual void OnWindowResize(real32 left, real32 right, real32 bottom, real32 top) {}
 
 		std::string layerName;
-    std::shared_ptr<ComponentManager> componentManager;
+		std::shared_ptr<ComponentManager> componentManager;
 		Light3D light;
 	};
 }

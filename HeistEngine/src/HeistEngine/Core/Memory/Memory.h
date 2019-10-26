@@ -2,7 +2,7 @@
 #include "Macro.h"
 
 namespace Heist {
-	
+
 	class MemoryManager
 	{
 	public:

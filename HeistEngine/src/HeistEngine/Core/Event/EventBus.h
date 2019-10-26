@@ -10,7 +10,7 @@ namespace Heist {
 		~EventBus();
 
 		void AddReceiver(std::function<void(Event*)> receiver);
-		void SendEvent(Event *event);
+		void SendEvent(Event* event);
 
 		void Notify();
 

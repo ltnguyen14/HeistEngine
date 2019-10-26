@@ -30,13 +30,13 @@ namespace Heist {
 		BufferLayout bufferLayout({
 			{ShaderDataType::Float3, "Position"},
 			{ShaderDataType::Float4, "Color"},
-		});
+			});
 		spriteVertexBuffer->SetLayout(bufferLayout);
 		vertices = new real32[BUFFER_QUAD_SIZE * 4 * sizeof(Vertex2D)];
 
 		// IBO
 		int32 offset = 0;
-		uint32 *indicies = new uint32[IB_COUNT]; // Size too large for stack
+		uint32* indicies = new uint32[IB_COUNT]; // Size too large for stack
 		for (uint32 i = 0; i < IB_COUNT; i += 6) {
 			indicies[i + 0] = offset + 0;
 			indicies[i + 1] = offset + 1;

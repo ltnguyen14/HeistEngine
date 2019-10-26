@@ -46,17 +46,17 @@ namespace Heist {
 
 			switch (type)
 			{
-				case ShaderDataType::Float:   componentCount = 1;	   break;
-				case ShaderDataType::Float2:  componentCount = 2;	   break;
-				case ShaderDataType::Float3:  componentCount = 3;	   break;
-				case ShaderDataType::Float4:  componentCount = 4;	   break;
-				case ShaderDataType::Mat3:    componentCount = 3 * 3;  break;
-				case ShaderDataType::Mat4:    componentCount = 4 * 4;  break;
-				case ShaderDataType::Int:     componentCount = 1;	   break;
-				case ShaderDataType::Int2:    componentCount = 2;	   break;
-				case ShaderDataType::Int3:    componentCount = 3;	   break;
-				case ShaderDataType::Int4:    componentCount = 4;	   break;
-				case ShaderDataType::Bool:    componentCount = 1;	   break;
+			case ShaderDataType::Float:   componentCount = 1;	   break;
+			case ShaderDataType::Float2:  componentCount = 2;	   break;
+			case ShaderDataType::Float3:  componentCount = 3;	   break;
+			case ShaderDataType::Float4:  componentCount = 4;	   break;
+			case ShaderDataType::Mat3:    componentCount = 3 * 3;  break;
+			case ShaderDataType::Mat4:    componentCount = 4 * 4;  break;
+			case ShaderDataType::Int:     componentCount = 1;	   break;
+			case ShaderDataType::Int2:    componentCount = 2;	   break;
+			case ShaderDataType::Int3:    componentCount = 3;	   break;
+			case ShaderDataType::Int4:    componentCount = 4;	   break;
+			case ShaderDataType::Bool:    componentCount = 1;	   break;
 			}
 
 			HS_CORE_ASSERT(componentCount != 0, "Unknown Shader Data type!");
@@ -82,7 +82,7 @@ namespace Heist {
 		BufferLayout() {};
 
 		inline const std::vector<BufferElement>& GetElements() const { return elements; }
-		
+
 		std::vector<BufferElement>::iterator begin() { return elements.begin(); }
 		std::vector<BufferElement>::iterator end() { return elements.end(); }
 		std::vector<BufferElement>::const_iterator begin() const { return elements.begin(); }

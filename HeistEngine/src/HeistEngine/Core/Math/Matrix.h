@@ -34,9 +34,9 @@ namespace Heist {
 		mat4() = default;
 		mat4(bool identity);
 		mat4(real32 n00, real32 n01, real32 n02, real32 n03,
-			 real32 n10, real32 n11, real32 n12, real32 n13,
-			 real32 n20, real32 n21, real32 n22, real32 n23,
-			 real32 n30, real32 n31, real32 n32, real32 n33) {
+			real32 n10, real32 n11, real32 n12, real32 n13,
+			real32 n20, real32 n21, real32 n22, real32 n23,
+			real32 n30, real32 n31, real32 n32, real32 n33) {
 
 			data[0][0] = n00; data[0][1] = n01; data[0][2] = n02; data[0][3] = n03;
 			data[1][0] = n10; data[1][1] = n11; data[1][2] = n12; data[1][3] = n13;
@@ -52,8 +52,8 @@ namespace Heist {
 			data[3][0] = v4.x; data[3][1] = v4.y; data[3][2] = v4.z; data[3][3] = v4.q;
 		}
 
-		std::array<real32, 4> & mat4::operator [] (int32 i);
-		const std::array<real32, 4> & mat4::operator [] (int32 i) const;
+		std::array<real32, 4>& mat4::operator [] (int32 i);
+		const std::array<real32, 4>& mat4::operator [] (int32 i) const;
 
 		std::array<std::array<real32, 4>, 4> data;
 	};
@@ -102,11 +102,11 @@ namespace Heist {
 
 	real32 degree(real32 radian);
 
-	mat4 translate(mat4 mat, vec3 v); 
+	mat4 translate(mat4 mat, vec3 v);
 
-	mat4 scale(mat4 mat, vec3 v); 
+	mat4 scale(mat4 mat, vec3 v);
 
-	mat4 rotate(mat4 mat, real32 rotation, vec3 axis); 
+	mat4 rotate(mat4 mat, real32 rotation, vec3 axis);
 
 	mat4 MakeOrthoMatrix(real32 left, real32 right, real32 top, real32 bottom, real32 farPlane, real32 nearPlane);
 	mat4 MakePerspectiveMatrix(real32 fov, real32 aspect, real32 farPlane, real32 nearPlane);

@@ -28,10 +28,10 @@ namespace Heist {
 		void OnUpdate(real64 time);
 		void OnRender(real64 time);
 
-		void PushLayer(Layer *layer);
-		void PopLayer(Layer *layer);
+		void PushLayer(Layer* layer);
+		void PopLayer(Layer* layer);
 
-    void AttachCameraMovement(CameraMovement *cameraMovement);
+		void AttachCameraMovement(CameraMovement* cameraMovement);
 
 		void Run();
 
@@ -40,10 +40,10 @@ namespace Heist {
 		EventBus eventBus;
 		LayerStack layerStack;
 		Window window;
-		MemoryManager *memoryManager;
-		InputManager *inputManager;
+		MemoryManager* memoryManager;
+		InputManager* inputManager;
 		std::shared_ptr<ComponentManager> componentManager;
-    CameraMovement *cameraMovement;
+		CameraMovement* cameraMovement;
 		std::shared_ptr<Camera> camera;
 	};
 

@@ -20,7 +20,7 @@ namespace Heist {
 		static std::shared_ptr<ModelCollection3D> CreateModelFromRawData(const std::shared_ptr<RawModelCollection3D> rawModelColelction, const std::shared_ptr<Material3D> material, const std::shared_ptr<Shader>& shader, const std::shared_ptr<Texture>& texture);
 		static std::shared_ptr<RawModelCollection3D> ReadOBJFile(const char* filePath, const char* fileName);
 		static json ReadJSON(const char* filePath);
-    static std::unordered_map<std::string, std::shared_ptr<RawMaterial3D>> ReadMTLFile(const char* filePath);
+		static std::unordered_map<std::string, std::shared_ptr<RawMaterial3D>> ReadMTLFile(const char* filePath);
 
 		static void WriteFile();
 

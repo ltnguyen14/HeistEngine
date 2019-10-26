@@ -21,7 +21,7 @@ namespace Heist {
 		virtual void VBOSubData(uint32 offsetBytes, uint32 sizeBytes, real32* data) = 0;
 
 		inline static API GetAPI() { return s_API; }
-	private:	
+	private:
 		static API s_API;
 	};
 }

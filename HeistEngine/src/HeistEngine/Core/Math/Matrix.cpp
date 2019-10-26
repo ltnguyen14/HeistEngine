@@ -44,12 +44,12 @@ namespace Heist {
 		}
 	}
 
-	std::array<real32, 4> & mat4::operator[](int32 i) {
+	std::array<real32, 4>& mat4::operator[](int32 i) {
 		HS_CORE_ASSERT(i >= 0 && i <= 4, "Index out of range");
 		return data[i];
 	}
 
-	const std::array<real32, 4> & mat4::operator[](int32 i) const {
+	const std::array<real32, 4>& mat4::operator[](int32 i) const {
 		HS_CORE_ASSERT(i >= 0 && i <= 4, "Index out of range");
 		return data[i];
 	}
@@ -60,8 +60,8 @@ namespace Heist {
 	{
 		mat4 data = mat4(1);
 
-		data[0][0] =  2 / (right - left);
-		data[1][1] =  2 / (top - bottom);
+		data[0][0] = 2 / (right - left);
+		data[1][1] = 2 / (top - bottom);
 		data[2][2] = -2 / (farPlane - nearPlane);
 
 		data[3][0] = -(right + left) / (right - left);
@@ -127,7 +127,7 @@ namespace Heist {
 		mat4 yRot = {
 			 cos(radian(-axis.y * rotation)), 0, sin(radian(-axis.y * rotation)), 0,
 			 0,		1,		0,		0,
-       -sin(radian(-axis.y * rotation)), 0, cos(radian(-axis.y * rotation)), 0,
+	   -sin(radian(-axis.y * rotation)), 0, cos(radian(-axis.y * rotation)), 0,
 			 0,		0,		0,		1
 		};
 

@@ -13,15 +13,15 @@ namespace Heist {
 		virtual void StartUp() = 0;
 		virtual void ShutDown() = 0;
 
-		virtual void OnNotify(Event *event);
+		virtual void OnNotify(Event* event);
 
 		std::function<void(Event*)> GetNotificationFunc() {
-			return [=](Event *event) {
+			return [=](Event* event) {
 				return OnNotify(event);
 			};
 		}
 
-		void SendEvent(Event *event) {
+		void SendEvent(Event* event) {
 			eventBus->SendEvent(event);
 		}
 

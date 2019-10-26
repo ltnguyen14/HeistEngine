@@ -14,7 +14,7 @@ namespace Heist {
 		RendererCommand::Init();
 	}
 
-	void Renderer::BeginScene(const std::shared_ptr<Camera>& camera, Light3D *light) {
+	void Renderer::BeginScene(const std::shared_ptr<Camera>& camera, Light3D* light) {
 		HS_CORE_ASSERT(camera != nullptr, "Camera pointer is null");
 		s_sceneData->projectionViewMatrix = camera->projectionViewMatrix;
 		s_sceneData->light = light;
@@ -27,7 +27,7 @@ namespace Heist {
 
 	void Renderer::Submit(const std::shared_ptr<Model3D>& model) {
 		mat4 modelMatrix = model->GetModelMatrix();
-    Submit(model, modelMatrix);
+		Submit(model, modelMatrix);
 	}
 
 	void Renderer::Submit(const std::shared_ptr<Model3D>& model, const mat4& modelMatrix) {
@@ -37,8 +37,8 @@ namespace Heist {
 		model->vertexArray->Bind();
 
 		if (model->material) {
-		  model->material->texture->Bind(textureSlot);
-		  model->material->specular->Bind(textureSlot + 1);
+			model->material->texture->Bind(textureSlot);
+			model->material->specular->Bind(textureSlot + 1);
 		}
 
 		// Model
@@ -49,15 +49,16 @@ namespace Heist {
 
 		// Material
 		if (model->material) {
-		  model->shader->UploadUniform1i("material.diffuse", textureSlot);
-		  model->shader->UploadUniform1i("material.specular", textureSlot + 1);
-		  model->shader->UploadUniform1f("material.reflectiveness", model->material->reflectiveness);
-		} else if (model->rawMaterial) {
-		  model->shader->UploadUniformVec3("material.ambient", &model->rawMaterial->ambientColor);
-		  model->shader->UploadUniformVec3("material.diffuse", &model->rawMaterial->diffuseColor);
-		  model->shader->UploadUniformVec3("material.specular", &model->rawMaterial->specularColor);
-		  model->shader->UploadUniform1f("material.shininess", model->rawMaterial->shininess);
-		  model->shader->UploadUniform1i("material.specularHighlight", model->rawMaterial->specularHighlight);
+			model->shader->UploadUniform1i("material.diffuse", textureSlot);
+			model->shader->UploadUniform1i("material.specular", textureSlot + 1);
+			model->shader->UploadUniform1f("material.reflectiveness", model->material->reflectiveness);
+		}
+		else if (model->rawMaterial) {
+			model->shader->UploadUniformVec3("material.ambient", &model->rawMaterial->ambientColor);
+			model->shader->UploadUniformVec3("material.diffuse", &model->rawMaterial->diffuseColor);
+			model->shader->UploadUniformVec3("material.specular", &model->rawMaterial->specularColor);
+			model->shader->UploadUniform1f("material.shininess", model->rawMaterial->shininess);
+			model->shader->UploadUniform1i("material.specularHighlight", model->rawMaterial->specularHighlight);
 		}
 
 		// Light
@@ -68,9 +69,10 @@ namespace Heist {
 
 		if (model->useIndicies) {
 			RendererCommand::DrawIndexes(model->vertexArray);
-		} else {
+		}
+		else {
 			RendererCommand::DrawVerticies(model->vertexArray);
 		}
 
-  }
+	}
 }
