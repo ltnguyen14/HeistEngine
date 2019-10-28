@@ -121,6 +121,7 @@ namespace Heist {
 		spriteShader->UploadUniformMat4("modelMatrix", &mat4(1));
 		spriteShader->UploadUniformMat4("projectionViewMatrix", &s_sceneData->projectionViewMatrix); // NOTE(LAM): Once we get a command queue this can be done for each shader instead of model
 
+		spriteVertexArray->Bind();
 		spriteVertexBuffer->ResetBuffer(vertices, BUFFER_QUAD_SIZE * 4 * sizeof(Vertex2D), false);
 		RendererCommand::DrawIndexes(spriteVertexArray);
 		quadCount = 0;

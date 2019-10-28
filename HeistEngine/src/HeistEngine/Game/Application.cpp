@@ -14,6 +14,8 @@ namespace Heist {
 		window.StartUp();
 		inputManager = InputManager::Instance();
 		inputManager->StartUp();
+    guiManager = GUIManager::Instance();
+    guiManager->StartUp();
 		componentManager = std::make_shared<ComponentManager>(ComponentManager());
 		BaseSystem::RegisterComponentManager(componentManager);
 
@@ -23,17 +25,18 @@ namespace Heist {
 
 		// Camera init
 		camera = std::make_shared<Heist::Camera>(Heist::vec3(0, 0, 0), Heist::vec3(0, 0, 0), Heist::vec4(0, width, height, 0), false);
+		orthoCamera = std::make_shared<Heist::Camera>(Heist::vec3(0, 0, 0), Heist::vec3(0, 0, 0), Heist::vec4(0, width, height, 0), true);
 
 		// --------------------
 		Renderer::Init();
 		Renderer2D::Init();
-
 	}
 
 	Application::~Application() {
 		window.ShutDown();
 		inputManager->ShutDown();
 		memoryManager->ShutDown();
+    guiManager->ShutDown();
 		Renderer::ShutDown();
 
 		for (auto layer : layerStack.layers) {
@@ -49,6 +52,7 @@ namespace Heist {
 		camera->Update();
 		if (window.resize) {
 			camera->UpdateDimension({ 0, (real32)window.width, (real32)window.height, 0 });
+			orthoCamera->UpdateDimension({ 0, (real32)window.width, (real32)window.height, 0 });
 			for (auto layer : layerStack.layers) {
 				layer->OnWindowResize(0, (real32)window.width, (real32)window.height, 0);
 			}
@@ -74,6 +78,16 @@ namespace Heist {
 			RenderSystem::Update(time);
 			Renderer::EndScene();
 		}
+
+    Renderer2D::BeginScene(orthoCamera);
+    GUIManager::BeginFrame();
+    {
+      if(GUIManager::Button()) {
+        HS_CORE_INFO("Button is pressed");
+      }
+    }
+    GUIManager::EndFrame();
+    Renderer2D::EndScene();
 		window.SwapBuffer();
 	}
 

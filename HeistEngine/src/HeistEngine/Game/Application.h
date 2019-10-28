@@ -10,6 +10,7 @@
 #include "Core/Renderer/Camera.h"
 #include "Core/Renderer/Texture.h"
 #include "Core/Manager/InputManager.h"
+#include "Core/GUI/GUIManager.h"
 #include "Core/FileSystem/FileManager.h"
 #include "Core/Math/Math.h"
 #include "Platform/Assertions.h"
@@ -42,9 +43,11 @@ namespace Heist {
 		Window window;
 		MemoryManager* memoryManager;
 		InputManager* inputManager;
+    GUIManager* guiManager;
 		std::shared_ptr<ComponentManager> componentManager;
 		CameraMovement* cameraMovement;
 		std::shared_ptr<Camera> camera;
+    std::shared_ptr<Camera> orthoCamera;
 	};
 
 	// To be defined in client
