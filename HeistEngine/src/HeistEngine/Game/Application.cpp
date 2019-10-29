@@ -82,8 +82,12 @@ namespace Heist {
     Renderer2D::BeginScene(orthoCamera);
     GUIManager::BeginFrame();
     {
-      if(GUIManager::Button()) {
-        HS_CORE_INFO("Button is pressed");
+      if (GUIManager::Button({ 0.0f, 0.0f, 200.0f, 450.0f }, { 0.26f, 0.68f, 0.84f, 0.7f })) {
+        HS_CORE_INFO("Button 1 is pressed");
+      }
+
+      if (GUIManager::Button({ 500.0f, 0.0f, 200.0f, 450.0f }, { 0.26f, 0.68f, 0.84f, 0.7f })) {
+        HS_CORE_INFO("Button 2 is pressed");
       }
     }
     GUIManager::EndFrame();

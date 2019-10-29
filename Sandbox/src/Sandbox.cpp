@@ -71,10 +71,10 @@ struct TestLayer : public Heist::Layer {
 			}
 
 			if (goingDown) {
-				movementComponent->position.x += 0.75f * time;
+				movementComponent->position.x += 0.5f * time;
 			}
 			else {
-				movementComponent->position.x -= 0.75f * time;
+				movementComponent->position.x -= 0.5f * time;
 			}
 		}
 
