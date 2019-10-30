@@ -18,9 +18,19 @@ namespace Heist {
 
     static void BeginFrame();
     static void EndFrame(); // Actual rendering things
-    static bool Button(vec4 rect, vec4 color);
+
+    // Raw GUIs
+    static bool ButtonP(vec4 rect, vec4 color);
+
+    // Layouted GUIs
+    static bool Button(vec2 size, vec4 color);
+
+    // Layout
+    static void Layout(vec4 rect, vec2 dimensionLimit);
+    static void PopLayout();
 
     static std::vector<GUIElement> guis;
+    static std::vector<GUIAutoLayout> autoLayouts;
     static uint32 hot_id;
     static uint32 active_id;
     static uint32 id_runner;
