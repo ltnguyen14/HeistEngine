@@ -3,9 +3,11 @@
 .vs/
 bin/
 bin-int/
+static-cppcheck-*/
 
 # Files
 *.user
 *.vcxproj
 *.vcxproj.filters
 *.sln
+*.cppcheck
