@@ -68,11 +68,11 @@ namespace Heist {
 		Flush();
 	}
 
-	void Renderer2D::DrawSprite(const vec2 position, const vec2 scale, const vec4 color) {
+	void Renderer2D::DrawSprite(const vec2& position, const vec2& scale, const vec4& color) {
 		DrawSprite({ position.x, position.y, 0.0f }, scale, color);
 	}
 
-	void Renderer2D::DrawSprite(const vec3 position, const vec2 scale, const vec4 color) {
+	void Renderer2D::DrawSprite(const vec3& position, const vec2& scale, const vec4& color) {
 
 		if (quadCount == BUFFER_QUAD_SIZE) {
 			Flush();

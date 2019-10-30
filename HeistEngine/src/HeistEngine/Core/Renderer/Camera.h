@@ -24,7 +24,6 @@ namespace Heist {
 	private:
 		vec3 c_position, c_rotation;
 		void CalculateViewMatrix();
-		void CalculateProjectionMatrix(vec4 dimensions);
 	};
 
 }

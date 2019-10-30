@@ -19,8 +19,8 @@ namespace Heist {
 		static void BeginScene(const std::shared_ptr<Camera>& camera);
 		static void EndScene();
 
-		static void DrawSprite(const vec2 position, const vec2 scale, const vec4 color);
-		static void DrawSprite(const vec3 position, const vec2 scale, const vec4 color);
+		static void DrawSprite(const vec2& position, const vec2& scale, const vec4& color);
+		static void DrawSprite(const vec3& position, const vec2& scale, const vec4& color);
 
 		static void Flush();
 
