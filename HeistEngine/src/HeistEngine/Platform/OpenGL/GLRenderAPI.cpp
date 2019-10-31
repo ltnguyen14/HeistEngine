@@ -6,8 +6,7 @@
 namespace Heist {
 	void GLRenderAPI::Init() {
 		// GLAD init
-		int gladInit = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		HS_CORE_ASSERT(gladInit, "Failed to init GLAD");
+		HS_CORE_ASSERT(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress), "Failed to init GLAD");
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
