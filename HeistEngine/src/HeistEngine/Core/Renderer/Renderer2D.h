@@ -21,6 +21,7 @@ namespace Heist {
 
 		static void DrawSprite(const vec2& position, const vec2& scale, const vec4& color);
 		static void DrawSprite(const vec3& position, const vec2& scale, const vec4& color);
+    static void DrawText(const vec2& position, const std::shared_ptr<Texture> texture);
 
 		static void Flush();
 
@@ -36,6 +37,11 @@ namespace Heist {
 		static std::shared_ptr<VertexBuffer> spriteVertexBuffer;
 		static std::shared_ptr<IndexBuffer> spriteIndexBuffer;
 		static std::shared_ptr<Shader> spriteShader;
+
+		static std::shared_ptr<VertexArray> textVertexArray;
+		static std::shared_ptr<VertexBuffer> textVertexBuffer;
+		static std::shared_ptr<IndexBuffer> textIndexBuffer;
+		static std::shared_ptr<Shader> textShader;
 
 		static const int32 BUFFER_QUAD_SIZE = 100000;
 		static const int32 IB_COUNT = BUFFER_QUAD_SIZE * 6;

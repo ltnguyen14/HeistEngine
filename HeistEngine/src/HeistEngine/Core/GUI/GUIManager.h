@@ -3,6 +3,7 @@
 #include "Core/Event/EventNode.h"
 #include "Core/Math/Math.h"
 #include "Core/Renderer/Renderer2D.h"
+#include "Core/Renderer/Texture.h"
 
 namespace Heist {
 
@@ -16,6 +17,7 @@ namespace Heist {
 
 		void OnNotify(Event* event) override;
 
+    static void SetupFont(const std::string& fontPath);
     static void BeginFrame();
     static void EndFrame(); // Actual rendering things
 
@@ -24,6 +26,9 @@ namespace Heist {
 
     // Layouted GUIs
     static bool Button(vec2 size, vec4 color);
+
+    // Text Rendering
+    static void Text(vec3 position, vec4 color);
 
     // Layout
     static void Layout(vec4 rect, vec2 dimensionLimit);
@@ -34,6 +39,7 @@ namespace Heist {
     static uint32 hot_id;
     static uint32 active_id;
     static uint32 id_runner;
+    static std::shared_ptr<Texture> fontTexture;
 
 	private:
 		GUIManager() : EventNode("GUIManager") {}

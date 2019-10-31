@@ -6,6 +6,7 @@ namespace Heist {
 
   std::vector<GUIAutoLayout> GUIManager::autoLayouts;
   std::vector<GUIElement> GUIManager::guis;
+  std::shared_ptr<Texture> GUIManager::fontTexture;
   uint32 GUIManager::hot_id = 0;
   uint32 GUIManager::active_id = 0;
   uint32 GUIManager::id_runner = 0;
@@ -34,6 +35,10 @@ namespace Heist {
 
   void GUIManager::PopLayout() {
     autoLayouts.pop_back();
+  }
+
+  void GUIManager::SetupFont(const std::string& fontPath) {
+    fontTexture.reset(Texture::Create(fontPath.c_str()));
   }
 
   bool GUIManager::ButtonP(vec4 rect, vec4 color) {
@@ -90,6 +95,10 @@ namespace Heist {
 
       return triggered;
     } else return false;
+  }
+
+  void GUIManager::Text(vec3 position, vec4 color) {
+    
   }
 
 	void GUIManager::OnNotify(Event* event) {

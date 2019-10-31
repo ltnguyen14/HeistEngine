@@ -86,18 +86,12 @@ namespace Heist {
       //   HS_CORE_INFO("Button is pressed");
       // }
 
-      GUIManager::Layout({0.0f, 0.0f, 32.0f, 32.0f}, { 4, -1});
+      GUIManager::Layout({0.0f, 0.0f, 32.0f, 32.0f}, { 3, -1});
       {
-        for (int32 i = 0; i <= 12; i++) {
+        for (int32 i = 0; i <= 5; i++) {
           if (GUIManager::Button({ 200.0f, 100.0f }, { 0.26f, 0.68f, 0.84f, 1.f })) {
             HS_CORE_INFO("Button 1 is pressed");
           }
-        }
-        if (GUIManager::Button({ 600.0f, 100.0f }, { 0.26f, 0.68f, 0.84f, 1.f })) {
-          HS_CORE_INFO("Button 1 is pressed");
-        }
-        if (GUIManager::Button({ 100.0f, 100.0f }, { 0.26f, 0.68f, 0.84f, 1.f })) {
-          HS_CORE_INFO("Button 1 is pressed");
         }
       } GUIManager::PopLayout();
     }
