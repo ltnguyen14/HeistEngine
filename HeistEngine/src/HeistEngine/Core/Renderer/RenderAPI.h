@@ -12,6 +12,8 @@ namespace Heist {
 		};
 
 		virtual void Init() = 0;
+		virtual void SetBlend(bool value) = 0;
+		virtual void SetDepthTest(bool value) = 0;
 		virtual void SetClearColor(vec4 color) = 0;
 		virtual void ClearScreen() = 0;
 

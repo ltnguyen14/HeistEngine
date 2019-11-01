@@ -73,3 +73,4 @@
 ** IN PROGRESS Render bitmap font
    - State "IN PROGRESS" from "TODO"       [2019-10-31 Thu 07:36]
 ** TODO Integrate font with gui
+** TODO Pause game -> resume cause game to try to catch up, fps increase

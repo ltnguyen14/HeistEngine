@@ -30,6 +30,7 @@ namespace Heist {
 		// --------------------
 		Renderer::Init();
 		Renderer2D::Init();
+    GUIManager::SetupFont("assets/fonts/RobotoMedium.png", "assets/fonts/RobotoMedium.fnt");
 	}
 
 	Application::~Application() {
@@ -82,18 +83,15 @@ namespace Heist {
     Renderer2D::BeginScene(orthoCamera);
     GUIManager::BeginFrame();
     {
-      // if (GUIManager::ButtonP({ 500.0f, 0.0f, 200.0f, 450.0f }, { 0.26f, 0.68f, 0.84f, 0.7f })) {
-      //   HS_CORE_INFO("Button is pressed");
-      // }
-
       GUIManager::Layout({0.0f, 0.0f, 32.0f, 32.0f}, { 3, -1});
       {
-        for (int32 i = 0; i <= 5; i++) {
+        for (int32 i = 0; i <= 2; i++) {
           if (GUIManager::Button({ 200.0f, 100.0f }, { 0.26f, 0.68f, 0.84f, 1.f })) {
             HS_CORE_INFO("Button 1 is pressed");
           }
         }
       } GUIManager::PopLayout();
+      GUIManager::Text("This is a pretty long text to work on line wrapping and such. Hopefully I can make it work!", {}, {0.36f, 0.46f, 0.32f, 1.0f});
     }
     GUIManager::EndFrame();
     Renderer2D::EndScene();

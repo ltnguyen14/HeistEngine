@@ -8,15 +8,28 @@ namespace Heist {
 		// GLAD init
 		int gladInit = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		HS_CORE_ASSERT(gladInit, "Failed to init GLAD");
-
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-		glEnable(GL_DEPTH_TEST);
 	}
 
 	void GLRenderAPI::SetClearColor(vec4 color) {
 		glClearColor(color.r, color.g, color.b, color.a);
+	}
+
+	void GLRenderAPI::SetBlend(bool value) {
+		if (value) {
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		}
+		else {
+			glDisable(GL_BLEND);
+		}
+	}
+
+	void GLRenderAPI::SetDepthTest(bool value) {
+		if (value) {
+			glEnable(GL_DEPTH_TEST);
+		} else {
+			glDisable(GL_DEPTH_TEST);
+		}
 	}
 
 	void GLRenderAPI::ClearScreen() {

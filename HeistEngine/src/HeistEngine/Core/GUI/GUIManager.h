@@ -17,7 +17,7 @@ namespace Heist {
 
 		void OnNotify(Event* event) override;
 
-    static void SetupFont(const std::string& fontPath);
+    static void SetupFont(const std::string& fontPath, const std::string& fontDataPath);
     static void BeginFrame();
     static void EndFrame(); // Actual rendering things
 
@@ -28,7 +28,7 @@ namespace Heist {
     static bool Button(vec2 size, vec4 color);
 
     // Text Rendering
-    static void Text(vec3 position, vec4 color);
+    static void Text(const std::string& text, const vec3& position, const vec4& color);
 
     // Layout
     static void Layout(vec4 rect, vec2 dimensionLimit);
@@ -40,6 +40,7 @@ namespace Heist {
     static uint32 active_id;
     static uint32 id_runner;
     static std::shared_ptr<Texture> fontTexture;
+    static std::shared_ptr<FontData> fontData;
 
 	private:
 		GUIManager() : EventNode("GUIManager") {}

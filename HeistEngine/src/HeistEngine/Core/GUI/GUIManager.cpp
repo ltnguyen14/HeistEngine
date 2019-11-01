@@ -1,5 +1,6 @@
 #include "GUIManager.h"
 #include "Core/Manager/InputManager.h"
+#include "Core/FileSystem/FileManager.h"
 
 namespace Heist {
 	GUIManager* GUIManager::g_guiManager = nullptr;
@@ -7,6 +8,7 @@ namespace Heist {
   std::vector<GUIAutoLayout> GUIManager::autoLayouts;
   std::vector<GUIElement> GUIManager::guis;
   std::shared_ptr<Texture> GUIManager::fontTexture;
+  std::shared_ptr<FontData> GUIManager::fontData;
   uint32 GUIManager::hot_id = 0;
   uint32 GUIManager::active_id = 0;
   uint32 GUIManager::id_runner = 0;
@@ -37,8 +39,9 @@ namespace Heist {
     autoLayouts.pop_back();
   }
 
-  void GUIManager::SetupFont(const std::string& fontPath) {
+  void GUIManager::SetupFont(const std::string& fontPath, const std::string& fontDataPath) {
     fontTexture.reset(Texture::Create(fontPath.c_str()));
+    fontData = FileManager::ReadFontFile(fontDataPath.c_str());
   }
 
   bool GUIManager::ButtonP(vec4 rect, vec4 color) {
@@ -97,8 +100,16 @@ namespace Heist {
     } else return false;
   }
 
-  void GUIManager::Text(vec3 position, vec4 color) {
-    
+  void GUIManager::Text(const std::string& text, const vec3& position, const vec4& color) {
+    // NOTE(LAM): Ignoring position.z for now
+    vec2 cursorPos = {position.x, position.y};
+    for (auto character : text) {
+      auto charData = fontData->data[character];
+      Renderer2D::DrawText({cursorPos.x + charData.xOffset, cursorPos.y + charData.yOffset, charData.width, charData.height},
+                           {charData.x / fontData->width, 1 - (charData.y + charData.height) / fontData->height, charData.width / fontData->width, charData.height / fontData->height}, color);
+
+      cursorPos.x += charData.xAdvance;
+    }
   }
 
 	void GUIManager::OnNotify(Event* event) {
@@ -107,6 +118,7 @@ namespace Heist {
 
   void GUIManager::BeginFrame() {
     guis.clear();
+    Renderer2D::LoadFontTexture(fontTexture);
   }
 
   void GUIManager::EndFrame() {

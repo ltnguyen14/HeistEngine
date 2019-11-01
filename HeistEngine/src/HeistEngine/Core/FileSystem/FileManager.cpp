@@ -179,6 +179,94 @@ namespace Heist {
 		return jsonContent;
 	}
 
+  std::shared_ptr<FontData> FileManager::ReadFontFile(const char *filePath, const char *fileName) {
+	  std::shared_ptr<FontData> fontData = std::make_shared<FontData>(FontData());
+	  std::ifstream fileStream;
+
+	  char filePathAndName[50];
+	  std::strcpy(filePathAndName, filePath);
+	  std::strcat(filePathAndName, fileName);
+
+	  return ReadFontFile(filePathAndName);
+  }
+
+  std::shared_ptr<FontData> FileManager::ReadFontFile(const char* filePath) {
+	  std::shared_ptr<FontData> fontData = std::make_shared<FontData>(FontData());
+	  std::ifstream fileStream;
+
+	  fileStream.open(filePath);
+	  HS_CORE_ASSERT(!fileStream.fail(), "Cannot open file path: " + std::string(filePath));
+
+	  std::string line, tag;
+
+	  while (std::getline(fileStream, line)) {
+		  std::stringstream sl(line);
+		  sl >> tag;
+		  if (tag == "char") {
+			  CharacterData charData = CharacterData();
+			  uint32 id;
+			  while (sl) {
+				  std::string segment, name, value;
+				  sl >> segment;
+				  std::stringstream token(segment);
+				  std::getline(token, name, '=');
+				  if (name == "x") {
+					  std::getline(token, value, '=');
+					  charData.x = std::stof(value);
+				  }
+				  else if (name == "y") {
+					  std::getline(token, value, '=');
+					  charData.y = std::stof(value);
+				  }
+				  else if (name == "width") {
+					  std::getline(token, value, '=');
+					  charData.width = std::stof(value);
+				  }
+				  else if (name == "height") {
+					  std::getline(token, value, '=');
+					  charData.height = std::stof(value);
+				  }
+				  else if (name == "xoffset") {
+					  std::getline(token, value, '=');
+					  charData.xOffset = std::stof(value);
+				  }
+				  else if (name == "yoffset") {
+					  std::getline(token, value, '=');
+					  charData.yOffset = std::stof(value);
+				  }
+				  else if (name == "xadvance") {
+					  std::getline(token, value, '=');
+					  charData.xAdvance = std::stof(value);
+				  }
+				  else if (name == "id") {
+					  std::getline(token, value, '=');
+					  id = std::stof(value);
+				  }
+			  }
+			  fontData->data.insert({ id, charData });
+		  } else if (tag == "common") {
+        while (sl) {
+          std::string segment, name, value;
+          sl >> segment;
+          std::stringstream token(segment);
+          std::getline(token, name, '=');
+          if (name == "scaleW") {
+            std::getline(token, value, '=');
+            fontData->width = std::stof(value);
+          } else if (name == "scaleH") {
+              std::getline(token, value, '=');
+              fontData->height = std::stof(value);
+            }
+        }
+      }
+	  }
+
+	  fileStream.close();
+
+	  return fontData;
+  }
+
+
 	std::unordered_map<std::string, std::shared_ptr<RawMaterial3D>> FileManager::ReadMTLFile(const char* filePath) {
 		std::unordered_map<std::string, std::shared_ptr<RawMaterial3D>> materials;
 		std::ifstream fileStream;

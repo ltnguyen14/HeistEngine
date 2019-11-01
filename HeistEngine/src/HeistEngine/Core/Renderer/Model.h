@@ -6,6 +6,18 @@
 
 namespace Heist {
 
+  struct CharacterData {
+    real32 x, y;
+    real32 width, height;
+    real32 xOffset, yOffset;
+    real32 xAdvance;
+  };
+
+  struct FontData {
+    std::unordered_map<uint32, CharacterData> data;
+    real32 width, height;
+  };
+
 	struct TextureData {
 		TextureData(int32 width, int32 height, int32 comp, unsigned char* img) : width(width), height(height), comp(comp), img(img) {};
 		~TextureData();
