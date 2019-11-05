@@ -28,7 +28,7 @@ namespace Heist {
     static bool Button(vec2 size, vec4 color);
 
     // Text Rendering
-    static void Text(const std::string& text, const vec3& position, const vec4& color);
+    static void Text(const std::string& text, const vec4& rect, const vec4& color, real32 scale = 1.0f);
 
     // Layout
     static void Layout(vec4 rect, vec2 dimensionLimit);

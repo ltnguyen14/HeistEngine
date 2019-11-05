@@ -1,6 +1,8 @@
 #include "GUIManager.h"
 #include "Core/Manager/InputManager.h"
 #include "Core/FileSystem/FileManager.h"
+#undef max
+#undef min
 
 namespace Heist {
 	GUIManager* GUIManager::g_guiManager = nullptr;
@@ -100,15 +102,43 @@ namespace Heist {
     } else return false;
   }
 
-  void GUIManager::Text(const std::string& text, const vec3& position, const vec4& color) {
-    // NOTE(LAM): Ignoring position.z for now
-    vec2 cursorPos = {position.x, position.y};
+  void GUIManager::Text(const std::string& text, const vec4& rect, const vec4& color, real32 scale) {
+    real32 paddingOffset = 10.0f;
+    vec2 cursorPos = {rect.x, rect.y};
+    real32 lineHeight = -1;
+
+    // Find line height
     for (auto character : text) {
       auto charData = fontData->data[character];
-      Renderer2D::DrawText({cursorPos.x + charData.xOffset, cursorPos.y + charData.yOffset, charData.width, charData.height},
+      lineHeight = std::max(lineHeight, charData.height + charData.yOffset);
+    }
+
+    for (int32 index = 0; index < text.size(); index++) {
+      const char character = text[index];
+      bool breakline = false;
+      auto charData = fontData->data[character];
+      Renderer2D::DrawText({cursorPos.x + charData.xOffset * scale, cursorPos.y + charData.yOffset * scale, charData.width * scale, charData.height * scale},
                            {charData.x / fontData->width, 1 - (charData.y + charData.height) / fontData->height, charData.width / fontData->width, charData.height / fontData->height}, color);
 
-      cursorPos.x += charData.xAdvance;
+      cursorPos.x += charData.xAdvance * scale - paddingOffset * scale;
+
+      if (character == ' ') {
+        real32 widthTillSpace = 0.0f;
+        auto runner = index + 1;
+        auto ch = text[runner];
+        while (ch != '\0' && ch != ' ') {
+          widthTillSpace += fontData->data[ch].width * scale;
+          ch = text[++runner];
+        }
+
+        if (widthTillSpace + cursorPos.x > rect.w + rect.x)
+          breakline = true;
+      }
+
+      if (breakline) {
+        cursorPos.x = rect.x;
+        cursorPos.y += lineHeight * scale;
+      }
     }
   }
 

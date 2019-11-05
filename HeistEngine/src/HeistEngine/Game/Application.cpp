@@ -76,22 +76,34 @@ namespace Heist {
 		for (auto layer : layerStack.layers) {
 			Renderer::BeginScene(camera, &layer->light);
 			layer->OnRender(camera);
-			RenderSystem::Update(time);
+			// RenderSystem::Update(time);
 			Renderer::EndScene();
 		}
 
     Renderer2D::BeginScene(orthoCamera);
     GUIManager::BeginFrame();
     {
-      GUIManager::Layout({0.0f, 0.0f, 32.0f, 32.0f}, { 3, -1});
-      {
-        for (int32 i = 0; i <= 2; i++) {
-          if (GUIManager::Button({ 200.0f, 100.0f }, { 0.26f, 0.68f, 0.84f, 1.f })) {
-            HS_CORE_INFO("Button 1 is pressed");
-          }
-        }
-      } GUIManager::PopLayout();
-      GUIManager::Text("This is a pretty long text to work on line wrapping and such. Hopefully I can make it work!", {}, {0.36f, 0.46f, 0.32f, 1.0f});
+      // GUIManager::Layout({0.0f, 0.0f, 32.0f, 32.0f}, { 3, -1});
+      // {
+      //   for (int32 i = 0; i <= 2; i++) {
+      //     if (GUIManager::Button({ 200.0f, 100.0f }, { 0.26f, 0.68f, 0.84f, 1.f })) {
+      //       HS_CORE_INFO("Button {} is pressed", i);
+      //     }
+      //   }
+      // } GUIManager::PopLayout();
+
+      static real32 width = 800.0f;
+
+      if (inputManager->GetKey(HS_KEY_A))
+        width -= 1.5f;
+      else if (inputManager->GetKey(HS_KEY_D))
+        width += 1.5f;
+
+      GUIManager::Text(std::to_string((int32)(1000 / time)), { 0.0f, 0.0f, 64.0f, 64.0f }, { 0.2f, 0.4f, 0.33f, 1.0f }, 0.5f);
+
+      std::string textSample = "Lorem Lorem Lorem Lorem Lorem Lorem";
+      GUIManager::ButtonP({ 700.0f, 0.0f, width, 700.0f}, { 0.2f, 0.4f, 0.8f, 1.0f });
+      GUIManager::Text(textSample, { 700.0f, 0.0f, width, 700.0f }, {0.58f, 0.85f, 0.85f, 1.0f}, 0.5f);
     }
     GUIManager::EndFrame();
     Renderer2D::EndScene();
@@ -137,12 +149,13 @@ namespace Heist {
 			while (lag >= MS_PER_UPDATE && loops < MAX_FRAME_SKIP) {
 				this->OnUpdate(MS_PER_UPDATE / 1000);
 
-				// Render
-				this->OnRender(MS_PER_UPDATE / 1000);
-
 				loops++;
 				lag -= MS_PER_UPDATE;
+        // HS_CORE_INFO("{}", frameTime);
 			}
+
+      // Render
+      this->OnRender(frameTime);
 
 			frameTime = float(clock() - current);
 			// HS_CORE_INFO("{} ms", frameTime);

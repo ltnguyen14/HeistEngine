@@ -163,7 +163,7 @@ namespace Heist {
 		}
 
 		// TOD(Lam): Maybe find a better way to do this?
-		textVerticies[textQuadCount * 9 * 4] = rect.x;
+		textVerticies[textQuadCount * 9 * 4 + 0] = rect.x;
 		textVerticies[textQuadCount * 9 * 4 + 1] = rect.y;
 		textVerticies[textQuadCount * 9 * 4 + 2] = 0;
 		textVerticies[textQuadCount * 9 * 4 + 3] = textureCoords.x;

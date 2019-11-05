@@ -6,7 +6,12 @@ in vec4 v_color;
 out vec4 fragColor;
 uniform sampler2D outTexture; 
 
+const float width = 0.51f;
+const float edge = 0.1f;
+
 void main() {
-	float alpha = texture(outTexture, v_textureCoords).a;
+	float distance =  1.0f - texture(outTexture, v_textureCoords).a;
+  float alpha = 1.0f - smoothstep(width, width + edge, distance);
+
   fragColor = vec4(v_color.r, v_color.g, v_color.b, alpha);
 }
