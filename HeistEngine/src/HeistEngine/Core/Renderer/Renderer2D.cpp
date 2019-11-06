@@ -72,14 +72,14 @@ namespace Heist {
 		textVertexArray.reset(VertexArray::Create());
 
 		// VBO
-		textVertexBuffer.reset(VertexBuffer::Create(nullptr, BUFFER_QUAD_SIZE * 4 * sizeof(Vertex2D), false));
+		textVertexBuffer.reset(VertexBuffer::Create(nullptr, BUFFER_QUAD_SIZE * 4 * sizeof(TextVertex2D), false));
 		BufferLayout textBufferLayout({
         {ShaderDataType::Float3, "Position"},
         {ShaderDataType::Float2, "Texture Coords"},
         {ShaderDataType::Float4, "Text Color"},
 			});
 		textVertexBuffer->SetLayout(textBufferLayout);
-		textVerticies = new real32[BUFFER_QUAD_SIZE * 4 * sizeof(Vertex2D)];
+		textVerticies = new real32[BUFFER_QUAD_SIZE * 4 * sizeof(TextVertex2D)];
 
 		// IBO
 		textIndexBuffer.reset(IndexBuffer::Create(indicies, IB_COUNT));
@@ -159,11 +159,11 @@ namespace Heist {
   void Renderer2D::DrawText(const vec4& rect, const vec4& textureCoords, const vec4& color) {
 		if (textQuadCount == BUFFER_QUAD_SIZE) {
 			FlushText();
-			textVertexBuffer->ResetBuffer(nullptr, BUFFER_QUAD_SIZE * 4 * sizeof(Vertex2D), false);
+			textVertexBuffer->ResetBuffer(nullptr, BUFFER_QUAD_SIZE * 4 * sizeof(TextVertex2D), false);
 		}
 
 		// TOD(Lam): Maybe find a better way to do this?
-		textVerticies[textQuadCount * 9 * 4 + 0] = rect.x;
+		textVerticies[textQuadCount * 9 * 4] = rect.x;
 		textVerticies[textQuadCount * 9 * 4 + 1] = rect.y;
 		textVerticies[textQuadCount * 9 * 4 + 2] = 0;
 		textVerticies[textQuadCount * 9 * 4 + 3] = textureCoords.x;
@@ -231,10 +231,12 @@ namespace Heist {
       textShader->UploadUniformMat4("projectionViewMatrix", &s_sceneData->projectionViewMatrix); // NOTE(LAM): Once we get a command queue this can be done for each shader instead of model
 
       textVertexArray->Bind();
-      textVertexBuffer->ResetBuffer(textVerticies, BUFFER_QUAD_SIZE * 4 * sizeof(Vertex2D), false);
+      textVertexBuffer->ResetBuffer(textVerticies, BUFFER_QUAD_SIZE * 4 * sizeof(TextVertex2D), false);
       RendererCommand::DrawIndexes(textVertexArray);
       textQuadCount = 0;
       RendererCommand::SetBlend(false);
+
+      std::memset(textVerticies, 0, BUFFER_QUAD_SIZE * 4 * sizeof(TextVertex2D));
     }
   }
 }

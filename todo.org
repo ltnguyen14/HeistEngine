@@ -72,5 +72,7 @@
    Make the window screen small, panning is slow
 ** IN PROGRESS Render bitmap font
    - State "IN PROGRESS" from "TODO"       [2019-10-31 Thu 07:36]
+** TODO Switch to use line height from fnt file
+** TODO Read font padding infos from fnt file
 ** TODO Integrate font with gui
 ** TODO Pause game -> resume cause game to try to catch up, fps increase

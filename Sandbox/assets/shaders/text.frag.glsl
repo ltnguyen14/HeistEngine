@@ -6,8 +6,8 @@ in vec4 v_color;
 out vec4 fragColor;
 uniform sampler2D outTexture; 
 
-const float width = 0.51f;
-const float edge = 0.1f;
+const float width = 0.45f;
+const float edge = 0.15f;
 
 void main() {
 	float distance =  1.0f - texture(outTexture, v_textureCoords).a;

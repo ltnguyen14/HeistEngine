@@ -12,6 +12,12 @@ namespace Heist {
 		vec4 color;
 	};
 
+  struct TextVertex2D {
+    vec3 position;
+    vec2 textureCoords;
+    vec4 color;
+  };
+
 	struct Renderer2D {
 
 		static void ShutDown();

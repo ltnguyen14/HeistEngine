@@ -92,18 +92,18 @@ namespace Heist {
       //   }
       // } GUIManager::PopLayout();
 
-      static real32 width = 800.0f;
+      static real32 width = 400.0f;
 
       if (inputManager->GetKey(HS_KEY_A))
         width -= 1.5f;
       else if (inputManager->GetKey(HS_KEY_D))
         width += 1.5f;
 
-      GUIManager::Text(std::to_string((int32)(1000 / time)), { 0.0f, 0.0f, 64.0f, 64.0f }, { 0.2f, 0.4f, 0.33f, 1.0f }, 0.5f);
+      GUIManager::Text(std::to_string((int32)time), { 0.0f, 0.0f, 64.0f, 64.0f }, { 0.2f, 0.4f, 0.33f, 1.0f }, 0.5f);
 
-      std::string textSample = "Lorem Lorem Lorem Lorem Lorem Lorem";
-      GUIManager::ButtonP({ 700.0f, 0.0f, width, 700.0f}, { 0.2f, 0.4f, 0.8f, 1.0f });
-      GUIManager::Text(textSample, { 700.0f, 0.0f, width, 700.0f }, {0.58f, 0.85f, 0.85f, 1.0f}, 0.5f);
+      std::string textSample = "Press me Press me Press me";
+
+      GUIManager::ButtonP({100.0f, 0.0f, width}, {0.2f, 0.4f, 0.8f, 1.0f}, "This is a button with text", {0.8f, 0.4f, 0.2f, 1.0f}, 10.0f);
     }
     GUIManager::EndFrame();
     Renderer2D::EndScene();
