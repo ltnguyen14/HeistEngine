@@ -15,7 +15,7 @@ namespace Heist {
 	};
 
 	struct Event {
-		Event(std::string eventName, int32 eventTypeMask);
+		Event(const std::string& eventName, int32 eventTypeMask);
 		virtual ~Event();
 
 		bool handled;

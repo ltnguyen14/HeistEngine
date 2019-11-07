@@ -52,13 +52,4 @@ namespace Heist {
 
 		projectionViewMatrix = projectionMatrix * viewMatrix;
 	}
-
-	void Camera::CalculateProjectionMatrix(vec4 dimensions) {
-		if (ortho) {
-			projectionMatrix = MakeOrthoMatrix(dimensions.x, dimensions.y, dimensions.w, dimensions.h, -1000, 1000);
-		}
-		else {
-			projectionMatrix = MakePerspectiveMatrix(FOV, dimensions.y / dimensions.w, 0.1f, 1000.0f);
-		}
-	}
 }

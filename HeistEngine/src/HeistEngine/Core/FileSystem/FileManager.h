@@ -22,6 +22,9 @@ namespace Heist {
 		static json ReadJSON(const char* filePath);
 		static std::unordered_map<std::string, std::shared_ptr<RawMaterial3D>> ReadMTLFile(const char* filePath);
 
+    static std::shared_ptr<FontData> ReadFontFile(const char *filePath, const char *fileName);
+	static std::shared_ptr<FontData> ReadFontFile(const char* filePath);
+
 		static void WriteFile();
 
 		static TextureData ReadTexture(const char* texturePath);

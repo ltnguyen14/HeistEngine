@@ -46,7 +46,9 @@
    - State "DONE"       from "IN PROGRESS" [2019-10-19 Sat 18:30]
    - State "IN PROGRESS" from "TODO"       [2019-10-19 Sat 18:20]
    When moving camera it should not stop immidiately
-** IN PROGRESS Simple immediate mode GUI
+** DONE Simple immediate mode GUI
+   CLOSED: [2019-10-31 Thu 07:36]
+   - State "DONE"       from "IN PROGRESS" [2019-10-31 Thu 07:36]
    - State "IN PROGRESS" from "TODO"       [2019-10-27 Sun 17:57]
    Textured quads, etc. - might be able to use the existing 2D renderer
 ** DONE Multiple object in obj file
@@ -68,3 +70,9 @@
    - State "IN PROGRESS" from "TODO"       [2019-10-22 Tue 06:38]
 ** TODO Window panning depends on screen resolution, need to fix
    Make the window screen small, panning is slow
+** IN PROGRESS Render bitmap font
+   - State "IN PROGRESS" from "TODO"       [2019-10-31 Thu 07:36]
+** TODO Switch to use line height from fnt file
+** TODO Read font padding infos from fnt file
+** TODO Integrate font with gui
+** TODO Pause game -> resume cause game to try to catch up, fps increase

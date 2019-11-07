@@ -67,12 +67,14 @@ namespace Heist {
 		model->shader->UploadUniformVec3("light.diffuse", &s_sceneData->light->diffuse);
 		model->shader->UploadUniformVec3("light.specular", &s_sceneData->light->specular);
 
+    RendererCommand::SetDepthTest(true);
 		if (model->useIndicies) {
 			RendererCommand::DrawIndexes(model->vertexArray);
 		}
 		else {
 			RendererCommand::DrawVerticies(model->vertexArray);
 		}
-
+    RendererCommand::SetDepthTest(false);
+    
 	}
 }

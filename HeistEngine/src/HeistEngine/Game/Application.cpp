@@ -30,6 +30,7 @@ namespace Heist {
 		// --------------------
 		Renderer::Init();
 		Renderer2D::Init();
+    GUIManager::SetupFont("assets/fonts/RobotoMedium.png", "assets/fonts/RobotoMedium.fnt");
 	}
 
 	Application::~Application() {
@@ -75,31 +76,34 @@ namespace Heist {
 		for (auto layer : layerStack.layers) {
 			Renderer::BeginScene(camera, &layer->light);
 			layer->OnRender(camera);
-			RenderSystem::Update(time);
+			// RenderSystem::Update(time);
 			Renderer::EndScene();
 		}
 
     Renderer2D::BeginScene(orthoCamera);
     GUIManager::BeginFrame();
     {
-      // if (GUIManager::ButtonP({ 500.0f, 0.0f, 200.0f, 450.0f }, { 0.26f, 0.68f, 0.84f, 0.7f })) {
-      //   HS_CORE_INFO("Button is pressed");
-      // }
+      // GUIManager::Layout({0.0f, 0.0f, 32.0f, 32.0f}, { 3, -1});
+      // {
+      //   for (int32 i = 0; i <= 2; i++) {
+      //     if (GUIManager::Button({ 200.0f, 100.0f }, { 0.26f, 0.68f, 0.84f, 1.f })) {
+      //       HS_CORE_INFO("Button {} is pressed", i);
+      //     }
+      //   }
+      // } GUIManager::PopLayout();
 
-      GUIManager::Layout({0.0f, 0.0f, 32.0f, 32.0f}, { 4, -1});
-      {
-        for (int32 i = 0; i <= 12; i++) {
-          if (GUIManager::Button({ 200.0f, 100.0f }, { 0.26f, 0.68f, 0.84f, 1.f })) {
-            HS_CORE_INFO("Button 1 is pressed");
-          }
-        }
-        if (GUIManager::Button({ 600.0f, 100.0f }, { 0.26f, 0.68f, 0.84f, 1.f })) {
-          HS_CORE_INFO("Button 1 is pressed");
-        }
-        if (GUIManager::Button({ 100.0f, 100.0f }, { 0.26f, 0.68f, 0.84f, 1.f })) {
-          HS_CORE_INFO("Button 1 is pressed");
-        }
-      } GUIManager::PopLayout();
+      static real32 width = 400.0f;
+
+      if (inputManager->GetKey(HS_KEY_A))
+        width -= 1.5f;
+      else if (inputManager->GetKey(HS_KEY_D))
+        width += 1.5f;
+
+      GUIManager::Text(std::to_string((int32)time), { 0.0f, 0.0f, 64.0f, 64.0f }, { 0.2f, 0.4f, 0.33f, 1.0f }, 0.5f);
+
+      std::string textSample = "Press me Press me Press me";
+
+      GUIManager::ButtonP({100.0f, 0.0f, width}, {0.2f, 0.4f, 0.8f, 1.0f}, "This is a button with text", {0.8f, 0.4f, 0.2f, 1.0f}, 10.0f);
     }
     GUIManager::EndFrame();
     Renderer2D::EndScene();
@@ -145,12 +149,13 @@ namespace Heist {
 			while (lag >= MS_PER_UPDATE && loops < MAX_FRAME_SKIP) {
 				this->OnUpdate(MS_PER_UPDATE / 1000);
 
-				// Render
-				this->OnRender(MS_PER_UPDATE / 1000);
-
 				loops++;
 				lag -= MS_PER_UPDATE;
+        // HS_CORE_INFO("{}", frameTime);
 			}
+
+      // Render
+      this->OnRender(frameTime);
 
 			frameTime = float(clock() - current);
 			// HS_CORE_INFO("{} ms", frameTime);

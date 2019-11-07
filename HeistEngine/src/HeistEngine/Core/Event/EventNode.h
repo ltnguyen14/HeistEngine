@@ -6,7 +6,7 @@ namespace Heist {
 
 	struct EventNode {
 
-		EventNode(std::string name);
+		EventNode(const std::string& name);
 		~EventNode();
 
 		void SubscribeToBus(EventBus* eventBus);

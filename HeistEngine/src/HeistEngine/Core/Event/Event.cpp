@@ -2,7 +2,7 @@
 #include "Event.h"
 
 namespace Heist {
-	Event::Event(std::string eventName, int32 eventTypeMask) : eventName(eventName), eventTypeMask(eventTypeMask), handled(false) {}
+	Event::Event(const std::string& eventName, int32 eventTypeMask) : eventName(eventName), eventTypeMask(eventTypeMask), handled(false) {}
 	Event::~Event() {}
 
 	KeyEvent::KeyEvent(int32 value, int32 action)
