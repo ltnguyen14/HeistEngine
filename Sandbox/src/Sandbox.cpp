@@ -2,6 +2,7 @@
 #include <HeistEngine.h>
 #include <EntryPoint.h>
 #include "Systems/MovementSystem.h"
+#include "GUI/ProfileComponent.h"
 
 struct TestLayer : public Heist::Layer {
 
@@ -27,7 +28,7 @@ struct TestLayer : public Heist::Layer {
 		Heist::Entity plane("Plane");
 		componentManager->AddEntity(plane);
 		componentManager->AddComponents<Heist::RenderableComponent>(plane, { { planeRawModel, shader } });
-		componentManager->AddComponents<Heist::TransformComponent>(plane, { { {0, -2.0f, 0}, {} } });
+		componentManager->AddComponents<Heist::TransformComponent>(plane, { { {0, -2.0f, 0}, {}, { 5.0f, 1.0f, 5.0f} } });
 
 		auto rockRawModel = Heist::FileManager::ReadOBJFile("assets/models/", "rock.obj");
 		Heist::Entity rock("Rock 1");
@@ -92,22 +93,19 @@ struct TestLayer : public Heist::Layer {
 	}
 
 	void OnOverlay() override {
-		Heist::GUIManager::BeginFrame();
-		{
-			Heist::GUIManager::Layout({0.0f, 0.0f, 32.0f, 32.0f}, { 3, -1});
-			{
-			  for (int32 i = 0; i <= 2; i++) {
-			    if (Heist::GUIManager::Button({ 200.0f, 100.0f }, { 0.26f, 0.68f, 0.84f, 1.f })) {
-			      HS_CORE_INFO("Button {} is pressed", i);
-			    }
-			  }
-			} Heist::GUIManager::PopLayout();
-
-			std::string textSample = "Press me Press me Press me";
-
-			Heist::GUIManager::ButtonP({ 100.0f, 0.0f, 500.0f }, { 0.2f, 0.4f, 0.8f, 1.0f }, "This is a button with text", { 0.8f, 0.4f, 0.2f, 1.0f }, 10.0f);
-		}
-		Heist::GUIManager::EndFrame();
+    Heist::GUIManager::Layout({0.0f, 0.0f, 32.0f, 32.0f}, { 3, -1});
+    {
+      for (int32 i = 0; i <= 2; i++) {
+        if (Heist::GUIManager::Button({ 200.0f, 100.0f }, { 0.26f, 0.68f, 0.84f, 1.f })) {
+          HS_INFO("Button {} is pressed", i);
+        }
+      }
+    } Heist::GUIManager::PopLayout();
+    
+    std::string textSample = "Press me Press me Press me";
+    
+    Heist::GUIManager::ButtonP({ 100.0f, 0.0f, 500.0f }, { 0.2f, 0.4f, 0.8f, 1.0f }, "This is a button with text", { 0.8f, 0.4f, 0.2f, 1.0f }, 10.0f);
+    DrawProfile({800.0f, 100.0f, 600.0f, 800.0f});
 	}
 
 	void OnWindowResize(real32 left, real32 right, real32 bottom, real32 top) override {

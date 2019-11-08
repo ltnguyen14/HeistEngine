@@ -80,7 +80,9 @@ namespace Heist {
 			Renderer::EndScene();
 
 			Renderer2D::BeginScene(orthoCamera);
+      GUIManager::BeginFrame();
 			layer->OnOverlay();
+      GUIManager::EndFrame();
 			Renderer2D::EndScene();
 
 			// Stats

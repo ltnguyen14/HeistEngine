@@ -46,6 +46,17 @@ namespace Heist {
     fontData = FileManager::ReadFontFile(fontDataPath.c_str());
   }
 
+  real32 GUIManager::GetTextWidth(const std::string& text, real32 scale) {
+    // Find line width
+    real32 lineWidth = 0.0f;
+    for (auto character : text) {
+      auto charData = fontData->data[character];
+      lineWidth += charData.width * scale + charData.xOffset * scale;
+    }
+
+    return lineWidth;
+  }
+
   bool GUIManager::ButtonP(vec4 rect, vec4 color) {
     uint32 guiId = ++id_runner;
     bool isTriggered = false;
@@ -90,6 +101,17 @@ namespace Heist {
     return ButtonP({rect.x, rect.y, rect.z, 2 * padding + textHeight}, color);
   }
 
+  bool GUIManager::ButtonP(vec4 rect, vec4 color, const std::string& text, vec4 textColor, real32 padding, bool breakLines) {
+    real32 textHeight = 0.0f;
+    if (breakLines) {
+      textHeight = Text(text, {rect.x + padding, rect.y + padding, rect.z - 2 * padding, 0.0f}, textColor);
+    } else {
+      textHeight = Text(text, {rect.x + padding, rect.y + padding, rect.z - 2 * padding}, textColor);
+    }
+
+    return ButtonP({rect.x, rect.y, rect.z, 2 * padding + rect.h}, color);
+  }
+
   bool GUIManager::Button(vec2 size, vec4 color) {
     if (autoLayouts.size() >= 1) {
       GUIAutoLayout& layout = autoLayouts.back();
@@ -107,6 +129,52 @@ namespace Heist {
       } else {
         layout.xCount++;
         layout.xOffset += size.x + layout.rect.w;
+      }
+
+      return triggered;
+    } else return false;
+  }
+
+  bool GUIManager::Button(vec2 size, vec4 color, const std::string& text, vec4 textColor, real32 padding, bool breakLines) {
+    if (autoLayouts.size() >= 1) {
+      GUIAutoLayout& layout = autoLayouts.back();
+
+      bool triggered = ButtonP({layout.xOffset + layout.rect.x, layout.yOffset + layout.rect.y, size.x, size.y}, color, text, textColor, padding, breakLines);
+
+      if (layout.xCount == layout.dimensionLimit.x - 1) {
+        layout.xCount = 0;
+        layout.xOffset = 0;
+
+        layout.yCount++;
+        layout.yOffset += size.y + layout.rect.h;
+
+        HS_ASSERT(layout.yCount < layout.dimensionLimit.y || layout.dimensionLimit.y < 0, "AutoLayout dimension limit violated!");
+      } else {
+        layout.xCount++;
+        layout.xOffset += size.x + layout.rect.w;
+      }
+
+      return triggered;
+    } else return false;
+  }
+
+  bool GUIManager::Button(real32 width, vec4 color, const std::string& text, vec4 textColor, real32 padding, bool breakLines) {
+    if (autoLayouts.size() >= 1) {
+      GUIAutoLayout& layout = autoLayouts.back();
+
+      bool triggered = ButtonP({layout.xOffset + layout.rect.x, layout.yOffset + layout.rect.y, width}, color, text, textColor, padding, breakLines);
+
+      if (layout.xCount == layout.dimensionLimit.x - 1) {
+        layout.xCount = 0;
+        layout.xOffset = 0;
+
+        layout.yCount++;
+        layout.yOffset += layout.rect.h;
+
+        HS_ASSERT(layout.yCount < layout.dimensionLimit.y || layout.dimensionLimit.y < 0, "AutoLayout dimension limit violated!");
+      } else {
+        layout.xCount++;
+        layout.xOffset += width + layout.rect.w;
       }
 
       return triggered;
