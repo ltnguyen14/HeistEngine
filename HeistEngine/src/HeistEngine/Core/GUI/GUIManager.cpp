@@ -90,23 +90,23 @@ namespace Heist {
     return isTriggered;
   }
 
-  bool GUIManager::ButtonP(vec3 rect, vec4 color, const std::string& text, vec4 textColor, real32 padding, bool breakLines) {
+  bool GUIManager::ButtonP(vec3 rect, vec4 color, const std::string& text, vec4 textColor, real32 scale, real32 padding, bool breakLines) {
     real32 textHeight = 0.0f;
     if (breakLines) {
-      textHeight = Text(text, {rect.x + padding, rect.y + padding, rect.z - 2 * padding, 0.0f}, textColor);
+      textHeight = Text(text, {rect.x + padding, rect.y + padding, rect.z - 2 * padding, 0.0f}, textColor, scale);
     } else {
-      textHeight = Text(text, {rect.x + padding, rect.y + padding, rect.z - 2 * padding}, textColor);
+      textHeight = Text(text, {rect.x + padding, rect.y + padding, rect.z - 2 * padding}, textColor, scale);
     }
 
     return ButtonP({rect.x, rect.y, rect.z, 2 * padding + textHeight}, color);
   }
 
-  bool GUIManager::ButtonP(vec4 rect, vec4 color, const std::string& text, vec4 textColor, real32 padding, bool breakLines) {
+  bool GUIManager::ButtonP(vec4 rect, vec4 color, const std::string& text, vec4 textColor, real32 scale, real32 padding, bool breakLines) {
     real32 textHeight = 0.0f;
     if (breakLines) {
-      textHeight = Text(text, {rect.x + padding, rect.y + padding, rect.z - 2 * padding, 0.0f}, textColor);
+      textHeight = Text(text, {rect.x + padding, rect.y + padding, rect.z - 2 * padding, 0.0f}, textColor, scale);
     } else {
-      textHeight = Text(text, {rect.x + padding, rect.y + padding, rect.z - 2 * padding}, textColor);
+      textHeight = Text(text, {rect.x + padding, rect.y + padding, rect.z - 2 * padding}, textColor, scale);
     }
 
     return ButtonP({rect.x, rect.y, rect.z, 2 * padding + rect.h}, color);
@@ -135,11 +135,11 @@ namespace Heist {
     } else return false;
   }
 
-  bool GUIManager::Button(vec2 size, vec4 color, const std::string& text, vec4 textColor, real32 padding, bool breakLines) {
+  bool GUIManager::Button(vec2 size, vec4 color, const std::string& text, vec4 textColor, real32 scale, real32 padding, bool breakLines) {
     if (autoLayouts.size() >= 1) {
       GUIAutoLayout& layout = autoLayouts.back();
 
-      bool triggered = ButtonP({layout.xOffset + layout.rect.x, layout.yOffset + layout.rect.y, size.x, size.y}, color, text, textColor, padding, breakLines);
+      bool triggered = ButtonP({layout.xOffset + layout.rect.x, layout.yOffset + layout.rect.y, size.x, size.y}, color, text, textColor, scale, padding, breakLines);
 
       if (layout.xCount == layout.dimensionLimit.x - 1) {
         layout.xCount = 0;
@@ -158,11 +158,11 @@ namespace Heist {
     } else return false;
   }
 
-  bool GUIManager::Button(real32 width, vec4 color, const std::string& text, vec4 textColor, real32 padding, bool breakLines) {
+  bool GUIManager::Button(real32 width, vec4 color, const std::string& text, vec4 textColor, real32 scale, real32 padding, bool breakLines) {
     if (autoLayouts.size() >= 1) {
       GUIAutoLayout& layout = autoLayouts.back();
 
-      bool triggered = ButtonP({layout.xOffset + layout.rect.x, layout.yOffset + layout.rect.y, width}, color, text, textColor, padding, breakLines);
+      bool triggered = ButtonP({layout.xOffset + layout.rect.x, layout.yOffset + layout.rect.y, width}, color, text, textColor, scale, padding, breakLines);
 
       if (layout.xCount == layout.dimensionLimit.x - 1) {
         layout.xCount = 0;
@@ -182,24 +182,26 @@ namespace Heist {
   }
 
   real32 GUIManager::Text(const std::string& text, const vec4& rect, const vec4& color, real32 scale) {
-    real32 fontPaddingOffset = 10.0f;
     vec2 cursorPos = {rect.x, rect.y};
     real32 lineHeight = -1;
 
     // Find line height
     for (auto character : text) {
       auto charData = fontData->data[character];
-      lineHeight = std::max(lineHeight, charData.height * scale + charData.yOffset * scale);
+	  lineHeight = std::max(lineHeight, (charData.height + charData.yOffset) * scale);
     }
 
     for (int32 index = 0; index < text.size(); index++) {
       const char character = text[index];
       bool breakline = false;
       auto charData = fontData->data[character];
-      Renderer2D::DrawText({cursorPos.x + charData.xOffset * scale, cursorPos.y + charData.yOffset * scale, charData.width * scale, charData.height * scale},
+      Renderer2D::DrawText({cursorPos.x + charData.xOffset * scale, 
+							cursorPos.y + charData.yOffset * scale, 
+							charData.width * scale, 
+							charData.height * scale},
                            {charData.x / fontData->width, 1 - (charData.y + charData.height) / fontData->height, charData.width / fontData->width, charData.height / fontData->height}, color);
 
-      cursorPos.x += charData.xAdvance * scale - fontPaddingOffset * scale;
+      cursorPos.x += charData.xAdvance * scale;
 
       if (character == ' ') {
         real32 widthTillSpace = 0.0f;
@@ -216,7 +218,7 @@ namespace Heist {
 
       if (breakline) {
         cursorPos.x = rect.x;
-        cursorPos.y += lineHeight * scale;
+        cursorPos.y += lineHeight;
       }
     }
 
@@ -224,16 +226,20 @@ namespace Heist {
   }
 
   real32 GUIManager::Text(const std::string& text, const vec3& rect, const vec4& color, real32 scale) {
-    real32 fontPaddingOffset = 10.0f;
     vec2 cursorPos = {rect.x, rect.y};
     real32 totalWidth = 0.0f;
     real32 lineHeight = -1.0f;
 
-    for (auto character : text) {
-      auto charData = fontData->data[character];
-      totalWidth += charData.width * scale;
-      lineHeight = std::max(lineHeight, charData.height * scale + charData.yOffset * scale);
+	for (int32 i = 0; i < text.size(); i++) {
+      auto charData = fontData->data[text[i]];
+	  // Add width till last character
+	  if (i != text.size() - 1) {
+		  totalWidth += charData.xAdvance * scale;
+	  }
+      lineHeight = std::max(lineHeight, (charData.height + charData.yOffset) * scale);
     }
+	auto lastCharacterData = fontData->data[text[text.size() - 1]];
+	totalWidth += lastCharacterData.xOffset + lastCharacterData.width;
     real32 fitScale = rect.z / totalWidth;
 
     for (int32 index = 0; index < text.size(); index++) {
@@ -241,7 +247,7 @@ namespace Heist {
       auto charData = fontData->data[character];
       Renderer2D::DrawText(
                            { cursorPos.x + charData.xOffset * scale * fitScale,
-                               cursorPos.y + charData.yOffset * scale * fitScale - fontPaddingOffset * scale / 2,
+                               cursorPos.y + charData.yOffset * scale * fitScale,
                                charData.width * scale * fitScale,
                                charData.height * scale * fitScale
                                },
@@ -252,10 +258,10 @@ namespace Heist {
                                },
                            color);
 
-      cursorPos.x += charData.xAdvance * scale * fitScale - fontPaddingOffset * scale * fitScale;
+      cursorPos.x += charData.xAdvance * scale * fitScale;
 
     }
-    return lineHeight * fitScale - fontPaddingOffset * scale / 2;
+    return lineHeight * fitScale;
   }
 
 	void GUIManager::OnNotify(Event* event) {

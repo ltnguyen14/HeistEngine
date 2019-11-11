@@ -26,13 +26,13 @@ namespace Heist {
 
     // Raw GUIs
     static bool ButtonP(vec4 rect, vec4 color);
-    static bool ButtonP(vec3 rect, vec4 color, const std::string& text, vec4 textColor, real32 padding = 0.0f, bool breakLines = false);
-    static bool ButtonP(vec4 rect, vec4 color, const std::string& text, vec4 textColor, real32 padding = 0.0f, bool breakLines = false);
+    static bool ButtonP(vec3 rect, vec4 color, const std::string& text, vec4 textColor, real32 scale = 1.0f, real32 padding = 0.0f, bool breakLines = false);
+    static bool ButtonP(vec4 rect, vec4 color, const std::string& text, vec4 textColor, real32 scale = 1.0f, real32 padding = 0.0f, bool breakLines = false);
 
     // Layouted GUIs
     static bool Button(vec2 size, vec4 color);
-    static bool Button(vec2 size, vec4 color, const std::string& text, vec4 textColor, real32 padding = 0.0f, bool breakLines = false);
-    static bool Button(real32 width, vec4 color, const std::string& text, vec4 textColor, real32 padding = 0.0f, bool breakLines = false);
+    static bool Button(vec2 size, vec4 color, const std::string& text, vec4 textColor, real32 scale = 1.0f, real32 padding = 0.0f, bool breakLines = false);
+    static bool Button(real32 width, vec4 color, const std::string& text, vec4 textColor, real32 scale = 1.0f, real32 padding = 0.0f, bool breakLines = false);
 
     // Text Rendering
     static real32 Text(const std::string& text, const vec4& rect, const vec4& color, real32 scale = 1.0f);

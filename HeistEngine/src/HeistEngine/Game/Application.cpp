@@ -86,19 +86,19 @@ namespace Heist {
 			Renderer2D::EndScene();
 
 			// Stats
-			GUIManager::BeginFrame();
-			static int32 i = 0;
-			static real32 cachedTime = time;
-			i++;
-			if (i % 60 == 0) {
-				Heist::GUIManager::Text(std::to_string((int32)time), { 0.0f, 0.0f, 64.0f, 64.0f }, { 0.2f, 0.4f, 0.33f, 1.0f }, 0.5f);
-				cachedTime = time;
-				i = 1;
-			}
-			else {
-				Heist::GUIManager::Text(std::to_string((int32)cachedTime), { 0.0f, 0.0f, 64.0f, 64.0f }, { 0.2f, 0.4f, 0.33f, 1.0f }, 0.5f);
-			}
-			GUIManager::EndFrame();
+			// GUIManager::BeginFrame();
+			// static int32 i = 0;
+			// static real32 cachedTime = time;
+			// i++;
+			// if (i % 60 == 0) {
+			// 	Heist::GUIManager::Text(std::to_string((int32)time), { 0.0f, 0.0f, 64.0f, 64.0f }, { 0.2f, 0.4f, 0.33f, 1.0f }, 0.5f);
+			// 	cachedTime = time;
+			// 	i = 1;
+			// }
+			// else {
+			// 	Heist::GUIManager::Text(std::to_string((int32)cachedTime), { 0.0f, 0.0f, 64.0f, 64.0f }, { 0.2f, 0.4f, 0.33f, 1.0f }, 0.5f);
+			// }
+			// GUIManager::EndFrame();
 		}
 
 		window.SwapBuffer();
