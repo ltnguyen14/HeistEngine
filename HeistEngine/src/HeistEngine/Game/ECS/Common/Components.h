@@ -6,7 +6,7 @@
 
 namespace Heist {
 	struct TransformComponent : public BaseComponent {
-  TransformComponent(vec3 position, vec3 rotation, vec3 scale = {1.0f, 1.0f, 1.0f}) : position(position), rotation(rotation), scale(scale) {};
+		TransformComponent(vec3 position, vec3 rotation, vec3 scale = { 1.0f, 1.0f, 1.0f }) : position(position), rotation(rotation), scale(scale) {};
 		vec3 position;
 		vec3 scale;
 		vec3 rotation;
@@ -16,9 +16,9 @@ namespace Heist {
 	};
 
 	struct RenderableComponent : public BaseComponent {
-		 RenderableComponent(std::shared_ptr<RawModelCollection3D> rawModelCollection, std::shared_ptr<Shader> shader) {
+		RenderableComponent(std::shared_ptr<RawModelCollection3D> rawModelCollection, std::shared_ptr<Shader> shader) {
 			modelCollection = Heist::FileManager::CreateModelFromRawData(rawModelCollection, nullptr, shader, nullptr);
-		 };
+		};
 
 		std::shared_ptr<ModelCollection3D> modelCollection;
 		static int32 componentTypeId;

@@ -4,11 +4,11 @@
 namespace Heist {
 
 	LayerStack::LayerStack() {
-	
+
 	}
 
 	LayerStack::~LayerStack() {
-	
+
 	}
 
 	void LayerStack::PushLayer(Layer* layer, const std::shared_ptr<ComponentManager>& componentManager) {
@@ -16,7 +16,7 @@ namespace Heist {
 		layer->OnAttach(componentManager);
 	}
 
-	void LayerStack::PopLayer(Layer *layer) {
+	void LayerStack::PopLayer(Layer* layer) {
 		auto it = std::find(layers.begin(), layers.end(), layer);
 
 		if (it != layers.end()) {

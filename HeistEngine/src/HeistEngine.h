@@ -11,6 +11,7 @@
 #include "HeistEngine/Platform/Assertions.h"
 #include "HeistEngine/Game/ECS/Common/Systems.h"
 #include "HeistEngine/Game/ECS/Common/Components.h"
+#include "HeistEngine/Core/GUI/GUIManager.h"
 
 #include "HeistEngine/Game/Application.h"
 

@@ -26,6 +26,7 @@ namespace Heist {
 	void MemoryManager::ShutDown()
 	{
 		free(startPointer);
+		delete g_memoryManager;
 	}
 
 	void* MemoryManager::Alloc(uintmax size_byte)

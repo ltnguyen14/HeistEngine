@@ -9,13 +9,13 @@ namespace Heist {
 		KEYBOARD = BIT(1),
 		APPLICATION = BIT(2),
 		INPUT = BIT(3),
-    POSITION = BIT(4),
-    SCROLL = BIT(5),
-    SET = BIT(6)
+		POSITION = BIT(4),
+		SCROLL = BIT(5),
+		SET = BIT(6)
 	};
 
 	struct Event {
-		Event(std::string eventName, int32 eventTypeMask);
+		Event(const std::string& eventName, int32 eventTypeMask);
 		virtual ~Event();
 
 		bool handled;

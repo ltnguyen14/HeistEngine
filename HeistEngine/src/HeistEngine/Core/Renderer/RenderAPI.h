@@ -12,6 +12,8 @@ namespace Heist {
 		};
 
 		virtual void Init() = 0;
+		virtual void SetBlend(bool value) = 0;
+		virtual void SetDepthTest(bool value) = 0;
 		virtual void SetClearColor(vec4 color) = 0;
 		virtual void ClearScreen() = 0;
 
@@ -21,7 +23,7 @@ namespace Heist {
 		virtual void VBOSubData(uint32 offsetBytes, uint32 sizeBytes, real32* data) = 0;
 
 		inline static API GetAPI() { return s_API; }
-	private:	
+	private:
 		static API s_API;
 	};
 }

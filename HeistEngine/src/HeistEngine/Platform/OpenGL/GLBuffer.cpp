@@ -10,7 +10,8 @@ namespace Heist {
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		if (staticDraw) {
 			glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
-		} else {
+		}
+		else {
 			glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_DYNAMIC_DRAW);
 		}
 	}
@@ -50,7 +51,8 @@ namespace Heist {
 
 		if (staticDraw) {
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32), indicies, GL_STATIC_DRAW);
-		} else {
+		}
+		else {
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32), indicies, GL_DYNAMIC_DRAW);
 		}
 	}

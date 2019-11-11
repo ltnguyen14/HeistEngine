@@ -10,6 +10,14 @@ namespace Heist {
 			RendererCommand::SetClearColor({ 0.8f, 0.8f, 0.8f, 1.0f });
 		}
 
+		inline static void SetBlend(bool value) {
+			s_renderAPI->SetBlend(value);
+		}
+
+		inline static void SetDepthTest(bool value) {
+			s_renderAPI->SetDepthTest(value);
+		}
+
 		inline static void SetClearColor(vec4 color) {
 			s_renderAPI->SetClearColor(color);
 		}
@@ -26,7 +34,7 @@ namespace Heist {
 			s_renderAPI->DrawVerticies(vertexArray);
 		}
 
-		inline static void VBOSubData(uint32 offsetBytes, uint32 sizeBytes, real32 *data) {
+		inline static void VBOSubData(uint32 offsetBytes, uint32 sizeBytes, real32* data) {
 			s_renderAPI->VBOSubData(offsetBytes, sizeBytes, data);
 		}
 

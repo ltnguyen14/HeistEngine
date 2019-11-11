@@ -36,7 +36,7 @@ namespace Heist {
 		return content;
 	}
 
-  std::shared_ptr<ModelCollection3D> FileManager::CreateModelFromRawData(const std::shared_ptr<RawModelCollection3D> rawModelColelction, const std::shared_ptr<Material3D> material, const std::shared_ptr<Shader>& shader, const std::shared_ptr<Texture>& texture)
+	std::shared_ptr<ModelCollection3D> FileManager::CreateModelFromRawData(const std::shared_ptr<RawModelCollection3D> rawModelColelction, const std::shared_ptr<Material3D> material, const std::shared_ptr<Shader>& shader, const std::shared_ptr<Texture>& texture)
 	{
 		std::shared_ptr<ModelCollection3D> modelCollection = std::make_shared<ModelCollection3D>(ModelCollection3D());
 		for (auto modelPair : rawModelColelction->models) {
@@ -72,18 +72,18 @@ namespace Heist {
 		return modelCollection;
 	}
 
-  std::shared_ptr<RawModelCollection3D> FileManager::ReadOBJFile(const char* filePath, const char* fileName)
+	std::shared_ptr<RawModelCollection3D> FileManager::ReadOBJFile(const char* filePath, const char* fileName)
 	{
-    std::shared_ptr<RawModelCollection3D> collection = std::make_shared<RawModelCollection3D>(RawModelCollection3D());
+		std::shared_ptr<RawModelCollection3D> collection = std::make_shared<RawModelCollection3D>(RawModelCollection3D());
 		std::ifstream fileStream;
 
 		std::vector<real32> verticies;
 		std::vector<real32> normals;
 		std::vector<real32> textureCoord;
 
-    char filePathAndName[50];
-    std::strcpy(filePathAndName, filePath);
-    std::strcat(filePathAndName, fileName);
+		char filePathAndName[50];
+		std::strcpy(filePathAndName, filePath);
+		std::strcat(filePathAndName, fileName);
 
 		fileStream.open(filePathAndName);
 		HS_CORE_ASSERT(!fileStream.fail(), "Cannot open file path: " + std::string(filePathAndName));
@@ -94,28 +94,31 @@ namespace Heist {
 		real32 v1, v2, v3, v4, v5;
 		std::string currentObjectName;
 
-    bool useMtl = false;
+		bool useMtl = false;
 
 		while (std::getline(fileStream, line)) {
 			uint32 faceIndex = 0;
 			std::stringstream sl(line);
 			sl >> tag;
-      if (tag == "mtllib") {
-        useMtl = true;
-        sl >> mtlFileName;
-      }
+			if (tag == "mtllib") {
+				useMtl = true;
+				sl >> mtlFileName;
+			}
 
-      if (tag == "o") {
-        sl >> currentObjectName;
-		collection->models[currentObjectName] = std::make_shared<RawModel3D>(RawModel3D());
-      } else if (tag == "usemtl") {
-        sl >> collection->models[currentObjectName]->materialName;
-      } else if (tag == "v") {
+			if (tag == "o") {
+				sl >> currentObjectName;
+				collection->models[currentObjectName] = std::make_shared<RawModel3D>(RawModel3D());
+			}
+			else if (tag == "usemtl") {
+				sl >> collection->models[currentObjectName]->materialName;
+			}
+			else if (tag == "v") {
 				sl >> v1 >> v2 >> v3;
 				verticies.push_back(v1);
 				verticies.push_back(v2);
 				verticies.push_back(v3);
-			} else if (tag == "f") {
+			}
+			else if (tag == "f") {
 				for (uint64 i; sl >> i;) {
 					faceIndex++;
 					if (faceIndex == 1) { // indicies
@@ -123,10 +126,12 @@ namespace Heist {
 						collection->models[currentObjectName]->dataBuffer.push_back(verticies[(i - 1) * 3 + 0]);
 						collection->models[currentObjectName]->dataBuffer.push_back(verticies[(i - 1) * 3 + 1]);
 						collection->models[currentObjectName]->dataBuffer.push_back(verticies[(i - 1) * 3 + 2]);
-					} else if (faceIndex == 2) {
+					}
+					else if (faceIndex == 2) {
 						collection->models[currentObjectName]->dataBuffer.push_back(textureCoord[(i - 1) * 2 + 0]);
 						collection->models[currentObjectName]->dataBuffer.push_back(textureCoord[(i - 1) * 2 + 1]);
-					} else if (faceIndex == 3) {
+					}
+					else if (faceIndex == 3) {
 						collection->models[currentObjectName]->dataBuffer.push_back(normals[(i - 1) * 3 + 0]);
 						collection->models[currentObjectName]->dataBuffer.push_back(normals[(i - 1) * 3 + 1]);
 						collection->models[currentObjectName]->dataBuffer.push_back(normals[(i - 1) * 3 + 2]);
@@ -138,12 +143,14 @@ namespace Heist {
 					}
 				}
 				collection->models[currentObjectName]->verticiesNum += 3;
-			} else if (tag == "vn") {
+			}
+			else if (tag == "vn") {
 				sl >> v1 >> v2 >> v3;
 				normals.push_back(v1);
 				normals.push_back(v2);
 				normals.push_back(v3);
-			} else if (tag == "vt") {
+			}
+			else if (tag == "vt") {
 				sl >> v1 >> v2;
 				textureCoord.push_back(v1);
 				textureCoord.push_back(v2);
@@ -152,14 +159,14 @@ namespace Heist {
 
 		fileStream.close();
 
-    if (useMtl) {
-      std::string path(filePath);
-      path.append(mtlFileName);
-      std::unordered_map<std::string, std::shared_ptr<RawMaterial3D>> mat = ReadMTLFile(path.c_str());
-      for (std::pair<const std::string, std::shared_ptr<RawModel3D>> model : collection->models) {
-        model.second->SetRawMaterial(mat[model.second->materialName]);
-      }
-    }
+		if (useMtl) {
+			std::string path(filePath);
+			path.append(mtlFileName);
+			std::unordered_map<std::string, std::shared_ptr<RawMaterial3D>> mat = ReadMTLFile(path.c_str());
+			for (std::pair<const std::string, std::shared_ptr<RawModel3D>> model : collection->models) {
+				model.second->SetRawMaterial(mat[model.second->materialName]);
+			}
+		}
 
 		return collection;
 	}
@@ -172,53 +179,147 @@ namespace Heist {
 		return jsonContent;
 	}
 
-  std::unordered_map<std::string, std::shared_ptr<RawMaterial3D>> FileManager::ReadMTLFile(const char* filePath) {
-    std::unordered_map<std::string, std::shared_ptr<RawMaterial3D>> materials;
+  std::shared_ptr<FontData> FileManager::ReadFontFile(const char *filePath, const char *fileName) {
+	  std::shared_ptr<FontData> fontData = std::make_shared<FontData>(FontData());
+	  std::ifstream fileStream;
+
+	  char filePathAndName[50];
+	  std::strcpy(filePathAndName, filePath);
+	  std::strcat(filePathAndName, fileName);
+
+	  return ReadFontFile(filePathAndName);
+  }
+
+  std::shared_ptr<FontData> FileManager::ReadFontFile(const char* filePath) {
+	  std::shared_ptr<FontData> fontData = std::make_shared<FontData>(FontData());
+	  std::ifstream fileStream;
+
+	  fileStream.open(filePath);
+	  HS_CORE_ASSERT(!fileStream.fail(), "Cannot open file path: " + std::string(filePath));
+
+	  std::string line, tag;
+
+	  while (std::getline(fileStream, line)) {
+		  std::stringstream sl(line);
+		  sl >> tag;
+		  if (tag == "char") {
+			  CharacterData charData = CharacterData();
+			  uint32 id;
+			  while (sl) {
+				  std::string segment, name, value;
+				  sl >> segment;
+				  std::stringstream token(segment);
+				  std::getline(token, name, '=');
+				  if (name == "x") {
+					  std::getline(token, value, '=');
+					  charData.x = std::stof(value);
+				  }
+				  else if (name == "y") {
+					  std::getline(token, value, '=');
+					  charData.y = std::stof(value);
+				  }
+				  else if (name == "width") {
+					  std::getline(token, value, '=');
+					  charData.width = std::stof(value);
+				  }
+				  else if (name == "height") {
+					  std::getline(token, value, '=');
+					  charData.height = std::stof(value);
+				  }
+				  else if (name == "xoffset") {
+					  std::getline(token, value, '=');
+					  charData.xOffset = std::stof(value);
+				  }
+				  else if (name == "yoffset") {
+					  std::getline(token, value, '=');
+					  charData.yOffset = std::stof(value);
+				  }
+				  else if (name == "xadvance") {
+					  std::getline(token, value, '=');
+					  charData.xAdvance = std::stof(value);
+				  }
+				  else if (name == "id") {
+					  std::getline(token, value, '=');
+					  id = std::stof(value);
+				  }
+			  }
+			  fontData->data.insert({ id, charData });
+		  } else if (tag == "common") {
+        while (sl) {
+          std::string segment, name, value;
+          sl >> segment;
+          std::stringstream token(segment);
+          std::getline(token, name, '=');
+          if (name == "scaleW") {
+            std::getline(token, value, '=');
+            fontData->width = std::stof(value);
+          } else if (name == "scaleH") {
+              std::getline(token, value, '=');
+              fontData->height = std::stof(value);
+            }
+        }
+      }
+	  }
+
+	  fileStream.close();
+
+	  return fontData;
+  }
+
+
+	std::unordered_map<std::string, std::shared_ptr<RawMaterial3D>> FileManager::ReadMTLFile(const char* filePath) {
+		std::unordered_map<std::string, std::shared_ptr<RawMaterial3D>> materials;
 		std::ifstream fileStream;
 		fileStream.open(filePath);
 		HS_CORE_ASSERT(!fileStream.fail(), "Cannot open file path: " + std::string(filePath));
 
 		std::string line;
 		std::string tag;
-    std::string currentMaterialIndex;
+		std::string currentMaterialIndex;
 
 		while (std::getline(fileStream, line)) {
 			std::stringstream sl(line);
 			sl >> tag;
 
-      if (tag == "newmtl") {
-        sl >> currentMaterialIndex;
-        materials[currentMaterialIndex] = std::make_shared<RawMaterial3D>(RawMaterial3D());
-      } else if (tag == "Ns") {
-        real64 shininess;
-        sl >> shininess;
-        materials[currentMaterialIndex]->shininess = shininess;
-			} else if (tag == "Ka") {
-        real32 a1, a2, a3;
-        sl >> a1 >> a2 >> a3;
-        materials[currentMaterialIndex]->ambientColor = { a1, a2, a3 };
-      } else if (tag == "Kd") {
-        real32 d1, d2, d3;
-        sl >> d1 >> d2 >> d3;
-        materials[currentMaterialIndex]->diffuseColor = { d1, d2, d3 };
-      } else if (tag == "Ks") {
-        real32 s1, s2, s3;
-        sl >> s1 >> s2 >> s3;
-        materials[currentMaterialIndex]->specularColor = { s1, s2, s3 };
-      } else if (tag == "illum") {
-        int8 illum;
-        sl >> illum;
-        if (illum == 1) {
-          materials[currentMaterialIndex]->specularHighlight = false;
-        } else {
-          materials[currentMaterialIndex]->specularHighlight = true;
-        }
-      }
-    }
-    fileStream.close();
+			if (tag == "newmtl") {
+				sl >> currentMaterialIndex;
+				materials[currentMaterialIndex] = std::make_shared<RawMaterial3D>(RawMaterial3D());
+			}
+			else if (tag == "Ns") {
+				real64 shininess;
+				sl >> shininess;
+				materials[currentMaterialIndex]->shininess = shininess;
+			}
+			else if (tag == "Ka") {
+				real32 a1, a2, a3;
+				sl >> a1 >> a2 >> a3;
+				materials[currentMaterialIndex]->ambientColor = { a1, a2, a3 };
+			}
+			else if (tag == "Kd") {
+				real32 d1, d2, d3;
+				sl >> d1 >> d2 >> d3;
+				materials[currentMaterialIndex]->diffuseColor = { d1, d2, d3 };
+			}
+			else if (tag == "Ks") {
+				real32 s1, s2, s3;
+				sl >> s1 >> s2 >> s3;
+				materials[currentMaterialIndex]->specularColor = { s1, s2, s3 };
+			}
+			else if (tag == "illum") {
+				int8 illum;
+				sl >> illum;
+				if (illum == 1) {
+					materials[currentMaterialIndex]->specularHighlight = false;
+				}
+				else {
+					materials[currentMaterialIndex]->specularHighlight = true;
+				}
+			}
+		}
+		fileStream.close();
 
-    return materials;
-  }
+		return materials;
+	}
 
 	void FileManager::WriteFile() {
 	}
@@ -230,11 +331,12 @@ namespace Heist {
 
 		if (!img) {
 			HS_CORE_ERROR("Fail to load texture: {}", texturePath);
-		} else {
+		}
+		else {
 			HS_CORE_TRACE("Texture loaded: {}", texturePath);
 		}
 
-		return {width, height, comp, img};
+		return { width, height, comp, img };
 	}
 
 }

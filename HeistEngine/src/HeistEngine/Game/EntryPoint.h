@@ -15,5 +15,5 @@ int main(int argc, char** agrv) {
 }
 
 #else
-	#error Engine only supports Windows
+#error Engine only supports Windows
 #endif

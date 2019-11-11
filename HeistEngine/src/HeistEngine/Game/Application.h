@@ -10,6 +10,7 @@
 #include "Core/Renderer/Camera.h"
 #include "Core/Renderer/Texture.h"
 #include "Core/Manager/InputManager.h"
+#include "Core/GUI/GUIManager.h"
 #include "Core/FileSystem/FileManager.h"
 #include "Core/Math/Math.h"
 #include "Platform/Assertions.h"
@@ -28,10 +29,10 @@ namespace Heist {
 		void OnUpdate(real64 time);
 		void OnRender(real64 time);
 
-		void PushLayer(Layer *layer);
-		void PopLayer(Layer *layer);
+		void PushLayer(Layer* layer);
+		void PopLayer(Layer* layer);
 
-    void AttachCameraMovement(CameraMovement *cameraMovement);
+		void AttachCameraMovement(CameraMovement* cameraMovement);
 
 		void Run();
 
@@ -40,11 +41,13 @@ namespace Heist {
 		EventBus eventBus;
 		LayerStack layerStack;
 		Window window;
-		MemoryManager *memoryManager;
-		InputManager *inputManager;
+		MemoryManager* memoryManager;
+		InputManager* inputManager;
+    GUIManager* guiManager;
 		std::shared_ptr<ComponentManager> componentManager;
-    CameraMovement *cameraMovement;
+		CameraMovement* cameraMovement;
 		std::shared_ptr<Camera> camera;
+    std::shared_ptr<Camera> orthoCamera;
 	};
 
 	// To be defined in client

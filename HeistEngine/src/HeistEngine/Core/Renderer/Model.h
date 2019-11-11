@@ -6,6 +6,18 @@
 
 namespace Heist {
 
+  struct CharacterData {
+    real32 x, y;
+    real32 width, height;
+    real32 xOffset, yOffset;
+    real32 xAdvance;
+  };
+
+  struct FontData {
+    std::unordered_map<uint32, CharacterData> data;
+    real32 width, height;
+  };
+
 	struct TextureData {
 		TextureData(int32 width, int32 height, int32 comp, unsigned char* img) : width(width), height(height), comp(comp), img(img) {};
 		~TextureData();
@@ -18,40 +30,40 @@ namespace Heist {
 
 	struct Material3D {
 		Material3D(const std::shared_ptr<Texture>& texture, const std::shared_ptr<Texture>& specular, real32 reflectiveness = 64)
-			: texture(texture), specular(specular), reflectiveness(reflectiveness){};
+			: texture(texture), specular(specular), reflectiveness(reflectiveness) {};
 		std::shared_ptr<Texture> texture;
 		std::shared_ptr<Texture> specular;
 		real32 reflectiveness;
 	};
 
-  struct RawMaterial3D {
+	struct RawMaterial3D {
 
-  RawMaterial3D(vec3 ambientColor, vec3 diffuseColor, vec3 specularColor, real64 shininess, bool specularHighlight) : ambientColor(ambientColor), diffuseColor(diffuseColor), specularColor(specularColor), shininess(shininess), specularHighlight(specularHighlight) {}
+		RawMaterial3D(vec3 ambientColor, vec3 diffuseColor, vec3 specularColor, real64 shininess, bool specularHighlight) : ambientColor(ambientColor), diffuseColor(diffuseColor), specularColor(specularColor), shininess(shininess), specularHighlight(specularHighlight) {}
 
-    RawMaterial3D() {}
+		RawMaterial3D() {}
 
-    vec3 ambientColor;
-    vec3 diffuseColor;
-    vec3 specularColor;
-    real64 shininess;
-    bool specularHighlight;
-  };
+		vec3 ambientColor;
+		vec3 diffuseColor;
+		vec3 specularColor;
+		real64 shininess;
+		bool specularHighlight;
+	};
 
-  struct RawModel3D {
+	struct RawModel3D {
 		uint32 verticiesNum = 0;
 		std::vector<uint32> indicies;
 		std::vector<real32> dataBuffer;
-    std::string materialName;
+		std::string materialName;
 
-    std::shared_ptr<RawMaterial3D> rawMaterial;
-    void SetRawMaterial(const std::shared_ptr<RawMaterial3D> mat) {
-      rawMaterial = mat;
-    }
+		std::shared_ptr<RawMaterial3D> rawMaterial;
+		void SetRawMaterial(const std::shared_ptr<RawMaterial3D> mat) {
+			rawMaterial = mat;
+		}
 	};
 
-  struct RawModelCollection3D {
-	  std::unordered_map<std::string, std::shared_ptr<RawModel3D>> models;
-  };
+	struct RawModelCollection3D {
+		std::unordered_map<std::string, std::shared_ptr<RawModel3D>> models;
+	};
 
 	struct Model3D {
 
@@ -59,8 +71,8 @@ namespace Heist {
 			: shader(shader), vertexArray(vertexArray), material(material),
 			position(0, 0, 0), rotation(0, 0, 0), scale(1, 1, 1), c_position(position), c_rotation(rotation), c_scale(scale), c_modelMatrix(1), useIndicies(useIndicies) {};
 
-  Model3D(const std::shared_ptr<Shader>& shader, const std::shared_ptr<RawMaterial3D> rawMaterial, const std::shared_ptr<VertexArray>& vertexArray, bool useIndicies)
-  : shader(shader), vertexArray(vertexArray), rawMaterial(rawMaterial),
+		Model3D(const std::shared_ptr<Shader>& shader, const std::shared_ptr<RawMaterial3D> rawMaterial, const std::shared_ptr<VertexArray>& vertexArray, bool useIndicies)
+			: shader(shader), vertexArray(vertexArray), rawMaterial(rawMaterial),
 			position(0, 0, 0), rotation(0, 0, 0), scale(1, 1, 1), c_position(position), c_rotation(rotation), c_scale(scale), c_modelMatrix(1), useIndicies(useIndicies) {};
 
 		mat4 GetModelMatrix() {
@@ -81,7 +93,7 @@ namespace Heist {
 
 		std::shared_ptr<Shader> shader;
 		std::shared_ptr<Material3D> material;
-    std::shared_ptr<RawMaterial3D> rawMaterial;
+		std::shared_ptr<RawMaterial3D> rawMaterial;
 		std::shared_ptr<VertexArray> vertexArray;
 
 		vec3 position;
@@ -95,9 +107,9 @@ namespace Heist {
 		mat4 c_modelMatrix;
 	};
 
-  struct ModelCollection3D {
-    std::vector<std::shared_ptr<Model3D>> models;
-  };
+	struct ModelCollection3D {
+		std::vector<std::shared_ptr<Model3D>> models;
+	};
 
 	struct Light3D {
 

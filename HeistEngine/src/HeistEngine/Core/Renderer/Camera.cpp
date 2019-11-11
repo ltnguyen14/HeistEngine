@@ -3,14 +3,15 @@
 
 
 namespace Heist {
-  real32 FOV = 65.0f;
+	real32 FOV = 65.0f;
 
 	Camera::Camera(vec3 position, vec3 rotation, vec4 dimensions, bool ortho)
 		:position(position), c_position(position), rotation(rotation), c_rotation(rotation), ortho(ortho)
 	{
 		if (ortho) {
 			projectionMatrix = MakeOrthoMatrix(dimensions.x, dimensions.y, dimensions.w, dimensions.h, -1000, 1000);
-		} else {
+		}
+		else {
 			projectionMatrix = MakePerspectiveMatrix(FOV, dimensions.y / dimensions.w, 0.1f, 1000.0f);
 		}
 
@@ -50,14 +51,5 @@ namespace Heist {
 		viewMatrix = translate(viewMatrix, { -position.x, -position.y, -position.z });
 
 		projectionViewMatrix = projectionMatrix * viewMatrix;
-	}
-
-	void Camera::CalculateProjectionMatrix(vec4 dimensions) {
-		if (ortho) {
-			projectionMatrix = MakeOrthoMatrix(dimensions.x, dimensions.y, dimensions.w, dimensions.h, -1000, 1000);
-		}
-		else {
-			projectionMatrix = MakePerspectiveMatrix(FOV, dimensions.y / dimensions.w, 0.1f, 1000.0f);
-		}
 	}
 }

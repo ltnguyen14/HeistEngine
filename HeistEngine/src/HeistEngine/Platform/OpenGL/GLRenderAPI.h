@@ -7,6 +7,8 @@ namespace Heist {
 
 		void Init() override;
 		void SetClearColor(vec4 color) override;
+		void SetBlend(bool value) override;
+		void SetDepthTest(bool value) override;
 		void ClearScreen() override;
 
 		void DrawIndexes(const std::shared_ptr<VertexArray>& vertexArray) override;

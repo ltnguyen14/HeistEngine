@@ -10,7 +10,7 @@ namespace Heist {
 		receivers.push_back(receiver);
 	}
 
-	void EventBus::SendEvent(Event *event) {
+	void EventBus::SendEvent(Event* event) {
 		events.push(event);
 	}
 

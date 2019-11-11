@@ -11,7 +11,7 @@ namespace Heist {
 		void Unbind() const override;
 
 		void ResetBuffer(real32* vertices, uint32 size, bool staticDraw) override;
-		void SetLayout(BufferLayout& layout) override;	
+		void SetLayout(BufferLayout& layout) override;
 	};
 
 	struct GLIndexBuffer : public IndexBuffer {
