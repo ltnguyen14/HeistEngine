@@ -1,3 +1,4 @@
+#include "hspch.h"
 #include "GUIManager.h"
 #include "Core/Manager/InputManager.h"
 #include "Core/FileSystem/FileManager.h"

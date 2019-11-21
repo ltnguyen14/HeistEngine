@@ -1,5 +1,6 @@
 #pragma once
 #include "GUI.h"
+#include "Core/Renderer/Model.h"
 #include "Core/Event/EventNode.h"
 #include "Core/Math/Math.h"
 #include "Core/Renderer/Renderer2D.h"

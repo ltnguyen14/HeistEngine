@@ -1,4 +1,6 @@
 #pragma once
+#include "Macro.h"
+#include "Core/Math/Math.h"
 
 namespace Heist {
 
