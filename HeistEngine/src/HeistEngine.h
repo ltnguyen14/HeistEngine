@@ -2,6 +2,7 @@
 
 // Include for client only
 #include "HeistEngine/Macro.h"
+#include "HeistEngine/Core/Raytracer/ray.h"
 #include "HeistEngine/Core/Log/Log.h"
 #include "HeistEngine/Core/Math/Math.h"
 #include "HeistEngine/Core/Event/EventNode.h"

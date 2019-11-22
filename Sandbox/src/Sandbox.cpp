@@ -12,6 +12,7 @@ struct TestLayer : public Heist::Layer {
 	real32 time;
 	
 	void OnAttach(const std::shared_ptr<Heist::ComponentManager>& componentManager) override {
+    test();
 		// Load assets
 			// textureAtlas.reset(Heist::Texture::Create("assets/textures/woodBox.png"));
 			// textureSpecAtlas.reset(Heist::Texture::Create("assets/textures/woodBox_spec.png"));
@@ -93,7 +94,6 @@ struct TestLayer : public Heist::Layer {
 	}
 
 	void OnOverlay() override {
-    DrawProfile({0.0f, 0.0f, 800.0f, 800.0f});
 	}
 
 	void OnWindowResize(real32 left, real32 right, real32 bottom, real32 top) override {
