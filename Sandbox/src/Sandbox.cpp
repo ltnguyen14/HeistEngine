@@ -12,7 +12,6 @@ struct TestLayer : public Heist::Layer {
 	real32 time;
 	
 	void OnAttach(const std::shared_ptr<Heist::ComponentManager>& componentManager) override {
-    test();
 		// Load assets
 			// textureAtlas.reset(Heist::Texture::Create("assets/textures/woodBox.png"));
 			// textureSpecAtlas.reset(Heist::Texture::Create("assets/textures/woodBox_spec.png"));

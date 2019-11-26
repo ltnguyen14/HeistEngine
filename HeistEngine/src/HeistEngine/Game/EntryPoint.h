@@ -9,9 +9,11 @@ int main(int argc, char** agrv) {
 
 	Heist::Log::Init();
 
-	auto app = Heist::CreateApplication();
-	app->Run();
-	delete app;
+	/* auto app = Heist::CreateApplication(); */
+	/* app->Run(); */
+	/* delete app; */
+
+  Heist::tracer();
 }
 
 #else

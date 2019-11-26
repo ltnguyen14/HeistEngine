@@ -29,7 +29,8 @@ namespace Heist {
 
 	typedef union vec4 {
 		vec4() = default;
-		vec4(real32 x, real32 y, real32 z, real32 q) : x(x), y(y), z(z), q(q) {};
+  vec4(real32 x, real32 y, real32 z, real32 q) : x(x), y(y), z(z), q(q) {};
+  vec4(const vec3& vector, real32 a) : x(vector.r), y(vector.g), z(vector.b), a(a) {};
 
 		struct {
 			real32 x;
@@ -73,7 +74,7 @@ namespace Heist {
 	}
 
 	inline vec2 operator - (const vec2& v, const vec2& v2) {
-		return vec2{ v.x + v2.x, v.y + v2.y };
+		return v + (-v2);
 	}
 
 	inline bool operator == (const vec2& v, const vec2& v2) {
@@ -100,6 +101,10 @@ namespace Heist {
 		return vec3{ v.x * s, v.y * s, v.z * s };
 	}
 
+	inline vec3 operator * (real32 s, const vec3& v) {
+		return vec3{ v.x * s, v.y * s, v.z * s };
+	}
+
 	inline vec3 operator / (const vec3& v, real32 s) {
 		s = 1.0f / s;
 		return v * s;
@@ -114,7 +119,7 @@ namespace Heist {
 	}
 
 	inline vec3 operator - (const vec3& v, const vec3& v2) {
-		return vec3{ v.x + v2.x, v.y + v2.y, v.z + v2.z };
+		return v + (-v2);
 	}
 
 	inline bool operator == (const vec3& v, const vec3& v2) {
@@ -132,6 +137,16 @@ namespace Heist {
 	inline vec3 Normalize(const vec3& v) {
 		return (v / Magnitude(v));
 	}
+
+  inline vec3 Cross(const vec3& v1, const vec3& v2) {
+    vec3 result = {};
+
+    result.x = v1.y * v2.z - v1.z * v2.y;
+    result.y = v1.z * v2.x - v1.x * v2.z;
+    result.z = v1.x * v2.y - v1.y * v2.x;
+
+    return result;
+  }
 
 	// -----------------------------------------------
 	// vec4 ------------------------------------------
@@ -156,7 +171,7 @@ namespace Heist {
 	}
 
 	inline vec4 operator - (const vec4& v, const vec4& v2) {
-		return vec4{ v.x - v2.x, v.y - v2.y, v.z - v2.z, v.q - v2.q };
+		return v + (-v2);
 	}
 
 	inline bool operator == (const vec4& v, const vec4& v2) {
@@ -176,4 +191,26 @@ namespace Heist {
 	}
 
 	// -----------------------------------------------
+
+  inline uint32 RoundReal32ToUInt32(real32 value)
+  {
+    return (uint32)roundf(value);
+  }
+
+  inline uint32 BGRAPack4x8(vec4 unpacked) {
+    uint32 result = ((RoundReal32ToUInt32(unpacked.a) << 24) |
+                     (RoundReal32ToUInt32(unpacked.r) << 16) |
+                     (RoundReal32ToUInt32(unpacked.g) << 8) |
+                     (RoundReal32ToUInt32(unpacked.b) << 0));
+    return result;
+  }
+
+  inline real32 Inner(const vec3& v1, const vec3& v2) {
+    real32 result = (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
+    return result;
+  }
+
+  inline real32 Inner(const vec2& v1, const vec2& v2) {
+    real32 result = (v1.x * v2.x) + (v1.y * v2.y);
+  }
 }
